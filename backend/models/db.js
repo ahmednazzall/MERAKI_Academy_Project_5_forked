@@ -11,4 +11,4 @@ pool.connect()
     console.log(err);
   });
 
-module.exports = pool;
+module.exports = {pool};
