@@ -1,6 +1,19 @@
 const { pool } = require("../models/db");
 
-const Register = /*async*/ (req, res) => {};
+const Register = async (req, res) => {
+  const {
+    userName,
+    firstName,
+    lastName,
+    email,
+    password,
+    country,
+    dateOfBirth,
+    profileImage,
+    bio,
+  } = req.body;
+  
+};
 
 const login = /*async*/ (req, res) => {};
 
@@ -13,8 +26,6 @@ const getUserByUserName = /*async*/ (req, res) => {};
 const updateUserById = /*async*/ (req, res) => {};
 
 const deleteUserById = /*async*/ (req, res) => {};
-
-
 
 module.exports = {
   Register,
