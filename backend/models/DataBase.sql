@@ -36,6 +36,7 @@ CREATE TABLE posts (
   post_id SERIAL NOT NULL,
   body text,
   image varchar(255),
+  video varchar(255),
   user_id integer,
   created_at timestamp default now(),
   updated_at timestamp,
