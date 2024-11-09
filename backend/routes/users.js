@@ -9,6 +9,7 @@ const {
   updateUserById,
   SoftDeleteUserById,
 } = require("../controllers/users");
+ user.js
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
@@ -18,6 +19,9 @@ usersRouter.get("/:id", getUserById);
 usersRouter.get("/", getUserByUserName);
 usersRouter.put("/:id", updateUserById);
 usersRouter.put("/sd/:id", SoftDeleteUserById);
+=======
+
+ main
 module.exports = usersRouter;
 
 /* 
@@ -50,3 +54,5 @@ register/user
 
 
 */
+ user.js
+ main

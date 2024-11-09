@@ -18,12 +18,16 @@ CREATE TABLE rolePermissions (
 );
 CREATE TABLE users (
   user_id SERIAL NOT NULL,
-  userName varchar (50),
-  firstName varchar (50),
-  lastName varchar(50),
-  email varchar(50),
+ user.js
+
+=======
+  userName varchar (255),
+  firstName varchar (255),
+  lastName varchar(255),
+  email varchar(255),
   password varchar(255),
-  country varchar(25),
+  country varchar(255),
+ main
   dateOfBirth date,
   profileImage text,
   bio varchar(255),
