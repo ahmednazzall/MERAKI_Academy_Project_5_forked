@@ -72,7 +72,7 @@ CREATE TABLE folowers (
   follow_id SERIAL NOT NULL,
   follower_id integer,
   following_id integer,
-   followed_at timestamp default now(),
+  followed_at timestamp default now(),
   is_deleted smallint default 0,
   foreign KEY(following_id) references users(user_id),
   foreign KEY(follower_id) references users(user_id),
