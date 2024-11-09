@@ -18,14 +18,14 @@ CREATE TABLE rolePermissions (
 );
 CREATE TABLE users (
   user_id SERIAL NOT NULL,
-  userName varchar (20),
-  firstName varchar (20),
-  lastName varchar(20),
+  userName varchar (50),
+  firstName varchar (50),
+  lastName varchar(50),
   email varchar(50),
-  password varchar(20),
+  password varchar(255),
   country varchar(25),
   dateOfBirth date,
-  profileImage varchar(255),
+  profileImage text,
   bio varchar(255),
   role_id integer,
   is_deleted smallint default 0,
@@ -41,7 +41,7 @@ CREATE TABLE posts (
   created_at timestamp default now(),
   updated_at timestamp,
   is_deleted smallint default 0,
-  foreign KEY(user_id) references users(user_id),
+  foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (post_id)
 );
 CREATE TABLE comments (
@@ -52,8 +52,8 @@ CREATE TABLE comments (
   created_at timestamp default now(),
   updated_at timestamp,
   is_deleted smallint default 0,
-  foreign KEY(commenter) references users(user_id),
-  foreign KEY(post_id) references posts(post_id),
+  foreign KEY(commenter) references users(user_id) ON DELETE CASCADE,
+  foreign KEY(post_id) references posts(post_id) ON DELETE CASCADE,
   PRIMARY KEY (comment_id)
 );
 CREATE TABLE reacts (
@@ -63,19 +63,19 @@ CREATE TABLE reacts (
   comment_id integer,
   reacts text [],
   is_deleted smallint default 0,
-  foreign KEY(comment_id) references comments(comment_id),
-  foreign KEY(post_id) references posts(post_id),
-  foreign KEY(user_id) references users(user_id),
+  foreign KEY(comment_id) references comments(comment_id) ON DELETE CASCADE,
+  foreign KEY(post_id) references posts(post_id) ON DELETE CASCADE,
+  foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (react_id)
 );
-CREATE TABLE folowers (
+CREATE TABLE followers (
   follow_id SERIAL NOT NULL,
   follower_id integer,
   following_id integer,
    followed_at timestamp default now(),
   is_deleted smallint default 0,
-  foreign KEY(following_id) references users(user_id),
-  foreign KEY(follower_id) references users(user_id),
+  foreign KEY(following_id) references users(user_id) ON DELETE CASCADE,
+  foreign KEY(follower_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (follow_id)
 );
 CREATE TABLE messages (
@@ -85,8 +85,8 @@ CREATE TABLE messages (
   message_text text ,
   created_at timestamp default now(),
   is_deleted smallint default 0,
-  foreign KEY(sender) references users(user_id),
-  foreign KEY(receiver) references users(user_id),
+  foreign KEY(sender) references users(user_id) ON DELETE CASCADE,
+  foreign KEY(receiver) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (message_id)
 );
 CREATE TABLE notifications (
@@ -94,7 +94,6 @@ CREATE TABLE notifications (
   user_id integer,
   action varchar(100),
   notification_time timestamp default now(),
-  foreign KEY(user_id) references users(user_id),
+  foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (notification_id)
 );
-
