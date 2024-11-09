@@ -9,7 +9,7 @@ const {
   updateUserById,
   SoftDeleteUserById,
 } = require("../controllers/users");
- user.js
+
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
