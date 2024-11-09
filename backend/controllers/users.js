@@ -1,7 +1,7 @@
 const { pool } = require("../models/db");
 
 
-=======
+
 const bcrypt = require("bcrypt");
 const saltRounds = parseInt(process.env.SALT);
 const jwt = require("jsonwebtoken");
@@ -19,24 +19,10 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
 
-  const role_id = 1; //! create admin then switch to user
-=======
+  const role_id = 3; //! create admin then switch to user
 
   
-};
-
-const login = /*async*/ (req, res) => {};
-
-const getAllUsers = /*async*/ (req, res) => {};
-
-const getUserById = /*async*/ (req, res) => {};
-
-const getUserByUserName = /*async*/ (req, res) => {};
-
-const updateUserById = /*async*/ (req, res) => {};
-=======
-  const role_id = "4"; //! create admin then switch to user
-
+  
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (userName,
       firstName,
@@ -61,7 +47,6 @@ const updateUserById = /*async*/ (req, res) => {};
     bio,
     role_id,
   ];
-
   try {
    
     
@@ -81,6 +66,9 @@ const updateUserById = /*async*/ (req, res) => {};
     });
   }
 };
+
+
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
