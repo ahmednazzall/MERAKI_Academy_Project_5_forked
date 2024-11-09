@@ -115,7 +115,7 @@ const login = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const query = `SELECT * FROM users`;
+  const query = `SELECT * FROM users WHERE is_deleted=0`;
   try {
     const result = await pool.query(query);
     if (result.rows.length) {
@@ -140,7 +140,7 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const id = req.params.id;
-  const query = `SELECT * FROM users where user_id=$1`;
+  const query = `SELECT * FROM users where user_id=$1 AND is_deleted=0`;
   try {
     const result = await pool.query(query, [id]);
     if (result.rows.length) {
@@ -165,7 +165,7 @@ const getUserById = async (req, res) => {
 
 const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
-  const query = `SELECT * FROM users where userName=$1`;
+  const query = `SELECT * FROM users where userName=$1 is_deleted=0`;
 
   try {
     const result = await pool.query(query, [searchUser]);
