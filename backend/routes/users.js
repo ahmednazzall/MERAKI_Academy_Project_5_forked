@@ -11,6 +11,10 @@ const {
 } = require("../controllers/users");
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
+
+
+module.exports = usersRouter;
+=======
 usersRouter.post("/register",Register)
 usersRouter.post("/login",login)
 usersRouter.get("/all",getAllUsers)
@@ -49,3 +53,4 @@ register/user
 
 
 */
+
