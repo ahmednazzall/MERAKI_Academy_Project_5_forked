@@ -15,6 +15,7 @@ usersRouter.post("/register",Register)
 usersRouter.post("/login",login)
 usersRouter.get("/all",getAllUsers)
 usersRouter.get("/:id",getUserById)
+usersRouter.get("/",getUserByUserName)
 module.exports = usersRouter;
 
 /* 

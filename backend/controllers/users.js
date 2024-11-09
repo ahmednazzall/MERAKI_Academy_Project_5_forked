@@ -1,7 +1,7 @@
 const { pool } = require("../models/db");
-const bcrypt=require("bcrypt")
-const saltRounds=parseInt(process.env.SALT)
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
+const saltRounds = parseInt(process.env.SALT);
+const jwt = require("jsonwebtoken");
 const Register = async (req, res) => {
   const {
     userName,
@@ -15,8 +15,8 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
   const role_id = "4"; //! create admin then switch to user
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const query = `INSERT INTO users (userName,
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const query = `INSERT INTO users (userName,
       firstName,
       lastName,
       email,
@@ -27,21 +27,21 @@ const Register = async (req, res) => {
       bio,
        role_id) 
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`;
-    const data = [
-      userName,
-      firstName,
-      lastName,
-      email.toLowerCase(),
-      hashedPassword,
-      country,
-      dateOfBirth,
-      profileImage,
-      bio,
-      role_id,
-    ];
-  
+  const data = [
+    userName,
+    firstName,
+    lastName,
+    email.toLowerCase(),
+    hashedPassword,
+    country,
+    dateOfBirth,
+    profileImage,
+    bio,
+    role_id,
+  ];
+
   try {
-    const result= await pool.query(query,data)
+    const result = await pool.query(query, data);
     res.status(200).json({
       success: true,
       message: "Account created successfully",
@@ -50,7 +50,7 @@ const Register = async (req, res) => {
     res.status(409).json({
       success: false,
       message: "The email already exists",
-      error:error.message,
+      error: error.message,
     });
   }
 };
@@ -118,13 +118,12 @@ const getAllUsers = async (req, res) => {
         success: true,
         Users: result.rows,
       });
-    }else{
+    } else {
       res.status(200).json({
         success: true,
         message: "No users",
       });
     }
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -157,10 +156,33 @@ const getUserById = async (req, res) => {
       error,
     });
   }
-
 };
 
-const getUserByUserName = /*async*/ (req, res) => {};
+const getUserByUserName = async (req, res) => {
+  const { searchUser } = req.query;
+  const query = `SELECT * FROM users where userName=$1`;
+
+  try {
+    const result = await pool.query(query, [searchUser]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        User: result.rows,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "User does not exist ",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
 
 const updateUserById = /*async*/ (req, res) => {};
 
