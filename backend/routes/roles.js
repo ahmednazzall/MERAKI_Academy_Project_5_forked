@@ -7,6 +7,15 @@ const {
 } = require("../controllers/roles");
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
-
+rolesRouter.post("/",createRole)
 module.exports = rolesRouter;
  
+
+/* 
+{
+    "name":"ِAdmin"
+}
+{
+    "name":"User"
+}
+*/
