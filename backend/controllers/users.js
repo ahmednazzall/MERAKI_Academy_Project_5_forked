@@ -276,10 +276,9 @@ const SoftDeleteUserById = async (req, res) => {
   }
 };
 
- user.js
-=======
 
- main
+
+
 module.exports = {
   Register,
   login,
