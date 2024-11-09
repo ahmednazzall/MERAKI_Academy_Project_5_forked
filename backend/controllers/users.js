@@ -184,7 +184,58 @@ const getUserByUserName = async (req, res) => {
   }
 };
 
-const updateUserById = /*async*/ (req, res) => {};
+const updateUserById = async (req, res) => {
+  const { id } = req.params;
+  const {
+    userName,
+    firstName,
+    lastName,
+    email,
+    password,
+    country,
+    dateOfBirth,
+    profileImage,
+    bio,
+  } = req.body;
+  let updatedPassword=""
+  if(password){
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+      updatedPassword=hashedPassword
+  }else{
+    updatedPassword=password
+  }
+  
+  const values = [
+    userName || null,
+    firstName || null,
+    lastName || null,
+    email || null,
+    updatedPassword || null,
+    country || null,
+    dateOfBirth || null,
+    profileImage || null,
+    bio || null,
+    id,
+  ];
+  const query = `UPDATE users SET userName=COALESCE($1,userName),firstName=COALESCE($2,firstName), lastName=COALESCE($3,lastName),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),dateOfBirth=COALESCE($7,dateOfBirth),profileImage=COALESCE($8,profileImage),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
+
+try {
+  const result=await pool.query(query,values)
+  res.status(200).json({
+    success: true,
+    message:"Updated successfully",
+    result: result.rows,
+  });
+} catch (error) {
+  res.status(500).json({
+    success: false,
+    message: "Server Error!",
+    error,
+  });
+}
+
+
+};
 
 const deleteUserById = /*async*/ (req, res) => {};
 
