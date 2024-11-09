@@ -14,7 +14,6 @@ const authorization = require('../middleware/authorization');
 
 
 module.exports = usersRouter;
-=======
 usersRouter.post("/register",Register)
 usersRouter.post("/login",login)
 usersRouter.get("/all",getAllUsers)
