@@ -14,7 +14,7 @@ const Register = async (req, res) => {
     profileImage,
     bio,
   } = req.body;
-  const role_id = "4"; //! create admin then switch to user
+  const role_id = 1; //! create admin then switch to user
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (userName,
       firstName,
@@ -41,12 +41,17 @@ const Register = async (req, res) => {
   ];
 
   try {
+   
+    
     const result = await pool.query(query, data);
+   
     res.status(200).json({
       success: true,
       message: "Account created successfully",
     });
   } catch (error) {
+    console.log(error);
+    
     res.status(409).json({
       success: false,
       message: "The email already exists",

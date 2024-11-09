@@ -34,14 +34,14 @@ CREATE TABLE rolePermissions (
 );
 CREATE TABLE users (
   user_id SERIAL NOT NULL,
-  userName varchar (20),
-  firstName varchar (20),
-  lastName varchar(20),
-  email varchar(50),
-  password varchar(20),
-  country varchar(25),
+  userName varchar (255),
+  firstName varchar (255),
+  lastName varchar(255),
+  email varchar(255),
+  password varchar(255),
+  country varchar(255),
   dateOfBirth date,
-  profileImage varchar(255),
+  profileImage text,
   bio varchar(255),
   role_id integer,
   is_deleted smallint default 0,
@@ -123,7 +123,7 @@ try {
   
 }
 }
-// createDataBase()
+//createDataBase()
 
 
 module.exports = {pool};
