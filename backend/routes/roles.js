@@ -8,6 +8,7 @@ const {
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
 
+
 // Route to create a new role
 rolesRouter.post("/role", authentication, authorization, createRole);
 
@@ -20,3 +21,17 @@ rolesRouter.post("/role-permissions", authentication, authorization, createRoleP
 
 module.exports = rolesRouter;
  
+=======
+rolesRouter.post("/",createRole)
+module.exports = rolesRouter;
+ 
+
+/* 
+{
+    "name":"ِAdmin"
+}
+{
+    "name":"User"
+}
+*/
+
