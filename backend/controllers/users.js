@@ -1,6 +1,7 @@
 const { pool } = require("../models/db");
 const bcrypt=require("bcrypt")
 const saltRounds=parseInt(process.env.SALT)
+const jwt = require("jsonwebtoken")
 const Register = async (req, res) => {
   const {
     userName,
@@ -54,7 +55,59 @@ const Register = async (req, res) => {
   }
 };
 
-const login = /*async*/ (req, res) => {};
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  const values = [email.toLowerCase()];
+  const query = `SELECT * FROM users where email=$1`;
+  try {
+    const result = await pool.query(query, values);
+    if (result.rows.length) {
+      try {
+        const valid = await bcrypt.compare(password, result.rows[0].password);
+        if (valid) {
+          const payload = {
+            userId: result.rows[0].user_id,
+            role_id: result.rows[0].role_id,
+            country: result.rows[0].country,
+          };
+          const options = { expiresIn: "1d" };
+          const token = jwt.sign(payload, process.env.SECRET, options);
+          if (token) {
+            return res.status(200).json({
+              success: true,
+              message: `Valid login credentials`,
+              userId: result.rows[0].user_id,
+              token,
+            });
+          } else {
+            throw Error;
+          }
+        } else {
+          res.status(403).json({
+            success: false,
+            message: `The email doesn’t exist or the password you’ve entered is incorrect`,
+          });
+        }
+      } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
+    } else {
+      res.status(403).json({
+        success: false,
+        message: `The email doesn’t exist or the password you’ve entered is incorrect`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong!",
+      error,
+    });
+  }
+};
 
 const getAllUsers = /*async*/ (req, res) => {};
 

@@ -12,6 +12,7 @@ const {
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
 usersRouter.post("/register",Register)
+usersRouter.post("/login",login)
 module.exports = usersRouter;
 
 /* 
