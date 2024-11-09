@@ -7,19 +7,21 @@ const {
   getUserById,
   getUserByUserName,
   updateUserById,
-  deleteUserById,
+  SoftDeleteUserById,
 } = require("../controllers/users");
-const authentication = require('../middleware/authentication');
-const authorization = require('../middleware/authorization');
+ user.js
+const authentication = require("../middleware/authentication");
+const authorization = require("../middleware/authorization");
+usersRouter.post("/register", Register);
+usersRouter.post("/login", login);
+usersRouter.get("/all", getAllUsers);
+usersRouter.get("/:id", getUserById);
+usersRouter.get("/", getUserByUserName);
+usersRouter.put("/:id", updateUserById);
+usersRouter.put("/sd/:id", SoftDeleteUserById);
+=======
 
-
-module.exports = usersRouter;
-usersRouter.post("/register",Register)
-usersRouter.post("/login",login)
-usersRouter.get("/all",getAllUsers)
-usersRouter.get("/:id",getUserById)
-usersRouter.get("/",getUserByUserName)
-usersRouter.put("/:id",updateUserById)
+ main
 module.exports = usersRouter;
 
 /* 
@@ -52,4 +54,5 @@ register/user
 
 
 */
-
+ user.js
+ main

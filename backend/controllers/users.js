@@ -212,14 +212,14 @@ const updateUserById = async (req, res) => {
     profileImage,
     bio,
   } = req.body;
-  let updatedPassword=""
-  if(password){
+  let updatedPassword = "";
+  if (password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-      updatedPassword=hashedPassword
-  }else{
-    updatedPassword=password
+    updatedPassword = hashedPassword;
+  } else {
+    updatedPassword = password;
   }
-  
+
   const values = [
     userName || null,
     firstName || null,
@@ -234,27 +234,52 @@ const updateUserById = async (req, res) => {
   ];
   const query = `UPDATE users SET userName=COALESCE($1,userName),firstName=COALESCE($2,firstName), lastName=COALESCE($3,lastName),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),dateOfBirth=COALESCE($7,dateOfBirth),profileImage=COALESCE($8,profileImage),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
 
-try {
-  const result=await pool.query(query,values)
-  res.status(200).json({
-    success: true,
-    message:"Updated successfully",
-    result: result.rows,
-  });
-} catch (error) {
-  res.status(500).json({
-    success: false,
-    message: "Server Error!",
-    error,
-  });
-}
-
-
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      result: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
 };
 
+const SoftDeleteUserById = async (req, res) => {
+  const { id } = req.params;
+  const query = `UPDATE users SET is_deleted=1 where user_id=$1 RETURNING*`;
 
-const deleteUserById = /*async*/ (req, res) => {};
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        message: "Deleted successfully",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
 
+ user.js
+=======
+
+ main
 module.exports = {
   Register,
   login,
@@ -262,5 +287,5 @@ module.exports = {
   getUserById,
   getUserByUserName,
   updateUserById,
-  deleteUserById,
+  SoftDeleteUserById,
 };
