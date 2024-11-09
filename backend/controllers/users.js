@@ -1,7 +1,5 @@
 const { pool } = require("../models/db");
 
-
-
 const bcrypt = require("bcrypt");
 const saltRounds = parseInt(process.env.SALT);
 const jwt = require("jsonwebtoken");
@@ -19,10 +17,8 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
 
-  const role_id = 3; //! create admin then switch to user
+  const role_id = 2; //! create admin then switch to user
 
-  
-  
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (userName,
       firstName,
@@ -47,18 +43,15 @@ const Register = async (req, res) => {
     bio,
     role_id,
   ];
+
   try {
-   
-    
     const result = await pool.query(query, data);
-   
+
     res.status(200).json({
       success: true,
       message: "Account created successfully",
     });
   } catch (error) {
-    console.log(error);
-    
     res.status(409).json({
       success: false,
       message: "The email already exists",
@@ -66,9 +59,6 @@ const Register = async (req, res) => {
     });
   }
 };
-
-
-
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -248,12 +238,52 @@ const updateUserById = async (req, res) => {
       error,
     });
   }
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      result: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
 };
 
 const SoftDeleteUserById = async (req, res) => {
   const { id } = req.params;
-  const query = `UPDATE users SET is_deleted=1 where user_id=$1 RETURNING*`;
+  const query = `UPDATE users SET is_deleted=1 where user_id=$1`;
 
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        message: "Deleted successfully",
+      });
+    }else{
+      res.status(200).json({
+        success: true,
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
+
+
+const hardDeletedUserById=async(req,res)=>{
+  const {id}=req.params
+  const query=`DELETE FROM users where user_id=$1 RETURNING*`
   try {
     const result = await pool.query(query, [id]);
     if (result.rows.length) {
@@ -270,14 +300,11 @@ const SoftDeleteUserById = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Server Error!",
+      message: error.message,
       error,
     });
   }
-};
-
-
-
+}
 
 module.exports = {
   Register,
@@ -287,4 +314,5 @@ module.exports = {
   getUserByUserName,
   updateUserById,
   SoftDeleteUserById,
+  hardDeletedUserById
 };
