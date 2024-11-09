@@ -8,6 +8,7 @@ const {
   getUserByUserName,
   updateUserById,
   SoftDeleteUserById,
+  hardDeletedUserById
 } = require("../controllers/users");
 
 const authentication = require("../middleware/authentication");
@@ -19,7 +20,7 @@ usersRouter.get("/:id", getUserById);
 usersRouter.get("/", getUserByUserName);
 usersRouter.put("/:id", updateUserById);
 usersRouter.put("/sd/:id", SoftDeleteUserById);
-
+usersRouter.delete("/hd/:id", hardDeletedUserById);
 module.exports = usersRouter;
 
 /* 

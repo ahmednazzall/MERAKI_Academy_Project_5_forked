@@ -280,6 +280,32 @@ const SoftDeleteUserById = async (req, res) => {
   }
 };
 
+
+const hardDeletedUserById=async(req,res)=>{
+  const {id}=req.params
+  const query=`DELETE FROM users where user_id=$1 RETURNING*`
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        message: "Deleted successfully",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error,
+    });
+  }
+}
+
 module.exports = {
   Register,
   login,
@@ -288,4 +314,5 @@ module.exports = {
   getUserByUserName,
   updateUserById,
   SoftDeleteUserById,
+  hardDeletedUserById
 };
