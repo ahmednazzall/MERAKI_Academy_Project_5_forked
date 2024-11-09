@@ -19,6 +19,9 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
 
+  const role_id = 1; //! create admin then switch to user
+=======
+
   
 };
 
@@ -33,6 +36,7 @@ const getUserByUserName = /*async*/ (req, res) => {};
 const updateUserById = /*async*/ (req, res) => {};
 =======
   const role_id = "4"; //! create admin then switch to user
+
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (userName,
       firstName,
@@ -59,12 +63,17 @@ const updateUserById = /*async*/ (req, res) => {};
   ];
 
   try {
+   
+    
     const result = await pool.query(query, data);
+   
     res.status(200).json({
       success: true,
       message: "Account created successfully",
     });
   } catch (error) {
+    console.log(error);
+    
     res.status(409).json({
       success: false,
       message: "The email already exists",
