@@ -238,6 +238,20 @@ const updateUserById = async (req, res) => {
       error,
     });
   }
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      result: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
 };
 
 const SoftDeleteUserById = async (req, res) => {
