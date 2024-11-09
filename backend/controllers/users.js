@@ -1,7 +1,5 @@
 const { pool } = require("../models/db");
 
-
-
 const bcrypt = require("bcrypt");
 const saltRounds = parseInt(process.env.SALT);
 const jwt = require("jsonwebtoken");
@@ -19,10 +17,8 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
 
-  const role_id = 3; //! create admin then switch to user
+  const role_id = 2; //! create admin then switch to user
 
-  
-  
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (userName,
       firstName,
@@ -47,18 +43,15 @@ const Register = async (req, res) => {
     bio,
     role_id,
   ];
+
   try {
-   
-    
     const result = await pool.query(query, data);
-   
+
     res.status(200).json({
       success: true,
       message: "Account created successfully",
     });
   } catch (error) {
-    console.log(error);
-    
     res.status(409).json({
       success: false,
       message: "The email already exists",
@@ -66,9 +59,6 @@ const Register = async (req, res) => {
     });
   }
 };
-
-
-
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -212,14 +202,14 @@ const updateUserById = async (req, res) => {
     profileImage,
     bio,
   } = req.body;
-  let updatedPassword=""
-  if(password){
+  let updatedPassword = "";
+  if (password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-      updatedPassword=hashedPassword
-  }else{
-    updatedPassword=password
+    updatedPassword = hashedPassword;
+  } else {
+    updatedPassword = password;
   }
-  
+
   const values = [
     userName || null,
     firstName || null,
@@ -234,26 +224,47 @@ const updateUserById = async (req, res) => {
   ];
   const query = `UPDATE users SET userName=COALESCE($1,userName),firstName=COALESCE($2,firstName), lastName=COALESCE($3,lastName),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),dateOfBirth=COALESCE($7,dateOfBirth),profileImage=COALESCE($8,profileImage),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
 
-try {
-  const result=await pool.query(query,values)
-  res.status(200).json({
-    success: true,
-    message:"Updated successfully",
-    result: result.rows,
-  });
-} catch (error) {
-  res.status(500).json({
-    success: false,
-    message: "Server Error!",
-    error,
-  });
-}
-
-
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+      result: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
 };
 
+const SoftDeleteUserById = async (req, res) => {
+  const { id } = req.params;
+  const query = `UPDATE users SET is_deleted=1 where user_id=$1`;
 
-const deleteUserById = /*async*/ (req, res) => {};
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        message: "Deleted successfully",
+      });
+    }else{
+      res.status(200).json({
+        success: true,
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
 
 module.exports = {
   Register,
@@ -262,5 +273,5 @@ module.exports = {
   getUserById,
   getUserByUserName,
   updateUserById,
-  deleteUserById,
+  SoftDeleteUserById,
 };
