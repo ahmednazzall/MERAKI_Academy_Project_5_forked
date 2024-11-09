@@ -109,7 +109,30 @@ const login = async (req, res) => {
   }
 };
 
-const getAllUsers = /*async*/ (req, res) => {};
+const getAllUsers = async (req, res) => {
+  const query = `SELECT * FROM users`;
+  try {
+    const result = await pool.query(query);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        Users: result.rows,
+      });
+    }else{
+      res.status(200).json({
+        success: true,
+        message: "No users",
+      });
+    }
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
 
 const getUserById = /*async*/ (req, res) => {};
 
