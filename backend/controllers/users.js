@@ -134,7 +134,31 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserById = /*async*/ (req, res) => {};
+const getUserById = async (req, res) => {
+  const id = req.params.id;
+  const query = `SELECT * FROM users where user_id=$1`;
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        User: result.rows,
+      });
+    } else {
+      res.status(404).json({
+        success: true,
+        message: "User does not exist ",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+
+};
 
 const getUserByUserName = /*async*/ (req, res) => {};
 

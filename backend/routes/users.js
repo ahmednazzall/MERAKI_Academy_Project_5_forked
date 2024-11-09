@@ -14,6 +14,7 @@ const authorization = require('../middleware/authorization');
 usersRouter.post("/register",Register)
 usersRouter.post("/login",login)
 usersRouter.get("/all",getAllUsers)
+usersRouter.get("/:id",getUserById)
 module.exports = usersRouter;
 
 /* 
