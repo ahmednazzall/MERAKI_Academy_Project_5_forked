@@ -33,7 +33,7 @@ const getAllPosts = (req, res) => {
             
             res.status(200).json({
                 success: true,
-                message: "Vaild Move",
+                message: "Valid Move",
                 Posts: result.rows,
             });
         }
@@ -98,7 +98,7 @@ const getPostByUser = (req, res) => {
             
             res.status(200).json({
                 success: true,
-                message: "Vaild Move",
+                message: "Valid Move",
                 Post: result.rows,
             });
         }
@@ -113,7 +113,7 @@ const getPostByUser = (req, res) => {
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
