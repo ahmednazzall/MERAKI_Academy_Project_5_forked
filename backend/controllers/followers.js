@@ -1,4 +1,6 @@
+const { Socket } = require("socket.io");
 const { pool } = require("../models/db");
+
 
 //follow a user
 const followUser = async (req, res) => {
@@ -17,7 +19,7 @@ const followUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error following user:", error);
-    res.status(500).json({ message: "Error following user", error });
+    res.status(500).json({ message: "Error following user", error:error.message });
   }
 };
 

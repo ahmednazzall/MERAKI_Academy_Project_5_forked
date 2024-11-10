@@ -11,7 +11,6 @@ const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
 const followersRouter = require("./routes/followers");
 const socketAuth = require("./middleware/socketAuth");
-const messageHandler = require("./controllers/message");
 const ioConnection = require("./controllers/ioConnect");
 app.use(express.json());
 app.use("/roles", rolesRouter);

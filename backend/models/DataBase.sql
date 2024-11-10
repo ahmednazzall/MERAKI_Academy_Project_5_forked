@@ -25,7 +25,7 @@ CREATE TABLE users (
   password varchar(255),
   country varchar(255),
   dateOfBirth date,
-  profileImage text,
+  profileImage text default (),//default img
   bio varchar(255),
   role_id integer,
   is_deleted smallint default 0,
