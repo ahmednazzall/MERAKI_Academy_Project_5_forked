@@ -6,8 +6,9 @@ const followUser = async (req, res) => {
   const following_id  = req.params.user_id;
 
   try {
+    
     const result = await pool.query(
-      `INSERT INTO followers(follower_id,following_id,follow_at) VALUES($1,$2,NOW())RETURNING *`,
+      `INSERT INTO followers(follower_id,following_id,followed_at) VALUES($1,$2,NOW())RETURNING *`,
       [follower_id, following_id]
     );
     res.status(201).json({
@@ -26,7 +27,7 @@ const unfollowUser = async (req, res) => {
   const following_id  = req.params.user_id;
   try {
     const result = await pool.query(
-      `UPDATE followers SET is_deleted=1 WHERE follower_id=$1 AND foolowing_id=$2 AND is_deleted=0 RETURNING *`,
+      `UPDATE followers SET is_deleted=1 WHERE follower_id=$1 AND following_id=$2 AND is_deleted=0 RETURNING *`,
       [follower_id, following_id]
     );
     if (result.rowCount === 0) {
