@@ -146,7 +146,7 @@ const getUserById = async (req, res) => {
     if (result.rows.length) {
       res.status(200).json({
         success: true,
-        User: result.rows,
+        User: result.rows[0],
       });
     } else {
       res.status(404).json({
@@ -165,7 +165,9 @@ const getUserById = async (req, res) => {
 
 const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
+
   const query = `SELECT * FROM users where userName=$1 And is_deleted=0`;
+ main
 
   try {
     const result = await pool.query(query, [searchUser]);
