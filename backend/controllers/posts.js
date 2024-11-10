@@ -29,11 +29,10 @@ const getAllPosts = (req, res) => {
   pool
     .query(query, [0])
     .then((result) => {
-
       if (result.rows.length) {
         res.status(200).json({
           success: true,
-          message: "Vaild Move",
+          message: "Valid Move",
           Posts: result.rows,
         });
       } else {
@@ -46,7 +45,7 @@ const getAllPosts = (req, res) => {
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
@@ -61,7 +60,7 @@ const getPostById = (req, res) => {
       if (result.rows.length) {
         res.status(200).json({
           success: true,
-          message: "Vaild Move",
+          message: "Valid Move",
           Post: result.rows,
         });
       } else {
@@ -74,7 +73,7 @@ const getPostById = (req, res) => {
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
@@ -87,11 +86,10 @@ const getPostByUser = (req, res) => {
   pool
     .query(query, [userId, 0])
     .then((result) => {
-
       if (result.rows.length) {
         res.status(200).json({
           success: true,
-          message: "Vaild Move",
+          message: "Valid Move",
           Post: result.rows,
         });
       } else {
@@ -112,22 +110,22 @@ const getPostByUser = (req, res) => {
 
 const updatePostById = (req, res) => {
   const postId = req.params.post_id;
-  const { body } = req.body;
-  const query = `UPDATE posts SET body=COALESCE($1,body) , updated_at =COALESCE(now() , updated_at)  WHERE post_id = $2 AND is_deleted=$3 RETURNING *`;
-  const data = [body, postId, 0];
+  const { body, image, video } = req.body;
+  const values=[ body || null, image || null , video || null,postId]
+  const query = `UPDATE posts SET body=COALESCE($1,body) , updated_at =COALESCE(now() , updated_at) , image=COALESCE($2,image),video=COALESCE($3,video) WHERE post_id = $4 RETURNING *`;
   pool
-    .query(query, data)
+    .query(query, values)
     .then((result) => {
       res.status(200).json({
         success: true,
-        message: "Vaild Move",
+        message: "Valid Move",
         UpdatedPost: result.rows,
       });
     })
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
@@ -140,14 +138,14 @@ const SoftDeletePostById = (req, res) => {
     .then((result) => {
       res.status(200).json({
         success: true,
-        message: "Vaild Move",
+        message: "Valid Move",
         DeletedPost: result.rows,
       });
     })
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
@@ -160,14 +158,14 @@ const hardDeletedPostById = (req, res) => {
     .then((result) => {
       res.status(200).json({
         success: true,
-        message: "Vaild Move",
+        message: "Valid Move",
         DeletedPost: result.rows,
       });
     })
     .catch((error) => {
       res.status(500).json({
         success: false,
-        message: "InVaild Move",
+        message: "InValid Move",
         err: error,
       });
     });
