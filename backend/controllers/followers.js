@@ -1,4 +1,6 @@
+const { Socket } = require("socket.io");
 const { pool } = require("../models/db");
+
 
 //follow a user
 const followUser = async (req, res) => {
@@ -7,7 +9,7 @@ const followUser = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO followers(follower_id,following_id,follow_at) VALUES($1,$2,NOW())RETURNING *`,
+      `INSERT INTO followers(follower_id,following_id,followed_at) VALUES($1,$2,NOW())RETURNING *`,
       [follower_id, following_id]
     );
     res.status(201).json({
@@ -16,7 +18,7 @@ const followUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error following user:", error);
-    res.status(500).json({ message: "Error following user", error });
+    res.status(500).json({ message: "Error following user", error:error.message });
   }
 };
 
