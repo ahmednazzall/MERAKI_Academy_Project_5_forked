@@ -165,7 +165,7 @@ const getUserById = async (req, res) => {
 
 const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
-  const query = `SELECT * FROM users where userName=$1 is_deleted=0`;
+  const query = `SELECT * FROM users where userName=$1 And is_deleted=0`;
 
   try {
     const result = await pool.query(query, [searchUser]);
