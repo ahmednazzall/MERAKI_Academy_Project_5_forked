@@ -2,8 +2,11 @@ const { pool } = require("../models/db");
 
 //create new comment
 const createComment = async (req, res) => {
-  const { comment, commenter, post_id } = req.body;
+    const commenter =  req.token.userId
+    const post_id = req.params.post_id
+  const { comment } = req.body;
   try {
+
     const result = await pool.query(
       `INSERT INTO comments (comment,commenter,post_id) VALUES ($1,$2,$3) RETURNING *`,
       [comment, commenter, post_id]
@@ -20,31 +23,50 @@ const createComment = async (req, res) => {
 
 // Get all comments
 const getAllComments = async (req, res) => {
-  const { post_id } = req.body;
+  
   let query = `SELECT * FROM comments WHERE is_deleted=0`;
-  let params = [];
-
-  if (post_id) {
-    query += `And post_id=$1`;
-    params.push(post_id);
-  }
+ 
 
   try {
-    const result = await pool.query(query, params);
-    res.status(200).json({
-      message: "Comments retrieved successfully",
-      data: result.rows,
-    });
+    const result = await pool.query(query);
+    if (result.rows.length) {
+        
+        res.status(200).json({
+            message: "Comments retrieved successfully",
+            data: result.rows,
+        });
+    }
+    else{
+        res.status(404).json({
+            message: "No Comments On This Post",
+            
+        });
+    }
   } catch (error) {
     res
       .status(500)
       .json({ message: "Error retrieving comments", error: error.message });
   }
 };
-
+const getCommentByPostId = async (req, res) => {
+    const post_id  = req.params.post_id;
+    const query = `SELECT * FROM comments WHERE post_id = $1 AND is_deleted=0`
+    pool.query(query , [post_id])
+    .then((result)=>{
+        res.status(200).json({
+            message: "Comments retrieved successfully",
+            data: result.rows,
+          });
+    })
+    .catch((error)=>{
+        res
+      .status(500)
+      .json({ message: "Error retrieving comments", error: error.message });
+    })
+}
 // Get a specific comment by ID
 const getCommentById = async (req, res) => {
-  const { comment_id } = req.params;
+  const  comment_id  = req.params.comment_id;
   try {
     const result = await pool.query(
       `SELECT * FROM comments WHERE comment_id = $1 AND is_deleted = 0`,
@@ -63,9 +85,10 @@ const getCommentById = async (req, res) => {
 
 // Update a comment by ID
 const updateCommentById = async (req, res) => {
-  const { comment_id } = req.params;
+  const  comment_id  = req.params.comment_id;
   const { comment } = req.body;
   try {
+    
     const result = await pool.query(
       `UPDATE comments SET comment = $1, updated_at = NOW() WHERE comment_id = $2 AND is_deleted = 0 RETURNING *`,
       [comment, comment_id]
@@ -87,7 +110,7 @@ const updateCommentById = async (req, res) => {
 
 // Delete a comment by ID
 const deleteCommentById = async (req, res) => {
-  const { comment_id } = req.params;
+  const  comment_id  = req.params.comment_id;
   try {
     const result = await pool.query(
       `UPDATE comments SET is_deleted = 1 WHERE comment_id = $1 RETURNING *`,
@@ -109,6 +132,7 @@ const deleteCommentById = async (req, res) => {
 module.exports = {
   createComment,
   getAllComments,
+  getCommentByPostId,
   getCommentById,
   updateCommentById,
   deleteCommentById,
