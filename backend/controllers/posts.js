@@ -42,7 +42,6 @@ const getAllPosts = (req, res) => {
           message: "No Posts Yet",
         });
       }
- main
     })
     .catch((error) => {
       res.status(500).json({
@@ -101,7 +100,6 @@ const getPostByUser = (req, res) => {
           message: `The User With ID ${userId} Have No Posts Yet`,
         });
       }
- main
     })
     .catch((error) => {
       res.status(500).json({
