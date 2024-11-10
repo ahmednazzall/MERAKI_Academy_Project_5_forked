@@ -10,11 +10,11 @@ const followerRouter = express.Router();
 
 
 // Route to follow a user
-followerRouter.post("/follow",authentication,followUser)
+followerRouter.post("/:user_id/follow",authentication,followUser)
 
 
 // Route to unfollow a user
-followerRouter.post("/unfollow",authentication,unfollowUser)
+followerRouter.post("/:user_id/unfollow",authentication,unfollowUser)
 
 
 // Route to get followers of a user

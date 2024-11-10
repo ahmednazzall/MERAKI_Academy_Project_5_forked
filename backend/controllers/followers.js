@@ -2,7 +2,8 @@ const { pool } = require("../models/db");
 
 //follow a user
 const followUser = async (req, res) => {
-  const { follower_id, following_id } = req.body;
+  const follower_id = req.token.userId
+  const following_id  = req.params.user_id;
 
   try {
     const result = await pool.query(
@@ -21,7 +22,8 @@ const followUser = async (req, res) => {
 
 // Unfollow a user
 const unfollowUser = async (req, res) => {
-  const { follower_id, following_id } = req.body;
+  const follower_id = req.token.userId
+  const following_id  = req.params.user_id;
   try {
     const result = await pool.query(
       `UPDATE followers SET is_deleted=1 WHERE follower_id=$1 AND foolowing_id=$2 AND is_deleted=0 RETURNING *`,
@@ -42,7 +44,7 @@ const unfollowUser = async (req, res) => {
 
 // Get list of followers for a user
 const getFollowers = async (req, res) => {
-  const { user_id } = req.params;
+  const  user_id  = req.params.user_id;
   try {
     const result = await pool.query(
       `SELECT * FROM followers WHERE following_id=$1 AND is_deleted=0`,
@@ -63,7 +65,7 @@ const getFollowers = async (req, res) => {
 
 // Get list of users a user is following
 const getFollowing = async (req, res) => {
-  const { user_id } = req.params;
+  const  user_id = req.params.user_id;
   try {
     const result = await pool.query(
       `SELECT * FROM followers WHERE follower_id=$1 AND is_deleted=0`,
