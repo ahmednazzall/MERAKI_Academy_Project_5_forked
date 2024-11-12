@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import { act } from "react"
+
 
 export const sliceUser=createSlice({
     name:"User",
