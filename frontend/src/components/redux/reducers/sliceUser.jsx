@@ -9,6 +9,9 @@ export const sliceUser=createSlice({
     reducers:{
         register :(state,action)=>{
             state.users.push(action.payload)
+        } ,
+        login : (state,action)=>{
+            //comment
         }
     }
 })
