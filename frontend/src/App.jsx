@@ -6,13 +6,9 @@ function App() {
   
 
   return (
-    <>
-
-    {/* test */}
-
-     App
-
-    </>
+   <div>
+    <Login />
+   </div>
   )
 }
 
