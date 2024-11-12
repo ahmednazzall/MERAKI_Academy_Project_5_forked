@@ -18,10 +18,10 @@ export const postsSlice = createSlice({
         state.posts[state.posts.indexOf(postById[0])] = action.payload.newPost
        },
       deletePost : (state,action)=>{
-        const postById = state.posts.filter((elem , i)=>{
+        const newPosts = state.posts.filter((elem , i)=>{
             return elem.post_id !== action.payload.post_id
         })
-        state.posts = postById
+        state.posts = newPosts
        }
     }
 })
