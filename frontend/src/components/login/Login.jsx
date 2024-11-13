@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./login.css";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { login,SetUserId } from "../redux/reducers/auth"; 
 import {LoadingOutlined} from '@ant-design/icons'
+
+import { login, SetUserId } from "../redux/reducers/auth";
+
 import axios from "axios";
 
 const Login = () => {
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
-  const [userInfo, setUserInfo] = useState({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({
+    email: localStorage.getItem("email") || null,
+    password: localStorage.getItem("password" || null),
+  });
   const [message, setMessage] = useState("");
-
+  const [rememberMe, setRememberMe] = useState(true);
   const handleLogin = () => {
+
 
     axios
       .post("http://localhost:5000/users/login", userInfo)
@@ -29,11 +37,49 @@ const Login = () => {
         console.log(err);
         setMessage(err.response.data.message)
       });
+
+    if (Object.values(userInfo)[0]!== null && Object.values(userInfo)[1]!== null) {      
+      axios
+        .post("http://localhost:5000/users/login", userInfo)
+        .then((res) => {
+          dispatch(login(res.data.token));
+          dispatch(SetUserId(res.data.userId));
+          setMessage(res.data.message);
+          if (rememberMe) {
+            localStorage.setItem("email", userInfo.email);
+            localStorage.setItem("password", userInfo.password);
+          } else {
+            localStorage.removeItem("email");
+            localStorage.removeItem("password");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setMessage(err.response.data.message);
+        });
+    } else {
+      console.log("empty obj", userInfo);
+      setMessage("please fill the required fields");
+    }
   };
-  const isLoggedIn=useSelector(auth=>{
-    return auth.auth.isLoggedIn
-  })
-  
+  const isLoggedIn = useSelector((auth) => {
+    return auth.auth.isLoggedIn;
+  });
+
+  const handleRemMe = (e) => {
+    if (e.target.checked) {
+      setRememberMe(true);
+    } else {
+      setRememberMe(false);
+    }
+
+  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/home");
+    }
+  });
+
   return (
     <div>
       <br></br>
@@ -44,6 +90,7 @@ const Login = () => {
         onChange={(e) => {
           setUserInfo({ ...userInfo, email: e.target.value });
         }}
+        defaultValue={localStorage.getItem("email") || ""}
       />
       <br></br>
       <input
@@ -53,15 +100,25 @@ const Login = () => {
         onChange={(e) => {
           setUserInfo({ ...userInfo, password: e.target.value });
         }}
+        defaultValue={localStorage.getItem("password") || ""}
       />
       <br></br>
+      <a href="/forget">forget password? </a>
+      <br></br>
+      <label>
+        <input type="checkbox" onChange={handleRemMe} defaultChecked="true" />
+        Remember me
+      </label>
+      <br></br>
       <button onClick={handleLogin}>login</button>
+      <br></br>
+
       {isLoggedIn
         ?  message&&
          <LoadingOutlined></LoadingOutlined> 
        
         : message && <p className="failed">{message}</p>}
-        
+
     </div>
   );
 };
