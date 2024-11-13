@@ -30,7 +30,7 @@ const Register = async (req, res) => {
       profileImage,
       bio,
        role_id) 
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`;
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING*`;
   const data = [
     userName,
     firstName,
@@ -50,6 +50,7 @@ const Register = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Account created successfully",
+      result:result.rows[0]
     });
   } catch (error) {
     res.status(409).json({
