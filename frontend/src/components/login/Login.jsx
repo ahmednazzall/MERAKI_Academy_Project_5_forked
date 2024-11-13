@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { login,SetUserId } from "../redux/reducers/auth"; 
 import {LoadingOutlined} from '@ant-design/icons'
 
-import { login, SetUserId } from "../redux/reducers/auth";
+
 
 import axios from "axios";
 
@@ -22,29 +22,18 @@ const Login = () => {
   const handleLogin = () => {
 
 
-    axios
-      .post("http://localhost:5000/users/login", userInfo)
-      .then((res) => {
-        dispatch(login(res.data.token))
-        dispatch(SetUserId(res.data.userId))
-        setMessage(res.data.message)
-        setTimeout(() => {
-          navigate("/home")
-          
-        }, 1000);
-      })
-      .catch((err) => {
-        console.log(err);
-        setMessage(err.response.data.message)
-      });
-
-    if (Object.values(userInfo)[0]!== null && Object.values(userInfo)[1]!== null) {      
+   
+    if (Object.values(userInfo)[0]!== null && Object.values(userInfo)[1]!== null) {    
+     
+        
       axios
         .post("http://localhost:5000/users/login", userInfo)
         .then((res) => {
+        
+          
           dispatch(login(res.data.token));
           dispatch(SetUserId(res.data.userId));
-          setMessage(res.data.message);
+          setMessage(res?.data.message);
           if (rememberMe) {
             localStorage.setItem("email", userInfo.email);
             localStorage.setItem("password", userInfo.password);
@@ -55,7 +44,7 @@ const Login = () => {
         })
         .catch((err) => {
           console.log(err);
-          setMessage(err.response.data.message);
+          setMessage(err.response?.data?.message);
         });
     } else {
       console.log("empty obj", userInfo);
@@ -65,18 +54,19 @@ const Login = () => {
   const isLoggedIn = useSelector((auth) => {
     return auth.auth.isLoggedIn;
   });
-
   const handleRemMe = (e) => {
     if (e.target.checked) {
       setRememberMe(true);
     } else {
       setRememberMe(false);
     }
-
   };
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/home");
+      setTimeout(() => {
+        navigate("/home");
+        
+      }, 1000);
     }
   });
 
