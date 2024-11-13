@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
+
 export const followerSlice = createSlice({
     name :"followers",
     initialState :{
