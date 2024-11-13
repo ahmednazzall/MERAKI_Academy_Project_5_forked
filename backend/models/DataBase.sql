@@ -21,11 +21,11 @@ CREATE TABLE users (
   userName varchar (255),
   firstName varchar (255),
   lastName varchar(255),
-  email varchar(255),
+  email varchar(255) UNIQUE,
   password varchar(255),
   country varchar(255),
   dateOfBirth date,
-  profileImage text default (),//default img
+  profileImage text default 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQinMNf_Hjwf-aKigY4eASZhdz3F1WxJBIbuQ&s',
   bio varchar(255),
   role_id integer,
   is_deleted smallint default 0,
