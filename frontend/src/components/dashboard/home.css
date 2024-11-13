@@ -1,0 +1,12 @@
+.MoltaqaIcon{
+    border-radius: 20%;
+    width: 10%;
+
+
+}
+.LogoutButton{
+    position: relative;
+    left: 10%;
+    bottom: 10vh;
+    /*just for test */
+}
