@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const cores=require("cors")
 const PORT = process.env.PORT;
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
@@ -13,6 +14,7 @@ const followersRouter = require("./routes/followers");
 const socketAuth = require("./middleware/socketAuth");
 const ioConnection = require("./controllers/ioConnect");
 app.use(express.json());
+app.use(cores())
 app.use("/roles", rolesRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
