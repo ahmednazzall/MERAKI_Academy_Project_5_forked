@@ -35,7 +35,7 @@ export const sliceUser = createSlice({
       return users;
     },
   },
-});
+);
 
 export const {
   register,
@@ -46,5 +46,6 @@ export const {
   updateUserById,
   SoftDeleteUserById,
 } = sliceUser.actions;
+
 
 export default sliceUser.reducer;
