@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import "./register.css";
-import axios from "axios"
+import axios from "axios";
 import { register } from "../redux/reducers/sliceUser";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
-  const handleRegister = () => {
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(false);
+  const dispatch = useDispatch();
+  const handleRegister = (e) => {
+    e.preventDefault();
+
     axios
       .post("http://localhost:5000/users/register", userInfo)
       .then((result) => {
         // console.log(result.data.result);
-        useDispatch(register(result.data.result))
+        dispatch(register(result.data.result));
+        setStatus(true);
+        setMessage(result.data.message);
       })
       .catch((err) => {
-        console.log(err);
+        setStatus(false);
+        setMessage(err.response.data.message);
       });
   };
+
   return (
     <div>
       <input
@@ -80,7 +89,19 @@ const Register = () => {
         }}
       />
       <br></br>
-      <button onClick={handleRegister}>submit</button>
+
+      <p>
+        Already have an account? <a href="/">login</a>{" "}
+      </p>
+      <br></br>
+      <button onClick={handleRegister}>Sign Up</button>
+      <br></br>
+
+      <p>Or by</p>
+      <a href="#">Google link</a>
+      {status
+        ? message && <p className="success">{message}</p>
+        : message && <p className="failed">{message}</p>}
     </div>
   );
 };

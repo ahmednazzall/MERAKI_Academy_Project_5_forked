@@ -1,30 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 import { act } from "react";
-
-
 
 export const sliceUser = createSlice({
   name: "User",
   initialState: {
-    users: [],
-
-
-    token: localStorage.getItem("token") || null,
-    isLoggedIn: localStorage.getItem("token") ? true : false,
-
+    users: []
   },
   reducers: {
     register: (state, action) => {
       state.users.push(action.payload);
-
-    },
-    login: (state, action) => {
-      state.token = action.payload;
-      state.isLoggedIn = true;
-      localStorage.setItem("token", action.payload);
     },
     getAllUsers: (state, action) => {
       state.users = action.payload;
@@ -32,20 +17,6 @@ export const sliceUser = createSlice({
     getUserById: (state, action) => {
       state.users = action.payload;
     },
-
-    },
-    login: (state, action) => {
-      state.token = action.payload;
-      state.isLoggedIn = true;
-      localStorage.setItem("token", action.payload);
-    },
-    getAllUsers: (state, action) => {
-      state.users = action.payload;
-    },
-    getUserById: (state, action) => {
-      state.users = action.payload;
-    },
-
     getUserByUserName: (state, action) => {
       state.users = action.payload;
     },
@@ -65,7 +36,6 @@ export const sliceUser = createSlice({
     },
   },
 );
-
 
 export const {
   register,
