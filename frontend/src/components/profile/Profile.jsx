@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./ProfilePage.css";
+import "./Profile.css";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
