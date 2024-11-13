@@ -64,7 +64,7 @@ export const sliceUser = createSlice({
       return users;
     },
   },
-});
+);
 
 
 export const {
@@ -77,6 +77,5 @@ export const {
   SoftDeleteUserById,
 } = sliceUser.actions;
 
-export const { register } = sliceUser.actions;
 
 export default sliceUser.reducer;
