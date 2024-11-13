@@ -35,7 +35,7 @@ export const sliceUser = createSlice({
       return users;
     },
   },
-);
+});
 
 export const {
   register,

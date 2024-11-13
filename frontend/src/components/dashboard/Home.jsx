@@ -3,8 +3,13 @@ import './home.css'
 import { useDispatch,useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Logout } from '../redux/reducers/auth'
+import axios from 'axios'
+import Posts from '../posts/Posts'
+
 
 const Home = () => {
+  
+  const token = localStorage.getItem('token')
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const handleLogout=()=>{
@@ -13,8 +18,10 @@ const Home = () => {
   const isLoggedIn=useSelector(auth=>{
     return auth.auth.isLoggedIn
   })
-
+  
 useEffect(() => {
+  
+  
   if(!isLoggedIn){
     navigate("/")
   }
@@ -23,7 +30,9 @@ useEffect(() => {
 
   return (
     <div>
-      <button onClick={handleLogout}>logout</button>
+      <img src='../../Preview.png'  className='MoltaqaIcon'/>
+      <button onClick={handleLogout} className='LogoutButton'>logout</button>
+      <Posts />
     </div>
   )
 }

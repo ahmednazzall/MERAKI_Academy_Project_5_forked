@@ -3,6 +3,7 @@ import "./login.css";
 import { useDispatch,useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login,SetUserId } from "../redux/reducers/auth"; 
+import {LoadingOutlined} from '@ant-design/icons'
 import axios from "axios";
 
 const Login = () => {
@@ -12,13 +13,17 @@ const Login = () => {
   const [message, setMessage] = useState("");
 
   const handleLogin = () => {
+
     axios
       .post("http://localhost:5000/users/login", userInfo)
       .then((res) => {
         dispatch(login(res.data.token))
         dispatch(SetUserId(res.data.userId))
         setMessage(res.data.message)
-        navigate("/home")
+        setTimeout(() => {
+          navigate("/home")
+          
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -52,8 +57,11 @@ const Login = () => {
       <br></br>
       <button onClick={handleLogin}>login</button>
       {isLoggedIn
-        ? message && <p className="success">{message}</p>
+        ?  message&&
+         <LoadingOutlined></LoadingOutlined> 
+       
         : message && <p className="failed">{message}</p>}
+        
     </div>
   );
 };
