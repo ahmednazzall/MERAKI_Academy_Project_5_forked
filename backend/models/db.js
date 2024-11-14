@@ -122,7 +122,9 @@ CREATE TABLE notifications (
     console.log(error);
   }
 };
-//createDataBase()
+
+// createDataBase()
+
 
 module.exports = { pool };
 
