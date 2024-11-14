@@ -6,6 +6,7 @@ import './comments.css'
 import { useNavigate } from "react-router-dom";
 
 const Comments = () => {
+  const [newComment , setnewComment] = useState('')
   const posts = useSelector((reducer)=>{
     return reducer.posts.posts
   })
@@ -59,6 +60,27 @@ const Comments = () => {
           <p>{comment.comment}</p>
         </div>)
       })}
+      <div>
+        <input placeholder="Add Comment" onChange={(e)=>{
+          setnewComment(e.target.value)
+        }}/>
+        <button
+        onClick={(e)=>{
+          axios
+          .post(`http://localhost:5000/comments/${postId}`,{
+            comment : newComment
+          },{
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          }).then((res)=>{
+
+          }).catch((err)=>{
+            console.log(err);
+            
+          })
+        }}>Comment</button>
+      </div>
     </div>
   )
 }
