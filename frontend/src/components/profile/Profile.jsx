@@ -29,7 +29,7 @@ const ProfilePage = () => {
   const user = useSelector((state) => {
     return state.users.users;
   });
-
+  
   return (
     <div className="profile-container">
       <div className="sidebar">Sidebar</div>
