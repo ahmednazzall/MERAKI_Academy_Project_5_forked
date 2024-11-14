@@ -1,13 +1,10 @@
-
 import React, { useState, useEffect } from "react";
 import "./login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { login,SetUserId } from "../redux/reducers/auth"; 
-import {LoadingOutlined} from '@ant-design/icons'
-
-
+import { login, SetUserId } from "../redux/reducers/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import axios from "axios";
 
@@ -21,17 +18,13 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const handleLogin = () => {
-
-
-   
-    if (Object.values(userInfo)[0]!== null && Object.values(userInfo)[1]!== null) {    
-     
-        
+    if (
+      Object.values(userInfo)[0] !== null &&
+      Object.values(userInfo)[1] !== null
+    ) {
       axios
         .post("http://localhost:5000/users/login", userInfo)
         .then((res) => {
-        
-          
           dispatch(login(res.data.token));
           dispatch(SetUserId(res.data.userId));
           setMessage(res?.data.message);
@@ -66,7 +59,6 @@ const Login = () => {
     if (isLoggedIn) {
       setTimeout(() => {
         navigate("/home");
-        
       }, 1000);
     }
   });
@@ -105,14 +97,10 @@ const Login = () => {
       <br></br>
 
       {isLoggedIn
-        ?  message&&
-         <LoadingOutlined></LoadingOutlined> 
-       
+        ? message && <LoadingOutlined></LoadingOutlined>
         : message && <p className="failed">{message}</p>}
-
     </div>
   );
 };
 
 export default Login;
-

@@ -6,40 +6,37 @@ const jwt = require("jsonwebtoken");
 
 const Register = async (req, res) => {
   const {
-    userName,
-    firstName,
-    lastName,
+    user_name,
+    first_name,
+    last_name,
     email,
     password,
     country,
-    dateOfBirth,
-    profileImage,
+    birth_date,
     bio,
   } = req.body;
 
   const role_id = 2; //! create admin then switch to user
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const query = `INSERT INTO users (userName,
-      firstName,
-      lastName,
+  const query = `INSERT INTO users (user_name,
+      first_name,
+      last_name,
       email,
       password,
       country,
-      dateOfBirth,
-      profileImage,
+      birth_date,
       bio,
        role_id) 
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING*`;
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING*`;
   const data = [
-    userName,
-    firstName,
-    lastName,
+    user_name,
+    first_name,
+    last_name,
     email.toLowerCase(),
     hashedPassword,
     country,
-    dateOfBirth,
-    profileImage,
+    birth_date,
     bio,
     role_id,
   ];
@@ -141,7 +138,9 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   const id = req.params.id;
-  const query = `SELECT * FROM users where user_id=$1 AND is_deleted=0`;
+  const query = `SELECT * FROM users u 
+  LEFT JOIN followers f ON u.user_id=f.follower_id
+  where u.user_id=$1 AND u.is_deleted=0`;
   try {
     const result = await pool.query(query, [id]);
     if (result.rows.length) {

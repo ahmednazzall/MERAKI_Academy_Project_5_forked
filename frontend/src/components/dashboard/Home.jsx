@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import './home.css'
 import { useDispatch,useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate,Outlet } from 'react-router-dom'
 import { Logout } from '../redux/reducers/auth'
 import axios from 'axios'
 import Posts from '../posts/Posts'
@@ -30,9 +30,20 @@ useEffect(() => {
 
   return (
     <div>
+      <br></br>
       <img src='../../Preview.png'  className='MoltaqaIcon'/>
+      <br></br>
+      <Link to={"/home/profile"}>profile</Link>
+      <br></br>
+      <Link to={"/home/"}>Feeds</Link>
+      
+      <br></br>
+     
       <button onClick={handleLogout} className='LogoutButton'>logout</button>
-      <Posts />
+      <br></br>
+     
+      {/* <Posts /> */}
+      <Outlet/>
     </div>
   )
 }

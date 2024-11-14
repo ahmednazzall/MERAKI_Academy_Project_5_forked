@@ -36,7 +36,7 @@ const getAllPosts = (req, res) => {
           Posts: result.rows,
         });
       } else {
-        res.status(404).json({
+        res.status(200).json({
           success: false,
           message: "No Posts Yet",
         });

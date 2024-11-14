@@ -15,12 +15,12 @@ const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
 usersRouter.post("/login", login);
-usersRouter.get("/all", getAllUsers);
-usersRouter.get("/:id", getUserById);
-usersRouter.get("/", getUserByUserName);
-usersRouter.put("/:id", updateUserById);
-usersRouter.put("/sd/:id", SoftDeleteUserById);
-usersRouter.delete("/hd/:id", hardDeletedUserById);
+usersRouter.get("/all",authentication ,getAllUsers);
+usersRouter.get("/:id",authentication, getUserById);
+usersRouter.get("/",authentication, getUserByUserName);
+usersRouter.put("/:id",authentication, updateUserById);
+usersRouter.put("/sd/:id", authentication,SoftDeleteUserById);
+usersRouter.delete("/hd/:id",authentication, hardDeletedUserById);
 module.exports = usersRouter;
 
 /* 

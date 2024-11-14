@@ -12,9 +12,12 @@ export const sliceUser = createSlice({
       state.users.push(action.payload);
     },
     getAllUsers: (state, action) => {
+      
+      
       state.users = action.payload;
     },
     getUserById: (state, action) => {
+      console.log(action);
       state.users = action.payload;
     },
     getUserByUserName: (state, action) => {
@@ -40,7 +43,6 @@ export const sliceUser = createSlice({
 
 export const {
   register,
-  login,
   getAllUsers,
   getUserById,
   getUserByUserName,
