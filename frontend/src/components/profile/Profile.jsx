@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Profile.css";
-
+import axios from "axios";
+import { getUserById } from "../redux/reducers/sliceUser";
 const ProfilePage = () => {
-  const user = useSelector((state) => state.user);
+  const userId = localStorage.getItem("user_id");
+
   const dispatch = useDispatch();
+  const token=useSelector((state=>{
+    return state.auth.token
+  }))
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/${userId}`,{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      })
+      .then((result) => {
+        console.log(result);
+        dispatch(getUserById(result.data.User));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const user = useSelector((state) => {
+    return state.users.users;
+  });
 
   return (
     <div className="profile-container">
@@ -13,35 +37,35 @@ const ProfilePage = () => {
         <div className="profile-header">
           <div className="profile-picture">
             <img
-              src={user.profilePicture || "default-profile.png"}
+              src={user?.profile_image || "default-profile.png"}
               alt="Profile"
             />
           </div>
           <div className="profile-info">
-            <h2>{user.name}</h2>
-            <p>@{user.userName}</p>
+            <h2>{user?.first_name}</h2>
+            <p>@{user?.user_name}</p>
           </div>
           <button className="edit-profile-button">Edit Profile</button>
         </div>
 
-        <div className="bio-section">{user.bio}</div>
+        <div className="bio-section">{user?.bio}</div>
 
         <div className="details-section">
-          <div className="detail-item">Location: {user.location}</div>
-          <div className="detail-item">Joined: {user.createdAt}</div>
-          <div className="detail-item">Followers: {user.followers}</div>
-          <div className="detail-item">Following: {user.following}</div>
+          <div className="detail-item">Location: {user?.country}</div>
+          <div className="detail-item">Joined: {user?.created_at}</div>
+          <div className="detail-item">Followers: {user?.followers || 0}</div>
+          <div className="detail-item">Following: {user?.following || 0}</div>
         </div>
 
         <div className="posts-section">
           <h3>User Posts</h3>
-          <div className="posts-list">
-            {user.posts.map((post, index) => (
+          {/*      <div className="posts-list">
+            {user?.posts.map((post, index) => (
               <div key={index} className="post-item">
                 {post}
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -32,7 +32,7 @@ const Register = () => {
         name="firstName"
         placeholder="insert your first name"
         onChange={(e) => {
-          setUserInfo({ ...userInfo, firstName: e.target.value });
+          setUserInfo({ ...userInfo, first_name: e.target.value });
         }}
       />
       <br></br>
@@ -41,7 +41,7 @@ const Register = () => {
         name="lastName"
         placeholder="insert your last name "
         onChange={(e) => {
-          setUserInfo({ ...userInfo, lastName: e.target.value });
+          setUserInfo({ ...userInfo, last_name: e.target.value });
         }}
       />
       <br></br>
@@ -50,7 +50,7 @@ const Register = () => {
         name="userName"
         placeholder="insert your user name"
         onChange={(e) => {
-          setUserInfo({ ...userInfo, userName: e.target.value });
+          setUserInfo({ ...userInfo, user_name: e.target.value });
         }}
       />
       <br></br>
@@ -76,7 +76,7 @@ const Register = () => {
         type="date"
         name="dateOfBirth"
         onChange={(e) => {
-          setUserInfo({ ...userInfo, dateOfBirth: e.target.value });
+          setUserInfo({ ...userInfo, birth_date: e.target.value });
         }}
       />
       <br></br>

@@ -6,6 +6,7 @@ import Register from "./components/register/Register";
 import Home from "./components/dashboard/Home";
 import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
+import Posts from "./components/posts/Posts";
 
 function App() {
   let element = useRoutes([
@@ -27,12 +28,18 @@ function App() {
       element: <Register />,
     },
     {
-      path: "home",
+      path: "/home",
       element: <Home />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
+      children: [
+        {
+          index: true,
+          element: <Posts />,
+        },
+        {
+          path: "/home/profile",
+          element: <Profile />,
+        },
+      ],
     },
   ]);
 
