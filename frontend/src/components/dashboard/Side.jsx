@@ -4,9 +4,17 @@ import "./sideStyle.css"
 const Side = () => {
   return (
     <div>
-      <Link to={"/home/profile"}>profile</Link>
+      <Link to={"/home/profile"} onClick={()=>{
+        if (localStorage.getItem('postId')) {
+          localStorage.removeItem('postId')
+        }
+      }}>profile</Link>
       <br></br>
-      <Link to={"/home/"}>Feeds</Link>
+      <Link to={"/home/"} onClick={()=>{
+        if (localStorage.getItem('postId')) {
+          localStorage.removeItem('postId')
+        }
+      }}>Feeds</Link>
      
     </div>
   );
