@@ -7,6 +7,7 @@ const Side = () => {
       <Link to={"/home/profile"}>profile</Link>
       <br></br>
       <Link to={"/home/"}>Feeds</Link>
+     
     </div>
   );
 };

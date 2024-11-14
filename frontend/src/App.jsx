@@ -7,7 +7,7 @@ import Home from "./components/dashboard/Home";
 import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
-
+import Comments from "./components/comments/Comments";
 function App() {
   let element = useRoutes([
     {
@@ -32,13 +32,18 @@ function App() {
       element: <Home />,
       children: [
         {
-          index: true,
+         path:'/home',
           element: <Posts />,
         },
         {
           path: "/home/profile",
           element: <Profile />,
         },
+
+        {
+          path:'/home/comments',
+          element:<Comments/>
+        }
       ],
     },
   ]);
