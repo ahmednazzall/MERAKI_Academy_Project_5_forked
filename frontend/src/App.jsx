@@ -30,16 +30,16 @@ function App() {
     {
       path: "/home",
       element: <Home />,
-      children:[
+      children: [
         {
-          index:true,
-         element:<Posts />
+          index: true,
+          element: <Posts />,
         },
         {
           path: "/home/profile",
           element: <Profile />,
         },
-      ]
+      ],
     },
   ]);
 
