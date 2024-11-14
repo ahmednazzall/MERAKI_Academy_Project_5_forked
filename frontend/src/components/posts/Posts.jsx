@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 import "./posts.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../redux/reducers/slicePosts";
 const Posts = () => {
+  const [addPost , setaddPost] = useState({})
+  const postInfo = {image : addPost.image||null , body : addPost.body|| null ,video:addPost.video||null  }
+
+  
+  
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
 
@@ -28,8 +33,17 @@ const Posts = () => {
   return (
     <div>
       <div className="createPost">
-        <input placeholder="whats on your mind?" />
-        <button type="submit">post</button>
+        <input placeholder="whats on your mind?" onChange={(e)=>{
+          setaddPost({...addPost , body: e.target.value})
+        }}/>
+        <button type="submit" onClick={(e)=>{
+          axios
+          .post('http://localhost:5000/posts',postInfo,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          })
+        }}>post</button>
       </div>
       {posts?.map((elem, ind) => {
         return (
