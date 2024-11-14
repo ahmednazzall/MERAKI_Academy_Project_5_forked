@@ -7,7 +7,7 @@ import Home from "./components/dashboard/Home";
 import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
-
+import { useState } from "react";
 import Comments from "./components/comments/Comments";
 
 function App() {
