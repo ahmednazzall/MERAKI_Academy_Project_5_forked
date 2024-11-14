@@ -43,7 +43,7 @@ CREATE TABLE users (
                 birth_date date,
                   profile_image text DEFAULT 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQinMNf_Hjwf-aKigY4eASZhdz3F1WxJBIbuQ&s',
                     bio varchar(255),
-                      created_at timestamp default now(),
+                      created_at DATE default now(),
                         role_id integer,
                           is_deleted smallint default 0,
                             foreign KEY(role_id) references roles(role_id),
