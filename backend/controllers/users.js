@@ -139,8 +139,8 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   const id = req.params.id;
   const query = `SELECT * FROM users u 
-  LEFT JOIN followers f ON u.user_id=f.follower_id
-  where u.user_id=$1 AND u.is_deleted=0`;
+left JOIN followers f ON u.user_id=f.follower_id
+WHERE u.user_id=$1 AND u.is_deleted=0`;
   try {
     const result = await pool.query(query, [id]);
     if (result.rows.length) {
@@ -158,7 +158,7 @@ const getUserById = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Server Error!",
-      error,
+      error:error.message,
     });
   }
 };

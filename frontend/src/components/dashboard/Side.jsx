@@ -10,11 +10,17 @@ const Side = () => {
         }
       }}>profile</Link>
       <br></br>
+
+      <Link to={"/home/"}>Feeds</Link>
+      <br></br>
+      <Link to={"/home/explore"}>#Explore</Link>
+
       <Link to={"/home/"} onClick={()=>{
         if (localStorage.getItem('postId')) {
           localStorage.removeItem('postId')
         }
       }}>Feeds</Link>
+
      
     </div>
   );

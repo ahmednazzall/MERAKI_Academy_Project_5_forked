@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Profile.css";
 import axios from "axios";
 import { getUserById } from "../redux/reducers/sliceUser";
 const ProfilePage = () => {
   const userId = localStorage.getItem("user_id");
-
+const [following, setFollowing] = useState()
+const [follower, setFollower] = useState()
+const [user, setUser] = useState()
   const dispatch = useDispatch();
   const token=useSelector((state=>{
     return state.auth.token
@@ -18,18 +20,46 @@ const ProfilePage = () => {
         }
       })
       .then((result) => {
-        console.log(result);
-        dispatch(getUserById(result.data.User));
+        // console.log(result);
+        setUser(result.data.User)
+        // dispatch(getUserById(result.data.User));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const user = useSelector((state) => {
-    return state.users.users;
-  });
+  // const user = useSelector((state) => {
+  //   return state.users.users;
+  // });
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/followers/${userId}/following`,{
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+    .then((result) => {
+      // console.log(result);
+      setFollowing(result.data.data.length)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    
+    axios.get(`http://localhost:5000/followers/${userId}/follower`)
+    .then((result) => {            
+      setFollower(result.data.result.length)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    
+  }, [])
   
+// console.log(follower);
+
+
   return (
     <div className="profile-container">
       <div className="sidebar">Sidebar</div>
@@ -53,8 +83,8 @@ const ProfilePage = () => {
         <div className="details-section">
           <div className="detail-item">Location: {user?.country}</div>
           <div className="detail-item">Joined: {user?.created_at}</div>
-          <div className="detail-item">Followers: {user?.followers || 0}</div>
-          <div className="detail-item">Following: {user?.following || 0}</div>
+          <div className="detail-item">Followers: {follower || 0}</div>
+          <div className="detail-item">Following: {following || 0}</div>
         </div>
 
         <div className="posts-section">
