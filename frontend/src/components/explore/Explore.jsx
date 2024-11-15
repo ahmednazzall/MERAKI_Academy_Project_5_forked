@@ -1,12 +1,13 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../redux/reducers/sliceUser";
 
 const Explore = () => {
   const dispatch = useDispatch();
-
+  const [following, setFollowing] = useState([]);
+  const [follower, setFollower] = useState([]);
   const { token, userId } = useSelector((state) => {
     return state.auth;
   });
@@ -14,9 +15,7 @@ const Explore = () => {
   const users = useSelector((state) => {
     return state.users.users;
   });
-  
 
- 
   useEffect(() => {
     axios
       .get("http://localhost:5000/users/all", {
@@ -30,19 +29,47 @@ const Explore = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [users]);
+  }, []);
 
-
-
-//   console.log(users);
-  
-  const handFollow = (id) => {
+  useEffect(() => {
     axios
-      .post(`http://localhost:5000/followers/${id}/follow`,{}, {
+      .get(`http://localhost:5000/followers/${userId}/following`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+      .then((result) => {
+        let found = result.data.data.map((elem) => {
+          return elem.following_id;
+        });
+
+        setFollowing(found);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // axios
+    //   .get(`http://localhost:5000/followers/${userId}/follower`)
+    //   .then((result) => {
+    //     // setFollower(result.data.result.length);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }, [following]);
+
+  const handFollow = (id) => {
+    axios
+      .post(
+        `http://localhost:5000/followers/${id}/follow`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
       })
@@ -57,11 +84,12 @@ const Explore = () => {
       {users?.map((user) => {
         return (
           <div key={user.user_id}>
-            {user.user_id != userId && (
+            {user.user_id != userId && !following.includes(user.user_id) && (
               <div>
                 <img src={user.profile_image} />
-                <p>{`${user.first_name} ${user.last_name}`}</p>
+                <p>{`${user.user_name} ${user.last_name}`}</p>
                 <p>@{user.user_name}</p>
+
                 <button
                   onClick={() => {
                     handFollow(user.user_id);
