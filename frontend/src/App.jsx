@@ -8,6 +8,7 @@ import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
 import Comments from "./components/comments/Comments";
+import Explore from "./components/explore/explore";
 function App() {
   let element = useRoutes([
     {
@@ -32,18 +33,21 @@ function App() {
       element: <Home />,
       children: [
         {
-         path:'/home',
+          path: "/home",
           element: <Posts />,
         },
         {
           path: "/home/profile",
           element: <Profile />,
         },
-
         {
-          path:'/home/comments',
-          element:<Comments/>
-        }
+          path: "/home/comments",
+          element: <Comments />,
+        },
+        {
+          path: "/home/explore",
+          element: <Explore />,
+        },
       ],
     },
   ]);

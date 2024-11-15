@@ -12,12 +12,9 @@ export const sliceUser = createSlice({
       state.users.push(action.payload);
     },
     getAllUsers: (state, action) => {
-      
-      
       state.users = action.payload;
     },
     getUserById: (state, action) => {
-      console.log(action);
       state.users = action.payload;
     },
     getUserByUserName: (state, action) => {
