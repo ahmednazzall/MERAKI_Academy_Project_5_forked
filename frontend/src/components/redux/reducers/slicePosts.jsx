@@ -6,7 +6,7 @@ export const postsSlice = createSlice({
     },
     reducers :{
         setPosts : (state , action) =>{
-            state.posts = action.payload ;
+            state.posts = action.payload.reverse() ;
         } ,
         createPost : (state,action)=>{
             state.posts.push(action.payload)

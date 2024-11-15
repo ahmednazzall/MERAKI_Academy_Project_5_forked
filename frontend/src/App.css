@@ -1,0 +1,48 @@
+:root {
+  --background-light: #ffffff;
+  --background-dark: #181818;
+  --background-blue: #e0f7fa;
+  --background-green: #e8f5e9;
+
+  --text-light: #000000;
+  --text-dark: #ffffff;
+  --text-blue: #0277bd;
+  --text-green: #2e7d32;
+}
+
+.app.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.app.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.app.blue {
+  background-color: var(--background-blue);
+  color: var(--text-blue);
+}
+
+.app.green {
+  background-color: var(--background-green);
+  color: var(--text-green);
+}
+
+.app-header {
+  padding: 10px;
+  text-align: center;
+  background-color: #333;
+  color: white;
+}
+
+button {
+  padding: 8px;
+  margin: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
