@@ -1,46 +1,65 @@
-
-
-.MoltaqaIcon{
-    border-radius: 20%;
-    width: 10%;
-
-
+.MoltaqaIcon {
+  border-radius: 20%;
+  width: 10%;
 }
-.LogoutButton{
-    position: relative;
-    left: 10%;
-    bottom: 10vh;
-    /*just for test */
+.LogoutButton {
+  position: relative;
+  left: 10%;
+  bottom: 10vh;
+  /*just for test */
 }
-.parent{
-    display: grid;
-    grid-template-rows: 0.2fr 1fr;
-    padding: 20px;
+.parent {
+  display: grid;
+  grid-template-rows: 0.2fr 1fr;
+  padding: 20px;
 }
-.nav{
-    display: flex;
-    align-items: baseline;
-    justify-content: space-around;
-
+.nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
 }
-.org{
-    display: grid;
-    grid-template-columns: 0.5fr 3fr 0.5fr;
-    gap: 10px;
+.org {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 0.5fr;
+  gap: 10px;
 }
-.sidebar{
-    border: 1px solid gray;
+.sidebar {
+  border: 1px solid gray;
 }
-.content{
-    display: flex;
-    justify-content: center;
-    border: 1px solid gray;
-    width: 100%;
+.content {
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
+  width: 100%;
 }
-.messages{
-    display: flex;
-    justify-content: center;
-    border: 1px solid gray;
-
+.messages {
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
 }
 
+/* .events {
+  border-left: 1px solid #ccc;
+  padding: 20px;
+}
+
+.birthdays-section {
+  margin-top: 20px;
+}
+
+.birthday-card {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.birthday-card h3 {
+  margin: 0;
+  color: #333;
+}
+
+.birthday-card p {
+  color: #888;
+} */
