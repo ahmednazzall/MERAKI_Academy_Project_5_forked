@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Comments from "../comments/Comments";
 import { setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
-
+import SearchBar from "../search/Search";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { FloatButton } from 'antd';
 const Posts = () => {
   const [addPost , setaddPost] = useState({})
   const postInfo = {image : addPost.image||null , body : addPost.body|| null ,video:addPost.video||null  }
@@ -36,6 +40,12 @@ const Posts = () => {
   }, [posts]);
   return (
     <div>
+       <Input placeholder="Search" allowClear='true' className='search-input' onPressEnter={(e)=>{
+      navigate('./search')
+    }}/>
+    <SearchOutlined className="Search-Button" onClick={()=>{
+      navigate('./search')
+    }}/>
       <div className="createPost">
         <input placeholder="whats on your mind?" onChange={(e)=>{
           setaddPost({...addPost , body: e.target.value})
@@ -73,6 +83,11 @@ const Posts = () => {
           </div>
         );
       })}
+      <FloatButton className="float-Button"
+      icon={<QuestionCircleOutlined />}
+      type="primary"
+     
+    />
     </div>
   );
 };

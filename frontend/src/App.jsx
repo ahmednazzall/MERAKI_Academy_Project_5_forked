@@ -11,6 +11,7 @@ import { useState } from "react";
 import Comments from "./components/comments/Comments";
 
 import Explore from "./components/explore/explore";
+import SearchBar from "./components/search/Search";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -58,10 +59,14 @@ function App() {
           path: "/home/explore",
           element: <Explore />,
         },
+        {
+          path: "/home/search",
+          element: <SearchBar />,
+        },
       ],
     },
   ]);
-  console.log(element);
+ 
 
   return (
     <div className={`app ${theme}`}>
