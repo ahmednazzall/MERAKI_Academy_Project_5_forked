@@ -16,6 +16,7 @@ import SearchBar from "./components/search/Search";
 
 import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
+import SavedPost from "./components/saved Post/savedPost";
 
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
       element: <Home />,
       children: [
         {
-          path: "/home",
+          path: "",
           element: <Posts />,
         },
         {
@@ -77,6 +78,10 @@ function App() {
         {
           path: "/home/search",
           element: <SearchBar />,
+        },
+        {
+          path: "bookmark",
+          element: <SavedPost/>,
         },
       ],
     },

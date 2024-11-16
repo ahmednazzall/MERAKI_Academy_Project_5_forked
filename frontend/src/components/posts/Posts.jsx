@@ -38,6 +38,25 @@ const Posts = () => {
         console.log(err);
       });
   }, [posts]);
+
+  const handleAddSave=(id)=>{
+    axios.post(`http://localhost:5000/posts/add&save/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then(res=>{
+      console.log(res);
+      
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
+  }
   return (
     <div>
        <Input placeholder="Search" allowClear='true' className='search-input' onPressEnter={(e)=>{
@@ -71,7 +90,7 @@ const Posts = () => {
               <h3>{elem.user_name}</h3>
               <p>{elem.body}</p>
               <div className="btn">
-                <button>share</button>
+                <button onClick={()=>{handleAddSave(elem.post_id)}}>save post</button>
                 <button onClick={(e)=>{
                   localStorage.setItem('postId',elem.post_id)
                   navigate('./comments')
