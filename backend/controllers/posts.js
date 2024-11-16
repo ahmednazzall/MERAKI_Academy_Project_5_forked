@@ -186,6 +186,8 @@ const savePost = async (req, res) => {
       saved_posts: result.rows,
     });
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({
       success: false,
       message: "InValid Move",
@@ -196,18 +198,22 @@ const savePost = async (req, res) => {
 
 const getSavedPots = async (req, res) => {
   const user_id = req.token.userId;
-  const query = `select s.saved_at,s.saved_post_id,u.first_name,u.last_name,u.user_name,u.profile_image,po.body,po.image,po.video,po.created_at from savedPost s
+  const query = `select * from savedPost s
 inner join posts po on s.post_id=po.post_id 
 inner join users u on po.user_id=u.user_id
 where s.user_id=$1 `;
   try {
     const result = await pool.query(query, [user_id]);
+    
+    
     res.status(200).json({
       success: true,
       message: "successfully retrieved",
       saved_posts: result.rows,
     });
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({
       success: false,
       message: "InValid Move",
