@@ -90,12 +90,14 @@ const Login = () => {
       <br></br>
       <label>
         <input type="checkbox" onChange={handleRemMe} defaultChecked="true" />
-        Remember me
+       <span> Remember me </span> 
       </label>
       <br></br>
       <button onClick={handleLogin}>login</button>
       <br></br>
-
+          <h4>Don't have an account? <a href="/register">Sign Up</a></h4>
+          <p>Or</p>
+          <a href="#">login by google</a>
       {isLoggedIn
         ? message && <LoadingOutlined></LoadingOutlined>
         : message && <p className="failed">{message}</p>}

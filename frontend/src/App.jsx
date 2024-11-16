@@ -11,6 +11,7 @@ import { useState } from "react";
 import Comments from "./components/comments/Comments";
 
 import Explore from "./components/explore/explore";
+import Followers from "./components/profile/Followers";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -48,7 +49,11 @@ function App() {
         },
         {
           path: "/home/profile",
-          element: <Profile />,
+          element: <Profile />
+        },
+        {
+          path:"/home/profile/f/:id",
+          element:<Followers/>
         },
         {
           path: "/home/comments",
@@ -61,7 +66,7 @@ function App() {
       ],
     },
   ]);
-  console.log(element);
+  // console.log(element);
 
   return (
     <div className={`app ${theme}`}>
@@ -69,6 +74,7 @@ function App() {
         <label htmlFor="theme-select">Choose Theme: </label>
         <select id="theme-select" value={theme} onChange={toggleTheme}>
           {themes.map((t) => (
+     
             <option key={t} value={t}>
               {t.charAt(0).toUpperCase() + t.slice(1)}
             </option>

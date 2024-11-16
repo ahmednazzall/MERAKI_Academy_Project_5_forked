@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../redux/reducers/sliceUser";
@@ -7,7 +7,6 @@ import { getAllUsers } from "../redux/reducers/sliceUser";
 const Explore = () => {
   const dispatch = useDispatch();
   const [following, setFollowing] = useState([]);
-  const [follower, setFollower] = useState([]);
   const { token, userId } = useSelector((state) => {
     return state.auth;
   });
@@ -48,15 +47,6 @@ const Explore = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    // axios
-    //   .get(`http://localhost:5000/followers/${userId}/follower`)
-    //   .then((result) => {
-    //     // setFollower(result.data.result.length);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, [following]);
 
   const handFollow = (id) => {
