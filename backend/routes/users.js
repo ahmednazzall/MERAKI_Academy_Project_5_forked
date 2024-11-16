@@ -8,7 +8,8 @@ const {
   getUserByUserName,
   updateUserById,
   SoftDeleteUserById,
-  hardDeletedUserById
+  hardDeletedUserById,
+  ResetPassByEmail
 } = require("../controllers/users");
 
 const authentication = require("../middleware/authentication");
@@ -22,7 +23,8 @@ usersRouter.put("/:id",authentication, updateUserById);
 usersRouter.put("/sd/:id", authentication,SoftDeleteUserById);
 usersRouter.delete("/hd/:id",authentication, hardDeletedUserById);
 module.exports = usersRouter;
-
+//reset password
+usersRouter.put("/login/re/", ResetPassByEmail);
 /* 
 register/Admin
 {

@@ -28,7 +28,7 @@ const Side = () => {
       }}>Feeds</Link>
 
 
-      <Link
+      {/* <Link
         to={"/home/"}
         onClick={() => {
           if (localStorage.getItem("postId")) {
@@ -37,7 +37,7 @@ const Side = () => {
         }}
       >
         Feeds
-      </Link>
+      </Link> */}
       <br></br>
 
 

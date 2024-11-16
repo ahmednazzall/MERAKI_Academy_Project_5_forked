@@ -15,6 +15,7 @@ import Explore from "./components/explore/explore";
 import SearchBar from "./components/search/Search";
 
 import Followers from "./components/profile/Followers";
+import NextStep from "./components/forgetPassword/NextStep";
 
 
 function App() {
@@ -34,8 +35,14 @@ function App() {
           element: <Login />,
         },
         {
-          path: "/forget",
+          path: "forget",
           element: <Forget />,
+          children:[
+            {
+              path:"claim/",
+              element:<NextStep/>
+            }
+          ]
         },
       ],
     },
