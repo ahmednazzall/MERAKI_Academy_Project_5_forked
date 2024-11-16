@@ -99,7 +99,7 @@ const ProfilePage = () => {
           {following ? (
             <div className="detail-item">
               Following:
-              <Link to={`/home/profile/f/${1}`}>{following || 0}</Link>
+              <Link to={`/home/profile/f/${1}`}>{following}</Link>
             </div>
           ) : (
             <div className="detail-item">Following:0</div>

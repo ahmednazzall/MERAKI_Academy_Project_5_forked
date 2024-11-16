@@ -47,7 +47,7 @@ const Register = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Account created successfully",
-      result:result.rows[0]
+      result: result.rows[0],
     });
   } catch (error) {
     res.status(409).json({
@@ -158,7 +158,7 @@ WHERE u.user_id=$1 AND u.is_deleted=0`;
     res.status(500).json({
       success: false,
       message: "Server Error!",
-      error:error.message,
+      error: error.message,
     });
   }
 };
@@ -167,7 +167,7 @@ const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
 
   const query = `SELECT * FROM users where userName=$1 And is_deleted=0`;
- main
+  main;
 
   try {
     const result = await pool.query(query, [searchUser]);
@@ -194,14 +194,14 @@ const getUserByUserName = async (req, res) => {
 const updateUserById = async (req, res) => {
   const { id } = req.params;
   const {
-    userName,
-    firstName,
-    lastName,
+    user_name,
+    first_name,
+    last_name,
     email,
     password,
     country,
-    dateOfBirth,
-    profileImage,
+    birth_date,
+    profile_image,
     bio,
   } = req.body;
   let updatedPassword = "";
@@ -213,18 +213,19 @@ const updateUserById = async (req, res) => {
   }
 
   const values = [
-    userName || null,
-    firstName || null,
-    lastName || null,
+    user_name || null,
+    first_name || null,
+    last_name || null,
     email || null,
     updatedPassword || null,
     country || null,
-    dateOfBirth || null,
-    profileImage || null,
+    birth_date || null,
+    profile_image || null,
     bio || null,
     id,
   ];
-  const query = `UPDATE users SET userName=COALESCE($1,userName),firstName=COALESCE($2,firstName), lastName=COALESCE($3,lastName),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),dateOfBirth=COALESCE($7,dateOfBirth),profileImage=COALESCE($8,profileImage),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
+
+  const query = `UPDATE users SET user_name=COALESCE($1,user_name),first_name=COALESCE($2,first_name), last_name=COALESCE($3,last_name),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),birth_date=COALESCE($7,birth_date),profile_image=COALESCE($8,profile_image),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
 
   try {
     const result = await pool.query(query, values);
@@ -240,11 +241,22 @@ const updateUserById = async (req, res) => {
       error,
     });
   }
+};
+const ResetPassByEmail = async (req, res) => {
+  const { email } = req.query;
+  const { password } = req.body;
+// console.log(email);
+// console.log(password);
+
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  const query = `UPDATE users SET password=$1 where email=$2 RETURNING*`;
+  const values = [hashedPassword, email];
   try {
     const result = await pool.query(query, values);
     res.status(200).json({
       success: true,
-      message: "Updated successfully",
+      message: "Password reset successfully",
       result: result.rows,
     });
   } catch (error) {
@@ -267,7 +279,7 @@ const SoftDeleteUserById = async (req, res) => {
         success: true,
         message: "Deleted successfully",
       });
-    }else{
+    } else {
       res.status(200).json({
         success: true,
         message: "User Not Found",
@@ -282,10 +294,9 @@ const SoftDeleteUserById = async (req, res) => {
   }
 };
 
-
-const hardDeletedUserById=async(req,res)=>{
-  const {id}=req.params
-  const query=`DELETE FROM users where user_id=$1 RETURNING*`
+const hardDeletedUserById = async (req, res) => {
+  const { id } = req.params;
+  const query = `DELETE FROM users where user_id=$1 RETURNING*`;
   try {
     const result = await pool.query(query, [id]);
     if (result.rows.length) {
@@ -306,7 +317,7 @@ const hardDeletedUserById=async(req,res)=>{
       error,
     });
   }
-}
+};
 
 module.exports = {
   Register,
@@ -316,5 +327,6 @@ module.exports = {
   getUserByUserName,
   updateUserById,
   SoftDeleteUserById,
-  hardDeletedUserById
+  hardDeletedUserById,
+  ResetPassByEmail,
 };
