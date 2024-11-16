@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+
 import { setComments } from "../redux/reducers/sliceComments";
 import "./comments.css";
 import { useNavigate } from "react-router-dom";
 
 const Comments = () => {
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingText, setEditingText] = useState("");
   const [newComment, setNewComment] = useState("");
   const posts = useSelector((reducer) => {
     return reducer.posts.posts;
