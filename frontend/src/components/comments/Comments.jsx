@@ -7,10 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const Comments = () => {
   const [newComment, setNewComment] = useState("");
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editingText, setEditingText] = useState("");
-  const [menuOpen, setMenuOpen] = useState(null);
-
   const posts = useSelector((reducer) => {
     return reducer.posts.posts;
   });
@@ -105,10 +101,6 @@ const Comments = () => {
       });
   };
 
-  const toggleMenu = (commentId) => {
-    setMenuOpen(menuOpen === commentId ? null : commentId);
-  };
-
   return (
     <div>
       <div>
@@ -121,48 +113,33 @@ const Comments = () => {
         </div>
       </div>
       {comments?.map((comment) => (
-        <div key={comment.comment_id} className="comment-container">
-          <p>{comment.comment}</p>
-          <div className="menu-container">
-            <button
-              className="menu-button"
-              onClick={() => toggleMenu(comment.comment_id)}
-            >
-              •••
-            </button>
-            {menuOpen === comment.comment_id && (
-              <div className="dropdown-menu">
-                <button
-                  onClick={() => {
-                    setEditingCommentId(comment.comment_id);
-                    setEditingText(comment.comment);
-                    setMenuOpen(null);
-                  }}
-                >
-                  تعديل
-                </button>
-                <button
-                  onClick={() => {
-                    handleDeleteComment(comment.comment_id);
-                    setMenuOpen(null);
-                  }}
-                >
-                  حذف
-                </button>
-              </div>
-            )}
-          </div>
-          {editingCommentId === comment.comment_id && (
-            <div className="edit-container">
+        <div key={comment.comment_id}>
+          {editingCommentId === comment.comment_id ? (
+            <div>
               <input
                 value={editingText}
                 onChange={(e) => setEditingText(e.target.value)}
                 placeholder="Edit your comment"
               />
               <button onClick={() => handleEditComment(comment.comment_id)}>
-                حفظ
+                Save
               </button>
-              <button onClick={() => setEditingCommentId(null)}>إلغاء</button>
+              <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+            </div>
+          ) : (
+            <div>
+              <p>{comment.comment}</p>
+              <button
+                onClick={() => {
+                  setEditingCommentId(comment.comment_id);
+                  setEditingText(comment.comment);
+                }}
+              >
+                Edit
+              </button>
+              <button onClick={() => handleDeleteComment(comment.comment_id)}>
+                Delete
+              </button>
             </div>
           )}
         </div>
