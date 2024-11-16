@@ -74,7 +74,7 @@ const Explore = () => {
       {users?.map((user) => {
         return (
           <div key={user.user_id}>
-            {user.user_id != userId && !following.includes(user.user_id) && (
+            {(user.user_id != userId && !following.includes(user.user_id)) && (
               <div>
                 <img src={user.profile_image} />
                 <p>{`${user.user_name} ${user.last_name}`}</p>

@@ -111,7 +111,7 @@ const getPostByUser = (req, res) => {
 const updatePostById = (req, res) => {
   const postId = req.params.post_id;
   const { body, image, video } = req.body;
-  const values=[ body || null, image || null , video || null,postId]
+  const values = [body || null, image || null, video || null, postId];
   const query = `UPDATE posts SET body=COALESCE($1,body) , updated_at =COALESCE(now() , updated_at) , image=COALESCE($2,image),video=COALESCE($3,video) WHERE post_id = $4 RETURNING *`;
   pool
     .query(query, values)
@@ -170,6 +170,52 @@ const hardDeletedPostById = (req, res) => {
       });
     });
 };
+
+const savePost = async (req, res) => {
+  const user_id = req.token.userId;
+  const post_id = req.params.id;
+
+  const values = [user_id, post_id];
+  const query = `INSERT INTO savedPost (user_id,post_id)
+  VALUES ($1,$2) RETURNING*`;
+  try {
+    const result = await pool.query(query, values);
+    res.status(200).json({
+      success: true,
+      message: "successfully added",
+      saved_posts: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "InValid Move",
+      err: error.message,
+    });
+  }
+};
+
+const getSavedPots = async (req, res) => {
+  const user_id = req.token.userId;
+  const query = `select s.saved_at,s.saved_post_id,u.first_name,u.last_name,u.user_name,u.profile_image,po.body,po.image,po.video,po.created_at from savedPost s
+inner join posts po on s.post_id=po.post_id 
+inner join users u on po.user_id=u.user_id
+where s.user_id=$1 `;
+  try {
+    const result = await pool.query(query, [user_id]);
+    res.status(200).json({
+      success: true,
+      message: "successfully retrieved",
+      saved_posts: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "InValid Move",
+      err: error,
+    });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
@@ -178,4 +224,6 @@ module.exports = {
   updatePostById,
   SoftDeletePostById,
   hardDeletedPostById,
+  getSavedPots,
+  savePost,
 };
