@@ -16,6 +16,7 @@ const Comments = () => {
   const post = posts.filter((elem, ind) => {
     return elem.post_id == postId;
   });
+  
   const dispatch = useDispatch();
   const comments = useSelector((reducers) => {
     return reducers.comments.comments;
@@ -27,7 +28,7 @@ const Comments = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
+      .then((res) => {        
         dispatch(setComments(res.data.data));
       })
       .catch((err) => {
@@ -48,25 +49,27 @@ const Comments = () => {
           },
         }
       )
-      .then((res) => {})
+      .then((res) => {
+      })
       .catch((err) => {
         console.log(err);
       });
   };
+  
   return (
     <div>
       <div>
-        {post[0].profile_image ? (
-          <img src={post[0].profile_image} className="profPic" />
+        {post[0]?.profile_image ? (
+          <img src={post[0]?.profile_image} className="profPic" />
         ) : null}
         <div className="innerPost">
-          <h3>{post[0].user_name}</h3>
-          <p>{post[0].body}</p>
+          <h3>{post[0]?.user_name}</h3>
+          <p>{post[0]?.body}</p>
         </div>
       </div>
       {comments?.map((comment, ind) => {
         return (
-          <div>
+          <div key={ind}>
             <p>{comment.comment}</p>
           </div>
         );
