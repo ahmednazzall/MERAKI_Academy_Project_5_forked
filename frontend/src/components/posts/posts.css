@@ -22,3 +22,27 @@
 input {
   width: 50vh;
 }
+.Search-Button{
+    position: relative;
+    left: 100%;
+    bottom: 4.6vh;
+    cursor: pointer;
+    height: 4.5vh;
+    padding: 0 1%;
+    border: solid 0.5px;
+    border-radius: 0 10px 10px 0  ;
+}
+.Search-Button:hover{
+    transform: scale(1.1);
+    transition:0.4s;
+    color: blue;
+    left: 100.3%;
+}
+.search-input{
+    border-radius: unset ;
+    border-radius: 10px 0 0 10px;
+}
+.float-Button{
+ margin: 0 13% 0 0;
+ 
+}
