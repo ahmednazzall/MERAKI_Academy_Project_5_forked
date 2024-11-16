@@ -4,7 +4,8 @@ const {
   unfollowUser,
   getFollowers,
   getFollowingCount,
-  getFollowing
+  getFollowing,
+  removeFollower
 } = require("../controllers/followers");
 const authentication = require("../middleware/authentication");
 const followerRouter = express.Router();
@@ -16,6 +17,7 @@ followerRouter.post("/:user_id/follow",authentication,followUser)
 
 // Route to unfollow a user
 followerRouter.post("/:user_id/unfollow",authentication,unfollowUser)
+followerRouter.post("/:user_id/trimFollower",authentication,removeFollower)
 
 
 // Route to get followers of a user
