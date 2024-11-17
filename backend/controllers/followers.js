@@ -147,7 +147,7 @@ const getPostsByFollowers = (req,res)=>{
   users ON followers.following_id = users.user_id
   OR followers.follower_id = users.user_id
   INNER JOIN posts ON users.user_id = posts.user_id
-  WHERE followers.follower_id = $1 AND followers.is_deleted=$2 
+  WHERE followers.follower_id = $1 AND posts.is_deleted=$2 
   `
   pool.query(query,[follower_id,0]).then((result)=>{
         res.status(200).json({ message: "No following users found ", data: result.rows });
