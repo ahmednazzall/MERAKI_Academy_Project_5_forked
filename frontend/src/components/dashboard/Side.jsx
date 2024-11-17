@@ -18,11 +18,16 @@ const Side = () => {
       <Link to={"/home/explore"}>#Explore</Link>
       <br></br>
 
-      <Link to={"/home/"} onClick={()=>{
-        if (localStorage.getItem('postId')) {
-          localStorage.removeItem('postId')
-        }
-      }}>Feeds</Link>
+      <Link
+        to={"/home/"}
+        onClick={() => {
+          if (localStorage.getItem("postId")) {
+            localStorage.removeItem("postId");
+          }
+        }}
+      >
+        Feeds
+      </Link>
       <br></br>
       <Link
         to={"/home/events"}
@@ -35,7 +40,7 @@ const Side = () => {
         Events
       </Link>
       <br></br>
-      <Link to={'./bookmark'}>Bookmarks</Link>
+      <Link to={"./bookmark"}>Bookmarks</Link>
     </div>
   );
 };

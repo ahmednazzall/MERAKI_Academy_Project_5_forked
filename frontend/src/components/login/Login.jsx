@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { login, SetUserId } from "../redux/reducers/auth";
-import { LoadingOutlined } from "@ant-design/icons";
 
 import axios from "axios";
 
