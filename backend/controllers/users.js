@@ -166,8 +166,8 @@ WHERE u.user_id=$1 AND u.is_deleted=0`;
 const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
 
-  const query = `SELECT * FROM users where userName=$1 And is_deleted=0`;
-  main;
+
+  const query = `SELECT * FROM users where user_name=$1 And is_deleted=0`;
 
   try {
     const result = await pool.query(query, [searchUser]);
@@ -177,12 +177,16 @@ const getUserByUserName = async (req, res) => {
         User: result.rows,
       });
     } else {
+      
+      
       res.status(404).json({
         success: false,
         message: "User does not exist ",
       });
     }
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({
       success: false,
       message: "Server Error!",

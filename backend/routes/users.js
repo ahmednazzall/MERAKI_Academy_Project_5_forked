@@ -18,7 +18,7 @@ usersRouter.post("/register", Register);
 usersRouter.post("/login", login);
 usersRouter.get("/all",authentication ,getAllUsers);
 usersRouter.get("/:id",authentication, getUserById);
-usersRouter.get("/",authentication, getUserByUserName);
+usersRouter.get("/userName/search",authentication, getUserByUserName);
 usersRouter.put("/:id",authentication, updateUserById);
 usersRouter.put("/sd/:id", authentication,SoftDeleteUserById);
 usersRouter.delete("/hd/:id",authentication, hardDeletedUserById);
