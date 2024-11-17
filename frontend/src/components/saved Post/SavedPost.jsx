@@ -25,6 +25,7 @@ const SavedPost = () => {
         console.log(err);
       });
   }, []);
+  
   posts?.map((elem)=>{
     if (filteredPosts.length) {
       filteredPosts.map((e)=>{
