@@ -98,6 +98,8 @@ const Posts = () => {
         </Button>
       </div>
 
+
+
       {/* Display Posts */}
       <div className="posts-section">
         {posts?.map((post, index) => (
@@ -118,12 +120,14 @@ const Posts = () => {
                   type="link"
                   onClick={() => {
                     localStorage.setItem("postId", post.post_id);
-                    navigate("./comments");
+           
+                     navigate(`./comments/${elem.post_id}`)
                   }}
                 >
                   Comments
                 </Button>
                 <Button type="link">Like</Button>
+
               </div>
             </div>
           </div>
