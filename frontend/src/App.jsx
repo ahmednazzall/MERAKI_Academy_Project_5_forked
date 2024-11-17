@@ -18,7 +18,6 @@ import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
 import SavedPost from "./components/saved Post/savedPost";
 
-
 function App() {
   const themes = ["light", "dark", "blue", "green"];
   const [theme, setTheme] = useState("light");
@@ -38,12 +37,12 @@ function App() {
         {
           path: "forget",
           element: <Forget />,
-          children:[
+          children: [
             {
-              path:"claim/",
-              element:<NextStep/>
-            }
-          ]
+              path: "claim/",
+              element: <NextStep />,
+            },
+          ],
         },
       ],
     },
@@ -61,11 +60,11 @@ function App() {
         },
         {
           path: "/home/profile",
-          element: <Profile />
+          element: <Profile />,
         },
         {
-          path:"/home/profile/f/:id",
-          element:<Followers/>
+          path: "/home/profile/f/:id",
+          element: <Followers />,
         },
         {
           path: "/home/comments",
@@ -81,12 +80,11 @@ function App() {
         },
         {
           path: "bookmark",
-          element: <SavedPost/>,
+          element: <SavedPost />,
         },
       ],
     },
   ]);
-
 
   return (
     <div className={`app ${theme}`}>
@@ -94,7 +92,6 @@ function App() {
         <label htmlFor="theme-select">Choose Theme: </label>
         <select id="theme-select" value={theme} onChange={toggleTheme}>
           {themes.map((t) => (
-     
             <option key={t} value={t}>
               {t.charAt(0).toUpperCase() + t.slice(1)}
             </option>
