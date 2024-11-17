@@ -125,7 +125,6 @@ CREATE TABLE notifications (
 
 // createDataBase()
 
-
 module.exports = { pool };
 
 /* 
@@ -134,8 +133,8 @@ CREATE TABLE savedPost (
  id serial Primary key,
  post_id integer ,
  user_id integer,
+saved_at timestamp default now(),
  foreign key (post_id) references posts.post_id,
  foreign key (user_id) references users.user_id
 )
 */
-

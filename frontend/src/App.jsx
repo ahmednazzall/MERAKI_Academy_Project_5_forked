@@ -68,7 +68,7 @@ function App() {
           element:<Followers/>
         },
         {
-          path: "/home/comments",
+          path: "/home/comments/:id",
           element: <Comments />,
         },
         {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setComments } from "../redux/reducers/sliceComments";
 import "./comments.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 const Comments = () => {
   const user_id = localStorage.getItem('user_id')
@@ -14,12 +14,20 @@ const Comments = () => {
   const posts = useSelector((reducer) => {
     return reducer.posts.posts;
   });
+
+  // console.log(posts);
+  
+  const postIdByParams=useParams().id
+  
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const postId = localStorage.getItem("postId") || null;
+  const postId = localStorage.getItem("postId") || postIdByParams;
+  // console.log(postId);
+  
   const post = posts.filter((elem, ind) => {
     return elem.post_id == postId;
   });
+// console.log(post);
 
   const dispatch = useDispatch();
   const comments = useSelector((reducers) => {

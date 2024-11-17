@@ -96,7 +96,7 @@ const Posts = () => {
                 <button onClick={()=>{handleAddSave(elem.post_id)}}>save post</button>
                 <button onClick={(e)=>{
                   localStorage.setItem('postId',elem.post_id)
-                  navigate('./comments')
+                  navigate(`./comments/${elem.post_id}`)
                 }}>comments</button>
                 <button>like</button>
                 
