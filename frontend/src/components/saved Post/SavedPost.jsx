@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 const SavedPost = () => {
   const [posts, setPosts] = useState([]);
+  const filteredPosts = []
+  
   const token = useSelector((state) => {
     return state.auth.token;
   });
@@ -23,11 +25,21 @@ const SavedPost = () => {
         console.log(err);
       });
   }, []);
-
+  posts?.map((elem)=>{
+    if (filteredPosts.length) {
+      filteredPosts.map((e)=>{
+        if (elem.post_id !== e.post_id) {
+          filteredPosts.push(elem)
+        }
+      })
+    }else{
+      filteredPosts.push(elem)
+    }
+  })
   return (
     <div >
       <h2>Saved Posts</h2>
-      {posts.length ? posts?.map((post) => {
+      {filteredPosts.length ? filteredPosts.map((post) => {
         return (
           <div key={post.saved_post_id}>
             <img src={post?.profile_image} />@{post.user_name}

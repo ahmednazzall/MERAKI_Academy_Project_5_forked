@@ -175,11 +175,14 @@ const savePost = async (req, res) => {
   const user_id = req.token.userId;
   const post_id = req.params.id;
 
+  
   const values = [user_id, post_id];
   const query = `INSERT INTO savedPost (user_id,post_id)
   VALUES ($1,$2) RETURNING*`;
   try {
     const result = await pool.query(query, values);
+   
+    
     res.status(200).json({
       success: true,
       message: "successfully added",
