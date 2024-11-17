@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { login, SetUserId } from "../redux/reducers/auth";
-
 import axios from "axios";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Login = () => {
   const dispatch = useDispatch();

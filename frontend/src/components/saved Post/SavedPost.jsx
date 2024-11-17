@@ -19,6 +19,7 @@ const SavedPost = () => {
         },
       })
       .then((result) => {
+        
         setPosts(result.data.saved_posts);
       })
       .catch((err) => {
@@ -26,41 +27,60 @@ const SavedPost = () => {
       });
   }, []);
 
-  posts?.map((elem) => {
-    if (filteredPosts.length) {
-      filteredPosts.map((e) => {
-        if (elem.post_id !== e.post_id) {
-          filteredPosts.push(elem);
-        }
-      });
-    } else {
-      filteredPosts.push(elem);
-    }
-  });
+  
 
   const handleClick = (id) => {
     navigate(`/home/comments/${id}`);
   };
 
-  return (
+
+  const handleRemove = (id) => {
+   const removed= posts.filter((post) => {
+      return post.post_id !== id;
+    });
+    setPosts(removed) 
+    
+    axios.delete(`http://localhost:5000/posts/savedTr/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res=>{
+      console.log(res);
+      
+    })
+    .catch(err=>{
+      console.log(err);
+      
+    })
+ };
+
+ return (
     <div>
       <h2>Saved Posts</h2>
-      {filteredPosts.length ? (
-        filteredPosts.map((post) => {
+      {posts.length ? (
+        posts.map((post) => {
           return (
-            <div
-              key={post.saved_post_id}
-              onClick={() => {
-                handleClick(post.post_id);
-              }}
-            >
-              <img src={post?.profile_image} />@{post.user_name}
-              <div>
-                <br></br>
-                {post.body}
+            <div key={post.saved_post_id}>
+              <button
+                onClick={() => {
+                  handleRemove(post.post_id);
+                }}
+              >
+                remove from bookmark
+              </button>
+              <div
+                onClick={() => {
+                  handleClick(post.post_id);
+                }}
+              >
+                <img src={post?.profile_image} />@{post.user_name}
+                <div>
+                  <br></br>
+                  {post.body}
+                </div>
+                <p>saved at {post.saved_at}</p>
               </div>
-              <p>saved at {post.saved_at}</p>
-              <button>remove from bookmark</button>
             </div>
           );
         })
@@ -70,5 +90,4 @@ const SavedPost = () => {
     </div>
   );
 };
-
 export default SavedPost;

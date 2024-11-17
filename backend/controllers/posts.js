@@ -175,14 +175,12 @@ const savePost = async (req, res) => {
   const user_id = req.token.userId;
   const post_id = req.params.id;
 
-  
   const values = [user_id, post_id];
   const query = `INSERT INTO savedPost (user_id,post_id)
   VALUES ($1,$2) RETURNING*`;
   try {
     const result = await pool.query(query, values);
-   
-    
+
     res.status(200).json({
       success: true,
       message: "successfully added",
@@ -190,7 +188,7 @@ const savePost = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    
+
     res.status(500).json({
       success: false,
       message: "InValid Move",
@@ -207,19 +205,38 @@ inner join users u on po.user_id=u.user_id
 where s.user_id=$1 `;
   try {
     const result = await pool.query(query, [user_id]);
-    
-    
+
     res.status(200).json({
       success: true,
       message: "successfully retrieved",
       saved_posts: result.rows,
     });
   } catch (error) {
-    console.log(error);
-    
+
     res.status(500).json({
       success: false,
       message: "InValid Move",
+      err: error,
+    });
+  }
+};
+
+const removeFromSaved = async(req, res) => {
+  const user_id = req.token.userId;
+  const post_id = req.params.id;
+
+  const query=`DELETE FROM savedPost where post_id=$1 AND user_id=$2 RETURNING*`
+  try {
+    const result= await pool.query(query,[post_id,user_id])
+    res.status(200).json({
+      success: true,
+      message: "successfully deleted",
+      saved_posts: result.rows,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
       err: error,
     });
   }
@@ -235,4 +252,5 @@ module.exports = {
   hardDeletedPostById,
   getSavedPots,
   savePost,
+  removeFromSaved
 };
