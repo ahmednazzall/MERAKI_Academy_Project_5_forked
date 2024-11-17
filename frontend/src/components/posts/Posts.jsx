@@ -4,14 +4,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
-import { Input, Button, List, Avatar, message } from "antd";
-import { SearchOutlined, QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
-import { FloatButton } from "antd";
 import Search from "../search/Search";
 
 const Posts = () => {
   const [addPost, setAddPost] = useState({});
   const postInfo = { image: addPost.image || null, body: addPost.body || null, video: addPost.video || null };
+  const userId = localStorage.getItem('user_id')
+  const [addPost , setaddPost] = useState({})
+  const postInfo = {image : addPost.image||null , body : addPost.body|| null ,video:addPost.video||null  }
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -21,13 +21,15 @@ const Posts = () => {
   // Fetch posts on component mount
   useEffect(() => {
     axios
-      .get("http://localhost:5000/posts", {
+      .get(`http://localhost:5000/followers/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        dispatch(setPosts(res.data.Posts));
+     
+        
+        dispatch(setPosts(res.data.data));
       })
       .catch((err) => {
         console.error(err);

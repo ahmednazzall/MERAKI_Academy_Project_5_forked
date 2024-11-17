@@ -7,6 +7,7 @@ import "./comments.css";
 import { useNavigate } from "react-router-dom";
 
 const Comments = () => {
+  const user_id = localStorage.getItem('user_id')
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [newComment, setNewComment] = useState("");
@@ -132,7 +133,7 @@ const Comments = () => {
           ) : (
             <div>
               <p>{comment.comment}</p>
-              <button
+              {comment.commenter == user_id ? <> <button
                 onClick={() => {
                   setEditingCommentId(comment.comment_id);
                   setEditingText(comment.comment);
@@ -142,7 +143,7 @@ const Comments = () => {
               </button>
               <button onClick={() => handleDeleteComment(comment.comment_id)}>
                 Delete
-              </button>
+              </button></>: null}
             </div>
           )}
         </div>

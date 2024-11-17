@@ -1,4 +1,5 @@
 const { pool } = require("../models/db");
+const { get } = require("../routes/posts");
 
 //follow a user
 const followUser = async (req, res) => {
@@ -140,7 +141,22 @@ const getFollowing = async (req, res) => {
       .json({ message: "Error fetching following", err: error.message });
   }
 };
-
+const getPostsByFollowers = (req,res)=>{
+  const follower_id = req.params.follower_id
+  const query = `SELECT * FROM followers INNER JOIN
+  users ON followers.following_id = users.user_id
+  INNER JOIN posts ON users.user_id = posts.user_id
+  WHERE followers.follower_id = $1 AND followers.is_deleted=$2
+  `
+  pool.query(query,[follower_id,0]).then((result)=>{
+        res.status(200).json({ message: "No following users found ", data: result.rows });
+  }).catch((error)=>{
+    console.log(error);
+    
+    res
+    .status(500).json({ message: "Error", err: error.message });
+  })
+}
 module.exports = {
   followUser,
   unfollowUser,
@@ -148,4 +164,5 @@ module.exports = {
   getFollowingCount,
   getFollowing,
   removeFollower,
+  getPostsByFollowers
 };
