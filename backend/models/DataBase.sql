@@ -57,6 +57,14 @@ CREATE TABLE comments (
   foreign KEY(post_id) references posts(post_id) ON DELETE CASCADE,
   PRIMARY KEY (comment_id)
 );
+CREATE TABLE savedPost (
+ id serial Primary key,
+ post_id integer ,
+ user_id integer,
+saved_at timestamp default now(),
+ foreign key (post_id) references posts.post_id,
+ foreign key (user_id) references users.user_id
+);
 CREATE TABLE reacts (
   react_id SERIAL NOT NULL,
   user_id integer,
