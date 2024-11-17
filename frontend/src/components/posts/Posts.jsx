@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
 import Search from "../search/Search";
-
+import {Input , Button , FloatButton , Avatar} from 'antd'
+import {QuestionCircleOutlined} from '@ant-design/icons'
 const Posts = () => {
   const [addPost, setAddPost] = useState({});
   const postInfo = { image: addPost.image || null, body: addPost.body || null, video: addPost.video || null };
   const userId = localStorage.getItem('user_id')
-  const [addPost , setaddPost] = useState({})
-  const postInfo = {image : addPost.image||null , body : addPost.body|| null ,video:addPost.video||null  }
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -29,12 +28,14 @@ const Posts = () => {
       .then((res) => {
      
         
+        
         dispatch(setPosts(res.data.data));
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [dispatch, token]);
+  }, [posts]);
+
 
   // Handle save post
   const handleAddSave = (id) => {
@@ -49,11 +50,12 @@ const Posts = () => {
         }
       )
       .then((res) => {
-        message.success("Post saved successfully!");
+        console.log("Post saved successfully!");
+        
       })
       .catch((err) => {
         console.error(err);
-        message.error("Failed to save post.");
+        alert("Failed to save post.");
       });
   };
 
@@ -66,12 +68,14 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        message.success("Post created successfully!");
+        console.log('Post created successfully!');
+        
         setAddPost({}); // Reset the input fields
       })
       .catch((err) => {
         console.error(err);
-        message.error("Failed to create post.");
+        console.log('"Failed to create post."');
+        
       });
   };
 
