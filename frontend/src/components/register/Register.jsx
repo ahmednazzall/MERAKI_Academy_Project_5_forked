@@ -17,9 +17,11 @@ const Register = () => {
         // console.log(result.data.result);
         dispatch(register(result.data.result));
         setStatus(true);
-        setMessage(result.data.message);
+        setMessage(result?.data.message);
       })
       .catch((err) => {
+        console.log(err);
+        
         setStatus(false);
         setMessage(err.response.data.message);
       });

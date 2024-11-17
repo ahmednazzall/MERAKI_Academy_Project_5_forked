@@ -11,6 +11,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 const Posts = () => {
+  const userId = localStorage.getItem('user_id')
   const [addPost , setaddPost] = useState({})
   const postInfo = {image : addPost.image||null , body : addPost.body|| null ,video:addPost.video||null  }
   const navigate = useNavigate();
@@ -26,13 +27,15 @@ const Posts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/posts", {
+      .get(`http://localhost:5000/followers/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        dispatch(setPosts(res.data.Posts));
+     
+        
+        dispatch(setPosts(res.data.data));
       })
       .catch((err) => {
         console.log(err);

@@ -16,7 +16,7 @@ const Register = async (req, res) => {
     bio,
   } = req.body;
 
-  const role_id = 2; //! create admin then switch to user
+  const role_id = 1; //! create admin then switch to user
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (user_name,
