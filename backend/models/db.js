@@ -114,6 +114,14 @@ CREATE TABLE notifications (
   foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (notification_id)
 );
+CREATE TABLE savedPost (
+ id serial Primary key,
+ post_id integer ,
+ user_id integer,
+saved_at timestamp default now(),
+ foreign key (post_id) references posts.post_id,
+ foreign key (user_id) references users.user_id
+)
 `;
   try {
     const result = await pool.query(query);
