@@ -7,7 +7,11 @@ import { setPosts } from "../redux/reducers/slicePosts";
 
 const Posts = () => {
   const [addPost, setAddPost] = useState({});
-  const postInfo = { image: addPost.image || null, body: addPost.body || null, video: addPost.video || null };
+  const postInfo = {
+    image: addPost.image || null,
+    body: addPost.body || null,
+    video: addPost.video || null,
+  };
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -60,12 +64,12 @@ const Posts = () => {
           placeholder="Search"
           className="search-input"
           onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              navigate('./search');
+            if (e.key === "Enter") {
+              navigate("./search");
             }
           }}
         />
-        <button className="search-button" onClick={() => navigate('./search')}>
+        <button className="search-button" onClick={() => navigate("./search")}>
           Search
         </button>
       </div>
@@ -111,7 +115,12 @@ const Posts = () => {
               <h3>{elem.user_name}</h3>
               <p>{elem.body}</p>
               <div className="btn-container">
-                <button className="btn" onClick={() => { handleAddSave(elem.post_id); }}>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    handleAddSave(elem.post_id);
+                  }}
+                >
                   Save Post
                 </button>
                 <button
@@ -131,7 +140,7 @@ const Posts = () => {
       })}
 
       {/* Floating Help Button (Custom Implementation) */}
-      <div className="float-button" onClick={() => alert('Help Clicked!')}>
+      <div className="float-button" onClick={() => alert("Help Clicked!")}>
         <span className="float-button-icon">?</span>
       </div>
     </div>
