@@ -43,7 +43,7 @@ const Events = ({ userId, token }) => {
       axios
         .post(
           `https://localhost/5000/greeting/send`,
-          { user_id, recipientId, greeting },
+          { userId, recipientId, greeting },
           {
             headers: {
               Authorization: `Bearer ${token}`,

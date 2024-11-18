@@ -69,7 +69,7 @@ const Posts = () => {
 
         // console.log(res.data);
 
-        dispatch(setPosts(res.data.data));
+        
 
 
       })
@@ -131,7 +131,10 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        console.log("Post created successfully!");
+        navigate('/loading')
+        setTimeout(() => {
+          navigate('./')
+        }, 1);
 
         setAddPost({}); // Reset the input fields
 
