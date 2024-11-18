@@ -3,7 +3,7 @@ const createPost = async (req, res) => {
   const { body, image, video } = req.body;
   const user_id = req.token.userId;
 
-  const query = `INSERT INTO POSTS (body , image , video , user_id) VALUES ($1,$2,$3,$4)`;
+  const query = `INSERT INTO POSTS (body , image , video , user_id) VALUES ($1,$2,$3,$4) RETURNING *`;
   const data = [body, image, video, user_id];
   pool
     .query(query, data)
@@ -11,6 +11,7 @@ const createPost = async (req, res) => {
       res.status(201).json({
         success: true,
         message: "Post Created Successfully",
+        post : result.rows
       });
     })
     .catch((error) => {
