@@ -6,16 +6,18 @@ import { Logout } from "../redux/reducers/auth";
 import axios from "axios";
 import Posts from "../posts/Posts";
 import Side from "./Side";
+
 import AdminPanel from "../AdminPanel/AdminPanel";
+
+import Search from "../search/Search";
+
 // import Events from "../events/events";
 
 const Home = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(Logout());
-  };
+
   const isLoggedIn = useSelector((auth) => {
     return auth.auth.isLoggedIn;
   });
@@ -32,9 +34,8 @@ const Home = () => {
       <div className="nav">
         {" "}
         <img src="../../Preview.png" className="MoltaqaIcon" />
-        <button onClick={handleLogout} className="LogoutButton">
-          logout
-        </button>
+      
+        <Search token={token} />
       </div>
       <div className="org">
         <div className="sidebar">

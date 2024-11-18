@@ -14,9 +14,8 @@
   padding: 20px;
 }
 .nav {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .org {
   display: grid;

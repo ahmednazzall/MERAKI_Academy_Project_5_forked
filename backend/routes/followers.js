@@ -26,7 +26,7 @@ followerRouter.delete("/:user_id/trimFollower",authentication,removeFollower)
 // Route to get followers of a user
 followerRouter.get('/:user_id/follower', getFollowers);
 
-followerRouter.get('/posty',authentication, getPostsByFollowers);
+followerRouter.get('/posty/:userId',authentication, getPostsByFollowers);
 
 
 

@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./sideStyle.css";
+import { Logout } from "../redux/reducers/auth";
 const Side = () => {
   const user_id=localStorage.getItem("user_id")
-  
+  const handleLogout = () => {
+    dispatch(Logout());
+  };
   return (
     <div>
       <Link
@@ -44,6 +47,18 @@ const Side = () => {
       
       <br></br>
       <Link to={"./bookmark"}>Bookmarks</Link>
+
+
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <button onClick={handleLogout} className="LogoutButton">
+          logout
+        </button>
     </div>
   );
 };

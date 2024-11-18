@@ -3,11 +3,11 @@ import "./posts.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, deletePost, setPosts } from "../redux/reducers/slicePosts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import Search from "../search/Search";
 
-import {Input , Button , FloatButton , Avatar} from 'antd'
-import {QuestionCircleOutlined, UserOutlined} from '@ant-design/icons'
+import { Input, Button, FloatButton, Avatar } from "antd";
+import { QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
 const Posts = () => {
   const [postId, setpostId] = useState(0);
   const [updateClicked, setupdateClicked] = useState(false);
@@ -18,7 +18,10 @@ const Posts = () => {
     body: addPost.body || null,
     video: addPost.video || null,
   };
-  const userId = localStorage.getItem("user_id");
+  const {id}=useParams()
+  const userId = id?id:localStorage.getItem("user_id");
+
+  
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -29,49 +32,15 @@ const Posts = () => {
   // Fetch posts on component mount
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/followers/posty`, {
-
+      .get(`http://localhost:5000/followers/posty/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-
-       
-        
-                
-        
-        if (!res.data.data.length) {
-          
-          
-          axios.get(`http://localhost:5000/posts/${userId}/user`,{ headers: {
-            Authorization: `Bearer ${token}`,
-          },}).then((result)=>{
-            if (result.data.Post) {
-              dispatch(setPosts(result.data.Post))
-              
-            }
-            else{dispatch(setPosts([]))}
-          }).catch((err)=>{
-            console.log(err);
-            
-            
-          })
-        }
-        else{
-          
-          
-          
-          dispatch(setPosts(res.data.data));
-        }
-        
-      
+        dispatch(setPosts(res.data.data));
 
         // console.log(res.data);
-
-        
-
-
       })
       .catch((err) => {
         console.error(err);
@@ -131,13 +100,12 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        navigate('/loading')
+        navigate("/loading");
         setTimeout(() => {
-          navigate('./')
+          navigate("./");
         }, 1);
 
         setAddPost({}); // Reset the input fields
-
       })
       .catch((err) => {
         console.error(err);
@@ -169,19 +137,19 @@ const Posts = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-
-      }).then((res)=>{
-        dispatch(deletePost({post_id:postId}))
-      }).catch((err) => {
-          console.error(err);
-          console.log('"Failed to create post."');
-          
-        });
-  }
+      })
+      .then((res) => {
+        dispatch(deletePost({ post_id: postId }));
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log('"Failed to create post."');
+      });
+  };
   return (
     <div>
       {/* Search Section */}
-      <Search token={token} />
+      
 
       {/* Create Post Section */}
       <div className="createPost">
@@ -202,7 +170,13 @@ const Posts = () => {
         {posts?.map((post, index) => (
           <div key={index} className="post">
             {post.profile_image ? (
-              <Avatar src={post.profile_image} className="post-avatar" onClick={()=>{navigate(`./profile/${post.user_id}`)}} />
+              <Avatar
+                src={post.profile_image}
+                className="post-avatar"
+                onClick={() => {
+                  navigate(`./profile/${post.user_id}`);
+                }}
+              />
             ) : (
               <Avatar icon={<UserOutlined />} className="post-avatar" />
             )}

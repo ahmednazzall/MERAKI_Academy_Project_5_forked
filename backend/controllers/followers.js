@@ -162,7 +162,7 @@ const getFollowing = async (req, res) => {
 //     console.log(result.rows);
 
 const getPostsByFollowers = (req, res) => {
-  const id = req.token.userId;
+  const id = req.params.userId;
 
   const query = `SELECT * FROM posts p
 JOIN users u ON p.user_id = u.user_id
