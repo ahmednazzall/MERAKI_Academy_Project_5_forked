@@ -50,7 +50,9 @@ const getAllComments = async (req, res) => {
 };
 const getCommentByPostId = async (req, res) => {
     const post_id  = req.params.post_id;
-    const query = `SELECT * FROM comments WHERE post_id = $1 AND is_deleted=0`
+    const query = `SELECT * FROM comments
+    INNER JOIN users ON comments.commenter = users.user_id
+    WHERE post_id = $1 AND comments.is_deleted=0`
     pool.query(query , [post_id])
     .then((result)=>{
         res.status(200).json({
@@ -59,6 +61,8 @@ const getCommentByPostId = async (req, res) => {
           });
     })
     .catch((error)=>{
+      console.log(error);
+      
         res
       .status(500)
       .json({ message: "Error retrieving comments", error: error.message });

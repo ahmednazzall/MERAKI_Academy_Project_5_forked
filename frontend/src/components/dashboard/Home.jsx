@@ -6,6 +6,7 @@ import { Logout } from "../redux/reducers/auth";
 import axios from "axios";
 import Posts from "../posts/Posts";
 import Side from "./Side";
+import AdminPanel from "../AdminPanel/AdminPanel";
 // import Events from "../events/events";
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
 
   return (
     <div className="parent">
+      <AdminPanel />
       <div className="nav">
         {" "}
         <img src="../../Preview.png" className="MoltaqaIcon" />

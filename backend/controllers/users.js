@@ -140,6 +140,7 @@ const getUserById = async (req, res) => {
   const id = req.params.id;
   const query = `SELECT * FROM users u 
 left JOIN followers f ON u.user_id=f.follower_id
+INNER JOIN roles ON u.role_id = roles.role_id
 WHERE u.user_id=$1 AND u.is_deleted=0`;
   try {
     const result = await pool.query(query, [id]);

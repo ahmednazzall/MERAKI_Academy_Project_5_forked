@@ -140,7 +140,12 @@ const Comments = () => {
             </div>
           ) : (
             <div>
+              <span>
+                <img src={comment.profile_image} width={100}></img>
+                <h4>{comment.user_name}</h4>
+                <p>{comment.created_at}</p>
               <p>{comment.comment}</p>
+              </span>
               {comment.commenter == user_id ? <> <button
                 onClick={() => {
                   setEditingCommentId(comment.comment_id);
