@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
+import { useDispatch } from "react-redux";
 const Side = () => {
+  const dispatch = useDispatch()
   const user_id=localStorage.getItem("user_id")
   const handleLogout = () => {
     dispatch(Logout());

@@ -12,7 +12,7 @@ const AdminPanel = () => {
             Authorization: `Bearer ${token}`,
           },
       }).then((res)=>{
-        setrole(res.data.User.name)
+        setrole(`${res.data.User.role_id}`)
         
        
         
@@ -24,15 +24,18 @@ const AdminPanel = () => {
    
     
       
-    }, [])
-    if (role === 'Admin') {
+    }, [role])
+   
+    //role id static
+    if (role == 2 ) {
+        
         
         return (
             
             <div>
                 test
 
-    </div>
+             </div>
   )
 }
 }
