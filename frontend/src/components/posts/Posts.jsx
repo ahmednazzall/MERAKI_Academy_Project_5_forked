@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./posts.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../redux/reducers/slicePosts";
+import { createPost, deletePost, setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
 import Search from "../search/Search";
 import {Input , Button , FloatButton , Avatar} from 'antd'
-import {QuestionCircleOutlined} from '@ant-design/icons'
+import {QuestionCircleOutlined, UserOutlined} from '@ant-design/icons'
 const Posts = () => {
   const [postId ,setpostId] = useState(0)
   const [updateClicked ,setupdateClicked] = useState(false)
@@ -23,16 +23,39 @@ const Posts = () => {
   // Fetch posts on component mount
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/followers/${userId}`, {
+      .get(`http://localhost:5000/followers/${userId}/posts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-     
+                
         
+        if (!res.data.data.length) {
+          
+          
+          axios.get(`http://localhost:5000/posts/${userId}/user`,{ headers: {
+            Authorization: `Bearer ${token}`,
+          },}).then((result)=>{
+            if (result.data.Post) {
+              dispatch(setPosts(result.data.Post))
+              
+            }
+            else{dispatch(setPosts([]))}
+          }).catch((err)=>{
+            console.log(err);
+            
+            
+          })
+        }
+        else{
+          
+          
+          
+          dispatch(setPosts(res.data.data));
+        }
         
-        dispatch(setPosts(res.data.data));
+      
       })
       .catch((err) => {
         console.error(err);
@@ -71,9 +94,8 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        console.log('Post created successfully!');
         
-        setAddPost({}); // Reset the input fields
+        setAddPost({}); 
       })
       .catch((err) => {
         console.error(err);
@@ -102,7 +124,7 @@ const Posts = () => {
           Authorization: `Bearer ${token}`,
         },
       }).then((res)=>{
-
+        dispatch(deletePost({post_id:postId}))
       }).catch((err) => {
           console.error(err);
           console.log('"Failed to create post."');

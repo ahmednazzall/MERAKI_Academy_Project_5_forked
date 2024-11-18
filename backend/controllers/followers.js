@@ -150,6 +150,8 @@ const getPostsByFollowers = (req,res)=>{
   WHERE followers.follower_id = $1 AND posts.is_deleted=$2 
   `
   pool.query(query,[follower_id,0]).then((result)=>{
+    
+    
         res.status(200).json({ message: "No following users found ", data: result.rows });
   }).catch((error)=>{
     console.log(error);
