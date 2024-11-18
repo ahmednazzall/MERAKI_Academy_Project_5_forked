@@ -17,6 +17,7 @@ import SearchBar from "./components/search/Search";
 import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
 import SavedPost from "./components/saved Post/savedPost";
+import Edit from "./components/profile/Edit";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -62,6 +63,11 @@ function App() {
           path: "profile/:id",
           element: <Profile />,
         },
+        {
+          path:"/home/profile/edit",
+          element:<Edit/>
+        },
+    
         {
           path: "/home/profile/f/:id",
           element: <Followers />,
