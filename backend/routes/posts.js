@@ -9,7 +9,8 @@ const {
   SoftDeletePostById,
   hardDeletedPostById,
   getSavedPots,
-  savePost
+  savePost,
+  removeFromSaved
 } = require("../controllers/posts");
 const authentication = require('../middleware/authentication');
 const authorization = require('../middleware/authorization');
@@ -26,6 +27,8 @@ postsRouter.post('/add&save/:id' , authentication , savePost)
 postsRouter.put('/:post_id' , authentication , updatePostById)
 postsRouter.delete('/:post_id/soft' , authentication , SoftDeletePostById)
 postsRouter.delete('/:post_id/hard' , authentication , hardDeletedPostById)
+
+postsRouter.delete('/savedTr/:id' , authentication , removeFromSaved)
 
 module.exports = postsRouter;
 

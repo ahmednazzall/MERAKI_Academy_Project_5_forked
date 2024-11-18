@@ -5,84 +5,89 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, deletePost, setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
 import Search from "../search/Search";
+
 import {Input , Button , FloatButton , Avatar} from 'antd'
 import {QuestionCircleOutlined, UserOutlined} from '@ant-design/icons'
 const Posts = () => {
-  const [postId ,setpostId] = useState(0)
-  const [updateClicked ,setupdateClicked] = useState(false)
-  const [editPosttext , seteditPosttext] = useState('')
+  const [postId, setpostId] = useState(0);
+  const [updateClicked, setupdateClicked] = useState(false);
+  const [editPosttext, seteditPosttext] = useState("");
   const [addPost, setAddPost] = useState({});
-  const postInfo = { image: addPost.image || null, body: addPost.body || null, video: addPost.video || null };
-  const userId = localStorage.getItem('user_id')
+  const postInfo = {
+    image: addPost.image || null,
+    body: addPost.body || null,
+    video: addPost.video || null,
+  };
+  const userId = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-
+  const [savedPost, setSavedPost] = useState([]);
   const posts = useSelector((state) => state.posts.posts);
+  // console.log(posts);
 
   // Fetch posts on component mount
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/followers/${userId}/posts`, {
+      .get(`http://localhost:5000/followers/posty`, {
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-                
-        
-        if (!res.data.data.length) {
-          
-          
-          axios.get(`http://localhost:5000/posts/${userId}/user`,{ headers: {
-            Authorization: `Bearer ${token}`,
-          },}).then((result)=>{
-            if (result.data.Post) {
-              dispatch(setPosts(result.data.Post))
-              
-            }
-            else{dispatch(setPosts([]))}
-          }).catch((err)=>{
-            console.log(err);
-            
-            
-          })
-        }
-        else{
-          
-          
-          
-          dispatch(setPosts(res.data.data));
-        }
-        
-      
+        // console.log(res.data);
+
+        dispatch(setPosts(res.data.data));
+
       })
       .catch((err) => {
         console.error(err);
       });
   }, [posts]);
 
+  //fetch saved posts
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/posts/saved", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        let found = result.data.saved_posts.map((elem) => {
+          return elem.post_id;
+        });
+        setSavedPost(found);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [posts]);
 
   // Handle save post
   const handleAddSave = (id) => {
-    axios
-      .post(
-        `http://localhost:5000/posts/add&save/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log("Post saved successfully!");
-        
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Failed to save post.");
-      });
+    if (!savedPost.includes(id)) {
+      axios
+        .post(
+          `http://localhost:5000/posts/add&save/${id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          return console.log("Post saved successfully!");
+        })
+        .catch((err) => {
+          return console.error(err);
+        });
+    } else {
+      return console.log("already saved");
+    }
   };
 
   // Handle adding a new post
@@ -94,35 +99,42 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        
-        setAddPost({}); 
+        console.log("Post created successfully!");
+
+        setAddPost({}); // Reset the input fields
+
       })
       .catch((err) => {
         console.error(err);
         console.log('"Failed to create post."');
-        
       });
   };
-  const handelUpdatePost = (postId)=>{
-    axios.put(`http://localhost:5000/posts/${postId}`,{
-      body : editPosttext
-    },{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res)=>{
-
-    }).catch((err) => {
+  const handelUpdatePost = (postId) => {
+    axios
+      .put(
+        `http://localhost:5000/posts/${postId}`,
+        {
+          body: editPosttext,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {})
+      .catch((err) => {
         console.error(err);
         console.log('"Failed to create post."');
-        
       });
-    }
-    const handelDelete = (postId)=>{
-      axios.delete(`http://localhost:5000/posts/${postId}/soft`,{
+  };
+  const handelDelete = (postId) => {
+    axios
+      .delete(`http://localhost:5000/posts/${postId}/soft`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
       }).then((res)=>{
         dispatch(deletePost({post_id:postId}))
       }).catch((err) => {
@@ -150,8 +162,6 @@ const Posts = () => {
         </Button>
       </div>
 
-
-
       {/* Display Posts */}
       <div className="posts-section">
         {posts?.map((post, index) => (
@@ -164,38 +174,73 @@ const Posts = () => {
             <div className="post-content">
               <h3>{post.user_name}</h3>
               <p>{post.body}</p>
-              {post.user_id == userId ? <div className="UD-Post">
-                {!updateClicked  ?<Button onClick={(e)=>{
-                  setupdateClicked(true)
-                  setpostId(post.post_id)
-                }}>Update</Button> : null}
-                
-                {updateClicked  && postId == post.post_id ? <><Input onChange={(e)=>{
-                  seteditPosttext(e.target.value)
-                }}/><Button onClick={(e)=>{
-                  handelUpdatePost(post.post_id)
-                  setupdateClicked(false)
-                }}>Save</Button></> : null}
-                <Button onClick={(e)=>{
-                  handelDelete(post.post_id)
-                }}>DELETE</Button>
-              </div> : null}
+              {post.user_id == userId ? (
+                <div className="UD-Post">
+                  {!updateClicked ? (
+                    <Button
+                      onClick={(e) => {
+                        setupdateClicked(true);
+                        setpostId(post.post_id);
+                      }}
+                    >
+                      Update
+                    </Button>
+                  ) : null}
+
+                  {updateClicked && postId == post.post_id ? (
+                    <>
+                      <Input
+                        onChange={(e) => {
+                          seteditPosttext(e.target.value);
+                        }}
+                      />
+
+                      <Button
+                        onClick={(e) => {
+                          handelUpdatePost(post.post_id);
+                          setupdateClicked(false);
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </>
+                  ) : null}
+                  <Button
+                    onClick={(e) => {
+                      handelDelete(post.post_id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
+                </div>
+              ) : null}
               <div className="post-actions">
-                <Button type="link" onClick={() => handleAddSave(post.post_id)}>
-                  Save Post
-                </Button>
+                {!savedPost.includes(post.post_id) ? (
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      handleAddSave(post.post_id);
+                    }}
+                  >
+                    Save Post
+                  </Button>
+                ) : (
+                  <Button danger type="text" disabled>
+                    Saved
+                  </Button>
+                )}
+
                 <Button
                   type="link"
                   onClick={() => {
                     localStorage.setItem("postId", post.post_id);
-           
-                     navigate(`./comments/${elem.post_id}`)
+
+                    navigate(`./comments/${post.post_id}`);
                   }}
                 >
                   Comments
                 </Button>
                 <Button type="link">Like</Button>
-
               </div>
             </div>
           </div>

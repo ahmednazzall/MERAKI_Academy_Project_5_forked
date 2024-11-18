@@ -41,9 +41,8 @@ const Followers = () => {
   const handleUnfollow = (id) => {
     if (follower.length) {
       axios
-        .post(
-          `http://localhost:5000/followers/${id}/unfollow`,
-          {},
+        .delete(
+          `http://localhost:5000/followers/${id}/trimFollower`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,9 +57,8 @@ const Followers = () => {
         });
     } else {
       axios
-        .post(
-          `http://localhost:5000/followers/${id}/trimFollower`,
-          {},
+        .delete(
+          `http://localhost:5000/followers/${id}/unfollow`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
