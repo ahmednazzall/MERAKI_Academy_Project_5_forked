@@ -24,20 +24,24 @@ const followUser = async (req, res) => {
 };
 
 // Unfollow a user
-const unfollowUser = async (req, res) => {
-  const following_id = req.token.userId;
-  const follower_id = req.params.user_id;
+const removeFollower = async (req, res) => {
+  // const follower_id = req.token.userId;
+  // const following_id = req.params.user_id;
 
+  
+   const following_id = req.token.userId;
+  const follower_id = req.params.user_id;
+  
   try {
     const result = await pool.query(
-      `UPDATE followers SET is_deleted=1 WHERE follower_id=$1 AND following_id=$2 AND is_deleted=0 RETURNING *`,
+      `DELETE FROM followers WHERE follower_id=$1 AND following_id=$2 AND is_deleted=0 RETURNING *`,
       [follower_id, following_id]
     );
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "Follow relationship not found" });
     }
     res.status(200).json({
-      message: "User unfollowed successfully",
+      message: "User removed from your followers successfully",
       data: result.rows[0],
     });
   } catch (error) {
@@ -45,13 +49,19 @@ const unfollowUser = async (req, res) => {
     res.status(500).json({ message: "Error unfollowing user", error });
   }
 };
-const removeFollower = async (req, res) => {
-  const follower_id = req.token.userId;
+const unfollowUser = async (req, res) => {
+  console.log("hi");
+  
+  // const following_id = req.token.userId;
+  // const follower_id = req.params.user_id;
+  
+    const follower_id = req.token.userId;
   const following_id = req.params.user_id;
+  
 
   try {
     const result = await pool.query(
-      `UPDATE followers SET is_deleted=1 WHERE follower_id=$1 AND following_id=$2 AND is_deleted=0 RETURNING *`,
+      `DELETE FROM followers WHERE follower_id=$1 AND following_id=$2 AND is_deleted=0 RETURNING *`,
       [follower_id, following_id]
     );
     if (result.rowCount === 0) {
@@ -116,6 +126,7 @@ const getFollowingCount = async (req, res) => {
 };
 
 const getFollowing = async (req, res) => {
+  
   const { id } = req.params;
   const query = `
   SELECT f.following_id,f.follower_id,u.user_name,u.first_name,u.last_name FROM followers f 
@@ -141,6 +152,7 @@ const getFollowing = async (req, res) => {
       .json({ message: "Error fetching following", err: error.message });
   }
 };
+
 const getPostsByFollowers = (req,res)=>{
   const follower_id = req.params.follower_id
   const query = `SELECT * FROM followers INNER JOIN
@@ -154,6 +166,18 @@ const getPostsByFollowers = (req,res)=>{
 
     
     
+
+const getPostsByFollowers = (req,res)=>{  
+  const id=req.token.userId
+
+  const query = `SELECT * FROM posts po
+  inner join users u on po.user_id=u.user_id
+  inner join followers f on po.user_id=f.following_id
+  where  (u.user_id=$1 or f.follower_id=$1) and po.is_deleted=0`
+  pool.query(query,[id])
+  .then((result)=>{
+
+
         res.status(200).json({ message: "No following users found ", data: result.rows });
   }).catch((error)=>{
     console.log(error);
@@ -162,12 +186,14 @@ const getPostsByFollowers = (req,res)=>{
     .status(500).json({ message: "Error", err: error.message });
   })
 }
+
+
 module.exports = {
   followUser,
-  unfollowUser,
+  removeFollower,
   getFollowers,
   getFollowingCount,
   getFollowing,
-  removeFollower,
+  unfollowUser,
   getPostsByFollowers
 };

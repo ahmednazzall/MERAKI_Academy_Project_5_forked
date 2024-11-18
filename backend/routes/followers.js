@@ -17,14 +17,17 @@ followerRouter.post("/:user_id/follow",authentication,followUser)
 
 
 // Route to unfollow a user
-followerRouter.post("/:user_id/unfollow",authentication,unfollowUser)
-followerRouter.post("/:user_id/trimFollower",authentication,removeFollower)
+followerRouter.delete("/:user_id/unfollow",authentication,unfollowUser)
+
+// route to remove follower
+followerRouter.delete("/:user_id/trimFollower",authentication,removeFollower)
 
 
 // Route to get followers of a user
 followerRouter.get('/:user_id/follower', getFollowers);
 
-followerRouter.get('/:follower_id/posts', getPostsByFollowers);
+followerRouter.get('/posty',authentication, getPostsByFollowers);
+
 
 
 
@@ -32,7 +35,7 @@ followerRouter.get('/:follower_id/posts', getPostsByFollowers);
 // Route to get users a user is following
 // followerRouter.get('/:user_id/followingC',authentication, authentication,getFollowingCount);
 
-
+// route to get who is user following 
 followerRouter.get('/:id/following',authentication ,getFollowing);
 
 
