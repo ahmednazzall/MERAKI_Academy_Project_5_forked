@@ -113,3 +113,12 @@ CREATE TABLE greetings (
   message TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE likes (
+    id SERIAL PRIMARY KEY,
+    userId INT NOT NULL,
+    postId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (postId) REFERENCES posts(post_id) ON DELETE CASCADE,
+    UNIQUE (userId, postId)
+);
+

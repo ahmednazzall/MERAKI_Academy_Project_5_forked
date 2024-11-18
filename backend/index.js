@@ -12,7 +12,8 @@ const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
 const followersRouter = require("./routes/followers");
-const greetingRouter=require("./routes/greeting")
+const greetingRouter = require("./routes/greeting");
+const reactsRouter = require("./routes/reacts");
 const socketAuth = require("./middleware/socketAuth");
 const ioConnection = require("./controllers/ioConnect");
 app.use(express.json());
@@ -22,7 +23,8 @@ app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/followers", followersRouter);
-app.use("/greeting",greetingRouter)
+app.use("/greeting", greetingRouter);
+app.use("/reacts", reactsRouter);
 
 io.use(socketAuth);
 io.on("connection", ioConnection);
