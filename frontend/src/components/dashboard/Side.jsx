@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./sideStyle.css";
 const Side = () => {
+  const user_id=localStorage.getItem("user_id")
+  
   return (
     <div>
       <Link
-        to={"/home/profile"}
+        to={`/home/profile/${user_id}`}
         onClick={() => {
           if (localStorage.getItem("postId")) {
             localStorage.removeItem("postId");
