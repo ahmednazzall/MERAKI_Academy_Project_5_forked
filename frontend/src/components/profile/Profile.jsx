@@ -2,21 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Profile.css";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import { getUserById } from "../redux/reducers/sliceUser";
+import Posts from "../posts/Posts";
 
 const ProfilePage = () => {
-  const {id}=useParams()
-  
-  const userId = id
-  
+const navigate=useNavigate()
+  const { id } = useParams();
+
+  const userId = id;
+
   const [following, setFollowing] = useState();
   const [follower, setFollower] = useState();
-  // const [user, setUser] = useState();
+  const [show, setShow] = useState(false)
   const dispatch = useDispatch();
   const token = useSelector((state) => {
     return state.auth.token;
   });
+
+  const user = useSelector((state) => {
+    return state.users.users;
+  });
+  
   useEffect(() => {
     axios
       .get(`http://localhost:5000/users/${id}`, {
@@ -25,36 +32,14 @@ const ProfilePage = () => {
         },
       })
       .then((result) => {
-        // console.log(result);
-        // setUser(result.data.User);
         dispatch(getUserById(result.data.User));
       })
       .catch((err) => {
         console.log(err);
       });
-
-
-      axios
-      .get(`http://localhost:5000/followers/posty`, {
-
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        
-      })
-      .catch(err=>{
-        console.log(err);
-        
-      })
-
   }, []);
 
-  const user = useSelector((state) => {
-    return state.users.users;
-  });
+ 
 
   useEffect(() => {
     axios
@@ -66,7 +51,6 @@ const ProfilePage = () => {
       .then((result) => {
         // console.log(result);
         setFollowing(result.data.data?.length);
-        
       })
       .catch((err) => {
         console.log(err);
@@ -100,7 +84,9 @@ const ProfilePage = () => {
             <h2>{user[0]?.first_name}</h2>
             <p>@{user[0]?.user_name}</p>
           </div>
-          <button className="edit-profile-button">Edit Profile</button>
+          <button className="edit-profile-button" onClick={()=>{
+            navigate(`/home/profile/edit`)
+          }}>Edit Profile</button>
         </div>
 
         <div className="bio-section">{user?.bio}</div>
@@ -127,16 +113,10 @@ const ProfilePage = () => {
             <div className="detail-item">Following:0</div>
           )}
         </div>
-
         <div className="posts-section">
           <h3>User Posts</h3>
-          {/*      <div className="posts-list">
-            {user?.posts.map((post, index) => (
-              <div key={index} className="post-item">
-                {post}
-              </div>
-            ))}
-          </div> */}
+          <Posts/>
+       
         </div>
       </div>
     </div>
