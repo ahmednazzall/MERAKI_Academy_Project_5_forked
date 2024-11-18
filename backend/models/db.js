@@ -122,6 +122,15 @@ saved_at timestamp default now(),
  foreign key (post_id) references posts.post_id,
  foreign key (user_id) references users.user_id
 )
+ CREATE TABLE likes (
+    id SERIAL PRIMARY KEY,
+    userId INT NOT NULL,
+    postId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (postId) REFERENCES posts(post_id) ON DELETE CASCADE,
+    UNIQUE (userId, postId)
+);
+
  CREATE TABLE greetings (
   id SERIAL PRIMARY KEY,
   sender_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
