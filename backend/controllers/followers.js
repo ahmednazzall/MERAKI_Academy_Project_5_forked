@@ -166,13 +166,13 @@ const getPostsByFollowers = (req, res) => {
 
   const query = `SELECT * FROM posts p
 JOIN users u ON p.user_id = u.user_id
-WHERE p.user_id = $1
+WHERE p.is_deleted=0 and p.user_id = $1
    OR p.user_id IN (
        SELECT following_id
        FROM followers
        WHERE follower_id = $1
-   )
-   and p.is_deleted=0
+       )
+   
 ORDER BY p.created_at DESC;`;
   pool
     .query(query, [id])
