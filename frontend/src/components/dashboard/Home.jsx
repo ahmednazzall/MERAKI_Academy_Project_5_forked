@@ -6,7 +6,7 @@ import { Logout } from "../redux/reducers/auth";
 import axios from "axios";
 import Posts from "../posts/Posts";
 import Side from "./Side";
-import Events from "../events/events";
+// import Events from "../events/events";
 
 const Home = () => {
   const token = localStorage.getItem("token");

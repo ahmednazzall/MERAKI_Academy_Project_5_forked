@@ -29,7 +29,8 @@ const Posts = () => {
         },
       })
       .then((res) => {
-     
+       
+        
         
         
         dispatch(setPosts(res.data.data));
