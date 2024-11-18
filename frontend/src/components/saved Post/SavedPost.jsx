@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const SavedPost = () => {
   const [posts, setPosts] = useState([]);
-  const filteredPosts = [];
   const navigate = useNavigate();
   const token = useSelector((state) => {
     return state.auth.token;
