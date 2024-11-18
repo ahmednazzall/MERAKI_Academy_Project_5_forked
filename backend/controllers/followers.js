@@ -151,6 +151,8 @@ const getPostsByFollowers = (req,res)=>{
   `
   pool.query(query,[follower_id,0]).then((result)=>{
     console.log(result.rows);
+
+    
     
         res.status(200).json({ message: "No following users found ", data: result.rows });
   }).catch((error)=>{
