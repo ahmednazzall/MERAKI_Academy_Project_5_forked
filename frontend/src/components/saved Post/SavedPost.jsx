@@ -18,7 +18,6 @@ const SavedPost = () => {
         },
       })
       .then((result) => {
-        
         setPosts(result.data.saved_posts);
       })
       .catch((err) => {
@@ -26,35 +25,30 @@ const SavedPost = () => {
       });
   }, []);
 
-  
-
   const handleClick = (id) => {
     navigate(`/home/comments/${id}`);
   };
 
-
   const handleRemove = (id) => {
-   const removed= posts.filter((post) => {
-      return post.post_id !== id;
-    });
-    setPosts(removed) 
-    
-    axios.delete(`http://localhost:5000/posts/savedTr/${id}`,{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res=>{
-      console.log(res);
-      
-    })
-    .catch(err=>{
-      console.log(err);
-      
-    })
- };
+    axios
+      .delete(`http://localhost:5000/posts/savedTr/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // console.log(res);
+        const removed = posts.filter((post) => {
+          return post.post_id !== id;
+        });
+        setPosts(removed);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
- return (
+  return (
     <div>
       <h2>Saved Posts</h2>
       {posts.length ? (
@@ -84,7 +78,7 @@ const SavedPost = () => {
           );
         })
       ) : (
-        <p>no saved posts</p>
+        <p>No saved posts</p>
       )}
     </div>
   );
