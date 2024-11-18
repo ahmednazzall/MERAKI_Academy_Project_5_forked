@@ -1,54 +1,63 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  setFollowers,
+  setFollowing,
+  unFollow,
+  removeFollower,
+} from "../redux/reducers/sliceFollowers";
 useParams;
 const Followers = () => {
+  const dispatch = useDispatch();
   const condition = useParams();
-
+  const [show, setShow] = useState(condition.id == 1 ? true : false);
   const { token, userId } = useSelector((state) => {
     return state.auth;
   });
-  const [following, setFollowing] = useState([]);
-  const [follower, setFollower] = useState([]);
+
+  const following = useSelector((state) => {
+    return state.followers.following;
+  });
+  const follower = useSelector((state) => {
+    return state.followers.myFollowers;
+  });
 
   useEffect(() => {
-    if (condition.id == 1) {
+    show
+      ? axios
+          .get(`http://localhost:5000/followers/${userId}/following`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((result) => {
+            dispatch(setFollowing(result.data.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : axios
+          .get(`http://localhost:5000/followers/${userId}/follower`)
+          .then((result) => {
+            dispatch(setFollowers(result.data.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+  }, []);
+
+  const handleUnfollow = (id) => {
+    if (!show) {
+      dispatch(removeFollower(id));
+
       axios
-        .get(`http://localhost:5000/followers/${userId}/following`, {
+        .delete(`http://localhost:5000/followers/${id}/trimFollower`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((result) => {
-          setFollowing(result.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      axios
-        .get(`http://localhost:5000/followers/${userId}/follower`)
-        .then((result) => {
-          setFollower(result.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [follower, following]);
-
-  const handleUnfollow = (id) => {
-    if (follower.length) {
-      axios
-        .delete(
-          `http://localhost:5000/followers/${id}/trimFollower`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
         .then((result) => {
           // console.log(result);
         })
@@ -56,15 +65,13 @@ const Followers = () => {
           console.log(err);
         });
     } else {
+      dispatch(unFollow(id));
       axios
-        .delete(
-          `http://localhost:5000/followers/${id}/unfollow`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        .delete(`http://localhost:5000/followers/${id}/unfollow`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((result) => {
           // console.log(result);
         })
@@ -73,48 +80,57 @@ const Followers = () => {
         });
     }
   };
+
   return (
     <div>
-      {follower?.length ? (
+      {!show ? (
         <div>
-          <h3>Followers</h3>
-          {follower?.map((elem) => {
-            return (
-              <div key={elem.follower_id}>
-                <h5>@{elem.user_name}</h5>
+          {follower?.length ? (
+            follower.map((elem) => {
+              return (
+                <div key={elem.follower_id}>
+                  <h3>Followers</h3>
 
-                <button
-                  onClick={() => {
-                    handleUnfollow(elem.follower_id);
-                  }}
-                >
-                  remove follower
-                </button>
-              </div>
-            );
-          })}
+                  <h5>@{elem.user_name}</h5>
+
+                  <button
+                    onClick={() => {
+                      handleUnfollow(elem.follower_id);
+                    }}
+                  >
+                    remove follower
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <h3>Followers list empty</h3>
+          )}
         </div>
-      ) : null}
-      {following?.length ? (
+      ) : (
         <div>
-          <h3>People you are Following</h3>
-          {following?.map((elem) => {
-            return (
-              <div key={elem.following_id}>
-                <h5>@{elem.user_name}</h5>
+          {following?.length ? (
+            following.map((elem) => {
+              return (
+                <div key={elem.following_id}>
+                  <h3>People you are Following</h3>
+                  <h5>@{elem.user_name}</h5>
 
-                <button
-                  onClick={() => {
-                    handleUnfollow(elem.following_id);
-                  }}
-                >
-                  unfollow
-                </button>
-              </div>
-            );
-          })}
+                  <button
+                    onClick={() => {
+                      handleUnfollow(elem.following_id);
+                    }}
+                  >
+                    unfollow
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <h3>Following list empty</h3>
+          )}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

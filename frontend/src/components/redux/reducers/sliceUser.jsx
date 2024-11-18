@@ -14,8 +14,8 @@ export const sliceUser = createSlice({
     getAllUsers: (state, action) => {
       state.users = action.payload;
     },
-    getUserById: (state, action) => {
-      state.users = action.payload;
+    getUserById: (state, action) => {      
+      state.users = [action.payload];
     },
     getUserByUserName: (state, action) => {
       state.users = action.payload;

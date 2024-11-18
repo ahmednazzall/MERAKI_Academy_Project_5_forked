@@ -202,7 +202,7 @@ const Posts = () => {
         {posts?.map((post, index) => (
           <div key={index} className="post">
             {post.profile_image ? (
-              <Avatar src={post.profile_image} className="post-avatar" />
+              <Avatar src={post.profile_image} className="post-avatar" onClick={()=>{navigate(`./profile/${post.user_id}`)}} />
             ) : (
               <Avatar icon={<UserOutlined />} className="post-avatar" />
             )}
