@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./posts.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../redux/reducers/slicePosts";
+import { createPost, deletePost, setPosts } from "../redux/reducers/slicePosts";
 import { useNavigate } from "react-router-dom";
 import Search from "../search/Search";
-import { Input, Button, FloatButton, Avatar } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+
+import {Input , Button , FloatButton , Avatar} from 'antd'
+import {QuestionCircleOutlined, UserOutlined} from '@ant-design/icons'
 const Posts = () => {
   const [postId, setpostId] = useState(0);
   const [updateClicked, setupdateClicked] = useState(false);
@@ -29,6 +30,7 @@ const Posts = () => {
   useEffect(() => {
     axios
       .get(`http://localhost:5000/followers/posty`, {
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,6 +39,7 @@ const Posts = () => {
         // console.log(res.data);
 
         dispatch(setPosts(res.data.data));
+
       })
       .catch((err) => {
         console.error(err);
@@ -99,6 +102,7 @@ const Posts = () => {
         console.log("Post created successfully!");
 
         setAddPost({}); // Reset the input fields
+
       })
       .catch((err) => {
         console.error(err);
@@ -130,14 +134,15 @@ const Posts = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.error(err);
-        console.log('"Failed to create post."');
-      });
-  };
 
+      }).then((res)=>{
+        dispatch(deletePost({post_id:postId}))
+      }).catch((err) => {
+          console.error(err);
+          console.log('"Failed to create post."');
+          
+        });
+  }
   return (
     <div>
       {/* Search Section */}

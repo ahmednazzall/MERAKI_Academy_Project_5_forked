@@ -31,6 +31,7 @@ followerRouter.get('/posty',authentication, getPostsByFollowers);
 
 
 
+
 // Route to get users a user is following
 // followerRouter.get('/:user_id/followingC',authentication, authentication,getFollowingCount);
 
