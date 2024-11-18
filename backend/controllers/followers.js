@@ -152,6 +152,21 @@ const getFollowing = async (req, res) => {
       .json({ message: "Error fetching following", err: error.message });
   }
 };
+
+const getPostsByFollowers = (req,res)=>{
+  const follower_id = req.params.follower_id
+  const query = `SELECT * FROM followers INNER JOIN
+  users ON followers.following_id = users.user_id
+  OR followers.follower_id = users.user_id
+  INNER JOIN posts ON users.user_id = posts.user_id
+  WHERE followers.follower_id = $1 AND posts.is_deleted=$2 
+  `
+  pool.query(query,[follower_id,0]).then((result)=>{
+    console.log(result.rows);
+
+    
+    
+
 const getPostsByFollowers = (req,res)=>{  
   const id=req.token.userId
 
@@ -161,6 +176,7 @@ const getPostsByFollowers = (req,res)=>{
   where  (u.user_id=$1 or f.follower_id=$1) and po.is_deleted=0`
   pool.query(query,[id])
   .then((result)=>{
+
 
         res.status(200).json({ message: "No following users found ", data: result.rows });
   }).catch((error)=>{

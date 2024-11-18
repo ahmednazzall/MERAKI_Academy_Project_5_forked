@@ -36,9 +36,41 @@ const Posts = () => {
         },
       })
       .then((res) => {
+
+       
+        
+                
+        
+        if (!res.data.data.length) {
+          
+          
+          axios.get(`http://localhost:5000/posts/${userId}/user`,{ headers: {
+            Authorization: `Bearer ${token}`,
+          },}).then((result)=>{
+            if (result.data.Post) {
+              dispatch(setPosts(result.data.Post))
+              
+            }
+            else{dispatch(setPosts([]))}
+          }).catch((err)=>{
+            console.log(err);
+            
+            
+          })
+        }
+        else{
+          
+          
+          
+          dispatch(setPosts(res.data.data));
+        }
+        
+      
+
         // console.log(res.data);
 
         dispatch(setPosts(res.data.data));
+
 
       })
       .catch((err) => {

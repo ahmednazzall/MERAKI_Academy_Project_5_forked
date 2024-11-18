@@ -3,6 +3,7 @@ import axios from "axios";
 
 const Events = ({ userId, token }) => {
   const [todaysBirthdays, setTodaysBirthdays] = useState([]);
+  const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
     axios
@@ -33,13 +34,48 @@ const Events = ({ userId, token }) => {
     setTodaysBirthdays(birthdaysToday);
   };
 
+  const handleGreetingChange = (event) => {
+    setGreeting(event.target.value);
+  };
+
+  const sendGreeting = (recipientId) => {
+    if (greeting.trim()) {
+      axios
+        .post(
+          `https://localhost/5000/greeting/send`,
+          { user_id, recipientId, greeting },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          alert("Greeting sent!");
+          setGreeting("");
+        })
+        .catch((error) => {
+          console.error("Error sending greeting:", error);
+          alert("Failed to send greeting.");
+        });
+    } else {
+      alert("Please write a greeting first.");
+    }
+  };
+
   return (
     <div className="birthdays-section">
       {todaysBirthdays.length > 0 ? (
         todaysBirthdays.map((user) => (
-          <div key={user.id} className="birthday-card">
-            <h3>{user.name}</h3>
+          <div key={user.user_id} className="birthday-card">
+            <h3>{user.user_name}</h3>
             <p>🎉 Happy Birthday! 🎉</p>
+            <textarea
+              value={greeting}
+              onChange={handleGreetingChange}
+              placeholder="Write a greeting..."
+            />
+            <button onClick={() => sendGreeting(user.id)}>Send Greeting</button>
           </div>
         ))
       ) : (

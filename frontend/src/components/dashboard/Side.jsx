@@ -15,7 +15,7 @@ const Side = () => {
         profile
       </Link>
       <br></br>
-      <Link to={"/home/explore"}>#Explore</Link>
+      <Link to={"/home/explore"}>Explore</Link>
       <br></br>
 
       <Link
@@ -39,6 +39,7 @@ const Side = () => {
       >
         Events
       </Link>
+      
       <br></br>
       <Link to={"./bookmark"}>Bookmarks</Link>
     </div>

@@ -106,3 +106,10 @@ CREATE TABLE notifications (
   foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (notification_id)
 );
+CREATE TABLE greetings (
+  id SERIAL PRIMARY KEY,
+  sender_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+  recipient_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
