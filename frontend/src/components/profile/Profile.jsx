@@ -5,13 +5,20 @@ import axios from "axios";
 import { Link, useParams,useNavigate } from "react-router-dom";
 import { getUserById } from "../redux/reducers/sliceUser";
 import Posts from "../posts/Posts";
-
+import { setPosts } from "../redux/reducers/slicePosts";
+import { Input, Button, FloatButton, Avatar } from "antd";
+import { QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
 const ProfilePage = () => {
 const navigate=useNavigate()
   const { id } = useParams();
 
   const userId = id;
-
+  const [addPost, setAddPost] = useState({});
+  const postInfo = {
+    image: addPost.image || null,
+    body: addPost.body || null,
+    video: addPost.video || null,
+  };
   const [following, setFollowing] = useState();
   const [follower, setFollower] = useState();
   const [show, setShow] = useState(false)
@@ -23,6 +30,10 @@ const navigate=useNavigate()
   const user = useSelector((state) => {
     return state.users.users;
   });
+  const posts = useSelector((state) => {
+    return state.posts.posts;
+  });
+  
   
   useEffect(() => {
     axios
@@ -37,13 +48,25 @@ const navigate=useNavigate()
       .catch((err) => {
         console.log(err);
       });
+    axios
+      .get(`http://localhost:5000/posts/${id}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        dispatch(setPosts(result.data.Post))
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
  
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/followers/${userId}/following`, {
+      .get(`http://localhost:5000/followers/${id}/following`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +81,7 @@ const navigate=useNavigate()
     // console.log(userId);
 
     axios
-      .get(`http://localhost:5000/followers/${userId}/follower`)
+      .get(`http://localhost:5000/followers/${id}/follower`)
       .then((result) => {
         setFollower(result.data.data?.length);
       })
@@ -67,7 +90,7 @@ const navigate=useNavigate()
       });
   }, [user]);
 
-  // console.log(user.user_id);
+  // console.log(user[0].user_id);
 
   return (
     <div className="profile-container">
@@ -84,9 +107,10 @@ const navigate=useNavigate()
             <h2>{user[0]?.first_name}</h2>
             <p>@{user[0]?.user_name}</p>
           </div>
-          <button className="edit-profile-button" onClick={()=>{
+          {user[0]?.user_id==localStorage.getItem("user_id")&& <button className="edit-profile-button" onClick={()=>{
             navigate(`/home/profile/edit`)
-          }}>Edit Profile</button>
+          }}>Edit Profile</button>}
+         
         </div>
 
         <div className="bio-section">{user?.bio}</div>
@@ -115,7 +139,100 @@ const navigate=useNavigate()
         </div>
         <div className="posts-section">
           <h3>User Posts</h3>
-          <Posts/>
+         
+               {/* <div className="posts-section">
+        {posts?.map((post, index) => (
+          <div key={index} className="post">
+           
+              <Avatar
+                src={post.profile_image}
+                className="post-avatar"
+                onClick={() => {
+                  navigate(`/home/profile/${post.user_id}`);
+                }}
+              />
+         
+            <div className="post-content">
+              <h3>{post.user_name}</h3>
+              <p>{post.body}</p>
+              {post.user_id == userId ? (
+                <div className="UD-Post">
+                  {!updateClicked ? (
+                    <Button
+                      onClick={(e) => {
+                        setupdateClicked(true);
+                        setpostId(post.post_id);
+                      }}
+                    >
+                      Update
+                    </Button>
+                  ) : null}
+
+                  {updateClicked && postId == post.post_id ? (
+                    <>
+                      <Input
+                        onChange={(e) => {
+                          seteditPosttext(e.target.value);
+                        }}
+                      />
+
+                      <Button
+                        onClick={(e) => {
+                          handelUpdatePost(post.post_id);
+                          setupdateClicked(false);
+                        }}
+                      >
+                        Save
+                      </Button>
+                    </>
+                  ) : null}
+                  <Button
+                    onClick={(e) => {
+                      handelDelete(post.post_id);
+                    }}
+                  >
+                    DELETE
+                  </Button>
+                </div>
+              ) : null}
+              <div className="post-actions">
+                {!savedPost.includes(post.post_id) ? (
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      handleAddSave(post.post_id);
+                    }}
+                  >
+                    Save Post
+                  </Button>
+                ) : (
+                  <Button danger type="text" disabled>
+                    Saved
+                  </Button>
+                )}
+
+                <Button
+                  type="link"
+                  onClick={() => {
+                    localStorage.setItem("postId", post.post_id);
+
+                    navigate(`/home/comments/${post.post_id}`);
+                  }}
+                >
+                  Comments
+                </Button>
+                <Button type="link">Like</Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div> */}
+       
+
+
+
+ 
+          {/* <Posts/> */}
        
         </div>
       </div>

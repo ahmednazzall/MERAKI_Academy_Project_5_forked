@@ -1,17 +1,76 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getUserById,
+  updateUserById,
+  SoftDeleteUserById,
+} from "../redux/reducers/sliceUser";
+import "./edit.css"
 
 const Edit = () => {
+  const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({});
   const [newPass, setNewPass] = useState({});
   const [showPass, setShowPass] = useState(false);
+  const userId = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
   const user = useSelector((state) => {
     return state.users.users;
   });
-  const userId = localStorage.getItem("user_id");
-  const token = localStorage.getItem("token");
-  console.log(userInfo);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        dispatch(getUserById(result.data.User));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleFileChange = (e) => {
+    const select = e.target.files[0];
+
+    if (!select) return;
+
+    const data = new FormData();
+    data.append("file", select);
+    data.append("upload_preset", "project_5");
+    data.append("cloud_name", "dniaphcwx");
+    fetch("https://api.cloudinary.com/v1_1/dniaphcwx/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        axios
+          .put(
+            `http://localhost:5000/users/${userId}`,
+
+            {
+              profile_image: data.url,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            dispatch(updateUserById(res.data.result[0]));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleUpdate = () => {
     axios
@@ -26,8 +85,10 @@ const Edit = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
-        alert(" updated successfully");
+        // alert(" updated successfully");
+        // console.log(res.data.result[0]);
+        dispatch(updateUserById(res.data.result[0]));
+        setUserInfo({});
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +149,14 @@ const Edit = () => {
   return (
     <div>
       <h3>Edit</h3>
+        <div className="profile-picture">
+
       <img src={user[0]?.profile_image} />
+        </div>
+      <div>
+        <input type="file" onChange={handleFileChange} />
+      </div>
+
       <br></br>
 
       <label>

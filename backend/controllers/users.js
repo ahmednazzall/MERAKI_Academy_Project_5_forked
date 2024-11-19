@@ -254,6 +254,8 @@ const updateUserById = async (req, res) => {
     profile_image,
     bio,
   } = req.body;
+
+  
   
   let updatedPassword = "";
   if (password) {
