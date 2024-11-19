@@ -8,7 +8,19 @@ const AdminPanel = () => {
     const userId = localStorage.getItem('user_id')
     const token = localStorage.getItem('token')
    
-   
+    const isLoggedIn = useSelector((auth) => {
+      return auth.auth.isLoggedIn;
+    });
+
+    useEffect(() => {
+      if(!isLoggedIn){
+        navigate("/")
+      }
+    
+      
+    }, [isLoggedIn])
+    
+
     //role id static
    
         return (

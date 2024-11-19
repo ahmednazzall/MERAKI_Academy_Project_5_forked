@@ -65,7 +65,7 @@ const getPostById = (req, res) => {
           Post: result.rows,
         });
       } else {
-        res.status(404).json({
+        res.status(200).json({
           success: false,
           message: "Post Not Found",
         });
@@ -94,7 +94,7 @@ const getPostByUser = (req, res) => {
           Post: result.rows,
         });
       } else {
-        res.status(404).json({
+        res.status(200).json({
           success: false,
           message: `The User With ID ${userId} Have No Posts Yet`,
         });
