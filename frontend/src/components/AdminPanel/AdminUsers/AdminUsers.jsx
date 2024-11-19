@@ -1,6 +1,7 @@
 import React from 'react'
 import './users.css'
 import { useSelector } from 'react-redux'
+import { Avatar } from 'antd'
 const AdminUsers = () => {
     const users = useSelector((users)=>{
         return users.users.users
@@ -11,7 +12,7 @@ const AdminUsers = () => {
             return (
                 <div>
                     <h2>{elem.user_name}</h2>
-                    <img src={elem.profile_image} />
+                    <Avatar src={elem.profile_image}/>
                 </div>
             )
         }) }
