@@ -35,7 +35,14 @@ const Login = () => {
         .then((res) => {
           const decoded = jwtDecode(res.data.token);
           setrole(decoded.role_id)
-          
+          axios.put(`http://localhost:5000/users/islogin/true/${res.data.userId}`,{}).then((result)=>{
+            
+            
+            
+          }).catch((err)=>{
+            console.log(err);
+            
+          })
           dispatch(login(res.data.token));
           dispatch(SetUserId(res.data.userId));
           setMessage(res?.data.message);
