@@ -18,7 +18,10 @@ import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
 import SavedPost from "./components/saved Post/savedPost";
 import Edit from "./components/profile/Edit";
-import AdminPanel from "./components/AdminPanel/AdminPanel";
+import AdminDashBoard from "./components/AdminPanel/AdminDashBoard/AdminDashBoard";
+import AdminUsers from "./components/AdminPanel/AdminUsers/AdminUsers";
+import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
+import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -93,9 +96,17 @@ function App() {
     },
     {
   path : 'Admin/Panel',
-  element : <AdminPanel />
-
-    }
+  element : <AdminDashBoard />,
+    },
+    {path : 'Admin/Panel/users'
+      ,element : <AdminUsers /> 
+     },
+     {path : 'Admin/Panel/posts'
+      ,element : <AdminPosts /> 
+     },
+     {path : 'Admin/Panel/reports'
+      ,element : <AdminReports /> 
+     }
   ]);
 
   return (
