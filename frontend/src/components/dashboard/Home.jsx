@@ -7,7 +7,7 @@ import axios from "axios";
 import Posts from "../posts/Posts";
 import Side from "./Side";
 
-import AdminPanel from "../AdminPanel/AdminPanel";
+
 
 import Search from "../search/Search";
 
