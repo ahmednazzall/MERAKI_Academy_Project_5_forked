@@ -66,7 +66,9 @@ const AdminDashBoard = () => {
             }}>Posts : {posts.length}</h3>
         </div>
         <div>
-            <h3>Is Login : {isLogin.length}</h3>
+            <h3 onClick={(e)=>{
+                navigate('./Is/Login')
+            }}>Is Login : {isLogin.length}</h3>
         </div>
         <div>
             <h3 onClick={(e)=>{
