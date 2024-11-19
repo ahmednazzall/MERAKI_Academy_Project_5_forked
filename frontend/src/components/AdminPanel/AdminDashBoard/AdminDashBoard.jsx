@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import './dashboard.css'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { getAllUsers } from '../../redux/reducers/sliceUser'
 import { setPosts } from '../../redux/reducers/slicePosts'
 
 const AdminDashBoard = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = localStorage.getItem('token')
     const users = useSelector((users)=>{
@@ -55,16 +56,22 @@ const AdminDashBoard = () => {
         <img src='../../../Preview.png'/>
         <div>
         <div>
-            <h3>Users : {users.length}</h3>
+            <h3 onClick={(e)=>{
+                navigate('./users')
+            }}>Users : {users.length}</h3>
         </div>
         <div>
-            <h3>Posts : {posts.length}</h3>
+            <h3 onClick={(e)=>{
+                navigate('./posts')
+            }}>Posts : {posts.length}</h3>
         </div>
         <div>
             <h3>Is Login : {isLogin.length}</h3>
         </div>
         <div>
-            <h3>Reports</h3>
+            <h3 onClick={(e)=>{
+                navigate('./Reports')
+            }}>Reports</h3>
         </div>
         </div>
         <Outlet />
