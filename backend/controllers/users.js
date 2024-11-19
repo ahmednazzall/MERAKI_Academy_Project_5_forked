@@ -167,7 +167,6 @@ WHERE u.user_id=$1 AND u.is_deleted=0`;
 const getUserByUserName = async (req, res) => {
   const { searchUser } = req.query;
 
-
   const query = `SELECT * FROM users where user_name=$1 And is_deleted=0`;
 
   try {
@@ -178,8 +177,6 @@ const getUserByUserName = async (req, res) => {
         User: result.rows,
       });
     } else {
-      
-      
       res.status(404).json({
         success: false,
         message: "User does not exist ",
@@ -187,7 +184,7 @@ const getUserByUserName = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    
+
     res.status(500).json({
       success: false,
       message: "Server Error!",
@@ -196,50 +193,48 @@ const getUserByUserName = async (req, res) => {
   }
 };
 
-const confirmPass=async(req,res)=>{
-  const {id}=req.params
+const confirmPass = async (req, res) => {
+  const { id } = req.params;
   const { password } = req.body;
   const query = `SELECT * FROM users where user_id=$1`;
-try {
-  const result=await pool.query(query,[id])
-    if(result.rows.length){
-        try {
-      const valid = await bcrypt.compare(password, result.rows[0].password);
-        if(valid){
-            res.status(200).json({
-              success:true,
-              message:"valid password"
-            })
-        }else{
+  try {
+    const result = await pool.query(query, [id]);
+    if (result.rows.length) {
+      try {
+        const valid = await bcrypt.compare(password, result.rows[0].password);
+        if (valid) {
           res.status(200).json({
-            success:false,
-            message:"Invalid password"
-          })
-        }
-
-        } catch (error) {
-          res.status(409).json({
+            success: true,
+            message: "valid password",
+          });
+        } else {
+          res.status(200).json({
             success: false,
-            message: "Error while verifying!",
-            error,
+            message: "Invalid password",
           });
         }
-    }else{
+      } catch (error) {
+        res.status(409).json({
+          success: false,
+          message: "Error while verifying!",
+          error,
+        });
+      }
+    } else {
       res.status(404).json({
         success: false,
         message: "Not found error while fetching user info!",
         error,
       });
     }
-    
-} catch (error) {
-  res.status(500).json({
+  } catch (error) {
+    res.status(500).json({
       success: false,
       message: "Server Error!",
       error,
     });
-}
-}
+  }
+};
 
 const updateUserById = async (req, res) => {
   const { id } = req.params;
@@ -254,7 +249,7 @@ const updateUserById = async (req, res) => {
     profile_image,
     bio,
   } = req.body;
-  
+
   let updatedPassword = "";
   if (password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -296,8 +291,8 @@ const updateUserById = async (req, res) => {
 const ResetPassByEmail = async (req, res) => {
   const { email } = req.query;
   const { password } = req.body;
-// console.log(email);
-// console.log(password);
+  // console.log(email);
+  // console.log(password);
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -380,5 +375,5 @@ module.exports = {
   SoftDeleteUserById,
   hardDeletedUserById,
   ResetPassByEmail,
-  confirmPass
+  confirmPass,
 };

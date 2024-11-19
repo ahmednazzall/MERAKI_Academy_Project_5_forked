@@ -4,8 +4,8 @@ import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 const Side = () => {
-  const dispatch = useDispatch()
-  const user_id=localStorage.getItem("user_id")
+  const dispatch = useDispatch();
+  const user_id = localStorage.getItem("user_id");
   const handleLogout = () => {
     dispatch(Logout());
   };
@@ -46,10 +46,9 @@ const Side = () => {
       >
         Events
       </Link>
-      
+
       <br></br>
       <Link to={"./bookmark"}>Bookmarks</Link>
-
 
       <br></br>
       <br></br>
@@ -59,8 +58,9 @@ const Side = () => {
       <br></br>
       <br></br>
       <button onClick={handleLogout} className="LogoutButton">
-          logout
-        </button>
+        logout
+      </button>
+      <Link to={"/home/settings"}>Settings</Link>
     </div>
   );
 };
