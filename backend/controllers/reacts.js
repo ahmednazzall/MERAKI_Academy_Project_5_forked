@@ -40,17 +40,23 @@ const toggleLike = async (req, res) => {
 
 const getLikes = async (req, res) => {
   const { postId } = req.params;
+  const userId = req.token.userId;
 
   try {
-    //get count of likes with userName
     const likesData = await pool.query(
-      `SELECT u.user_id AS user_id,u.user_name AS user_name  FROM likes l INNER JOIN users u ON l.userId = u.user_id WHERE l.postId=$1`,
+      `SELECT u.user_id AS user_id, u.user_name AS user_name FROM likes l 
+       INNER JOIN users u ON l.userId = u.user_id 
+       WHERE l.postId = $1`,
       [postId]
     );
+
+    const userLiked = likesData.rows.some((like) => like.user_id === userId);
+
     res.status(200).json({
       postId: postId,
       count: likesData.rows.length,
       users: likesData.rows.map((like) => like.user_name),
+      isLiked: userLiked,
     });
   } catch (error) {
     console.error(error);

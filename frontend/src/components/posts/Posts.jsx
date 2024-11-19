@@ -3,8 +3,9 @@ import "./posts.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, deletePost, setPosts } from "../redux/reducers/slicePosts";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Search from "../search/Search";
+import Like from "../likes/Like";
 
 import { Input, Button, FloatButton, Avatar } from "antd";
 import { QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
@@ -18,10 +19,9 @@ const Posts = () => {
     body: addPost.body || null,
     video: addPost.video || null,
   };
-  const {id}=useParams()
-  const userId = id?id:localStorage.getItem("user_id");
+  const { id } = useParams();
+  const userId = id ? id : localStorage.getItem("user_id");
 
-  
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -150,7 +150,6 @@ const Posts = () => {
   return (
     <div>
       {/* Search Section */}
-      
 
       {/* Create Post Section */}
       <div className="createPost">
@@ -250,7 +249,9 @@ const Posts = () => {
                 >
                   Comments
                 </Button>
-                <Button type="link">Like</Button>
+
+                <Like postId={post.post_id} />
+
               </div>
             </div>
           </div>
