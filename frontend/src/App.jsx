@@ -18,6 +18,7 @@ import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
 import SavedPost from "./components/saved Post/savedPost";
 import Edit from "./components/profile/Edit";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -90,6 +91,11 @@ function App() {
         },
       ],
     },
+    {
+  path : 'Admin/Panel',
+  element : <AdminPanel />
+
+    }
   ]);
 
   return (
