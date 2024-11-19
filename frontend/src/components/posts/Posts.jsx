@@ -28,7 +28,6 @@ const Posts = () => {
   const [savedPost, setSavedPost] = useState([]);
   
   const posts = useSelector((state) => state.posts.posts);
-  // console.log(posts);
 
   // Fetch posts on component mount
   useEffect(() => {
@@ -38,10 +37,8 @@ const Posts = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
-        dispatch(setPosts(res.data.data));
-
-        // console.log(res.data);
+      .then((res) => {        
+        dispatch(setPosts(res.data.data.reverse()));
       })
       .catch((err) => {
         console.error(err);
@@ -100,12 +97,8 @@ const Posts = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
-        navigate("/loading");
-        setTimeout(() => {
-          navigate("./");
-        }, 1);
-
+      .then((res) => {        
+        dispatch(createPost(res.data.post[0]))
         setAddPost({}); // Reset the input fields
       })
       .catch((err) => {
