@@ -26,6 +26,7 @@ const Posts = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const [savedPost, setSavedPost] = useState([]);
+  
   const posts = useSelector((state) => state.posts.posts);
   // console.log(posts);
 
@@ -244,7 +245,7 @@ const Posts = () => {
                   onClick={() => {
                     localStorage.setItem("postId", post.post_id);
 
-                    navigate(`./comments/${post.post_id}`);
+                    navigate(`/home/comments/${post.post_id}`);
                   }}
                 >
                   Comments

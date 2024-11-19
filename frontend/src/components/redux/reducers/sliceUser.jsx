@@ -21,19 +21,29 @@ export const sliceUser = createSlice({
       state.users = action.payload;
     },
     updateUserById: (state, action) => {
+      
+      const updated = state.users.map((user) => {
+        if (user.user_id == action.payload.user_id) {
+          return action.payload;
+        }
+      });
+      
+       state.users=updated;
+    },
+    SoftDeleteUserById: (state, action) => {
+      const deleted = state.users.filter((user) => {
+        return user.user_id !== action.payload.user_id;
+      });
+       state.users=deleted;
+    },
+    updateProfileImage:(state,action)=>{
       state.users = state.users.map((user) => {
         if (user.user_id === action.payload.user_id) {
           return action.payload;
         }
       });
       return users;
-    },
-    SoftDeleteUserById: (state, action) => {
-      state.users = state.users.filter((user) => {
-        return user.user_id !== action.payload;
-      });
-      return users;
-    },
+    }
   },
 
 });
