@@ -10,7 +10,9 @@ const {
   SoftDeleteUserById,
   hardDeletedUserById,
   ResetPassByEmail,
-  confirmPass
+  confirmPass,
+  isLogin,
+  isNotLogin
 } = require("../controllers/users");
 
 const authentication = require("../middleware/authentication");
@@ -27,6 +29,11 @@ usersRouter.delete("/hd/:id",authentication, hardDeletedUserById);
 module.exports = usersRouter;
 //reset password
 usersRouter.put("/login/re/", ResetPassByEmail);
+
+usersRouter.put("/islogin/true/:userId" ,isLogin);
+
+usersRouter.put("/isNotlogin/false/:userId" ,isNotLogin);
+
 /* 
 register/Admin
 {
