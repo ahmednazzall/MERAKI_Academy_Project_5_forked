@@ -250,6 +250,9 @@ const updateUserById = async (req, res) => {
     bio,
   } = req.body;
 
+  
+  
+
   let updatedPassword = "";
   if (password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
