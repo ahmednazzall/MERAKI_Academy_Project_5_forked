@@ -40,8 +40,13 @@ const AdminDashBoard = () => {
                 Authorization: `Bearer ${token}`,
               },
         }).then((res)=>{
-            dispatch(setPosts(res.data.Posts))
-            
+            if (res.data.Posts.length) {
+                dispatch(setPosts(res.data.Posts))
+                
+            }
+            else{
+                dispatch(setPosts([]))
+            }
             
         }).catch((err)=>{
             console.log(err);
@@ -63,7 +68,7 @@ const AdminDashBoard = () => {
         <div>
             <h3 onClick={(e)=>{
                 navigate('./posts')
-            }}>Posts : {posts.length}</h3>
+            }}>Posts : {posts?.length || 0}</h3>
         </div>
         <div>
             <h3 onClick={(e)=>{
