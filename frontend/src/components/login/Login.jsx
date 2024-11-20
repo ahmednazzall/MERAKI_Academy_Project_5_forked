@@ -125,11 +125,13 @@ const Login = () => {
       {isLoggedIn
         ? message && <LoadingOutlined></LoadingOutlined>
         : message && <p className="failed">{message}</p>}
+        <div>
         <h4 className="Welcome-Login">Welcome to</h4>
        <img src="../../Preview.png" className="Moltaqa-Logo"/>
        <p className="Description-Login">In This Application You Can Contact With Any Person Using This App And Talk About Your Opinions By Creating Posts Or Comments , Also You Can Follow Any User And See His Activities ,
         Thank You For Choosing Us .
        </p>
+       </div>
     </div>
   );
 };
