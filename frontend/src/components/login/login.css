@@ -1,7 +1,8 @@
-@media screen and (max-width :376px )  {
+@media screen and (max-width :376px ) and (min-width : 350px)  {
     .loginPage{
         display: flex;
         flex-direction: column;
+        text-align: center;
     }
     .loginInputs{
         display: flex;
@@ -24,7 +25,7 @@
         cursor: pointer;
         position: relative;
         bottom: 2.5vh;
-        left: 15%;
+        left: 5%;
         width: 50%;
         font-size: small;
         text-decoration: none;
@@ -55,7 +56,6 @@
     font-size: small;
     position: relative;
     bottom: 16.3vh;
-    left: 5%;
    }
    .OR{
     position: relative;
@@ -84,6 +84,688 @@
     margin: 0 auto;
    }
    .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :391px  )and (min-width : 380px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+        transform: scale(1.1);
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 2vh;
+        left: 2%;
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: small;
+    position: relative;
+    bottom: 5.9vh;
+    left: 45%;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 17%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: small;
+    position: relative;
+    bottom: 11.6vh;
+  
+   }
+   .OR{
+    position: relative;
+    bottom: 12vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+   }
+   .Moltaqa-Logo{
+    width: 40%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+    
+   }
+}
+@media screen and (max-width :415px  )and (min-width : 400px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+        transform: scale(1.1);
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 2vh;
+        
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: small;
+    position: relative;
+    bottom: 5.7vh;
+    left: 45%;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 17%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: small;
+    position: relative;
+    bottom: 11.6vh;
+   
+   }
+   .OR{
+    position: relative;
+    bottom: 12vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+   }
+   .Moltaqa-Logo{
+    width: 40%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :431px  )and (min-width : 417px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+        transform: scale(1.1);
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 2vh;
+        
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: small;
+    position: relative;
+    bottom: 5.7vh;
+    left: 45%;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 17%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: small;
+    position: relative;
+    bottom: 11.6vh;
+   
+   }
+   .OR{
+    position: relative;
+    bottom: 12vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+   }
+   .Moltaqa-Logo{
+    width: 40%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :361px  )and (min-width : 350px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        position: relative;
+        border-radius: 5px;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+        transform: scale(1.1);
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 2vh;
+        
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    font-size: small;
+    position: relative;
+    bottom: 6.5vh;
+    left: 45%;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 17%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: small;
+    position: relative;
+    bottom: 11.6vh;
+   
+   }
+   .OR{
+    position: relative;
+    bottom: 12vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+   }
+   .Moltaqa-Logo{
+    width: 40%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :413px  )and (min-width : 411px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+        transform: scale(1.1);
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 2vh;
+        
+        width: 50%;
+        font-size: small;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: small;
+    position: relative;
+    bottom: 5.7vh;
+    left: 45%;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 17%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+    width: 70%;
+    margin: 0 auto;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: small;
+    position: relative;
+    bottom: 10.6vh;
+   
+   }
+   .OR{
+    position: relative;
+    bottom: 12vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+   }
+   .Moltaqa-Logo{
+    width: 40%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .Description-Login{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :769px  )and (min-width : 750px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        height: 2.4vh;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+        font-size: large;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+       
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 1.8vh;
+        left: 5%;
+        width: 50%;
+        font-size: large;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: large;
+    position: relative;
+    bottom: 5.2vh;
+    left: 45%;
+    justify-content: space-around;
+    text-align: center;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 30%;
+   }
+   .Login-Button{
+    position: relative;
+    bottom: 7vh;
+    width: 60%;
+    margin: 0 auto;
+    font-size: large;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: large;
+    position: relative;
+    bottom: 10vh;
+   
+   }
+   .OR{
+    position: relative;
+    bottom: 11vh;
+    margin: 0 auto;
+    font-size: x-large;
+   }
+   .google{
+    position: relative;
+    bottom: 10vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+    font-size: x-large;
+   }
+   .Moltaqa-Logo{
+    width: 25%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 7vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+    font-size: x-large;
+   }
+   .Description-Login{
+    font-size: xx-large;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    bottom: 4vh;
+   }
+}
+@media screen and (max-width :821px  )and (min-width : 810px)  {
+    .loginPage{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .loginInputs{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        
+    }
+    .Email-Input , .Password-Input{
+        width: 75%;
+        height: 2.4vh;
+        position: relative;
+        margin: 0 auto;
+        border-radius: 5px;
+        font-size: large;
+    }
+    .Email-Input:hover , .Password-Input:hover{
+       
+        transition:0.4s;
+        border: blue solid 0.5px;
+    }
+    .forget{
+        cursor: pointer;
+        position: relative;
+        bottom: 1.6vh;
+        left: 5%;
+        width: 50%;
+        font-size: large;
+        text-decoration: none;
+    }
+   .Remember-Label{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    font-size: large;
+    position: relative;
+    bottom: 4.6vh;
+    left: 45%;
+    justify-content: space-around;
+    text-align: center;
+   }
+   .Remember-span{
+    width: 400px;
+    position: relative;
+    right: 30%;
+   }
+   .Login-Button{
+    font-size: large;
+    position: relative;
+    bottom: 6vh;
+    width: 60%;
+    margin: 0 auto;
+   }
+   .Login-Button:hover{
+    transition:0.7s;
+    opacity: 0.6;
+   }
+   .Register-Login{
+    font-size: large;
+    position: relative;
+    bottom: 8.5vh;
+   
+   }
+   .OR{
+    font-size: x-large;
+    position: relative;
+    bottom: 9vh;
+    margin: 0 auto;
+   }
+   .google{
+    position: relative;
+    bottom: 8vh;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    height: 7vh;
+    border-bottom: solid 0.5px black;
+    font-size: x-large;
+   }
+   .Moltaqa-Logo{
+    width: 25%;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    bottom: 5vh;
+   }
+   .Welcome-Login{
+    position: relative;
+    bottom: 7vh;
+    margin: 0 auto;
+    font-size: xx-large;
+   }
+   .Description-Login{
+    font-size: xx-large;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0 auto;
     text-align: center;
