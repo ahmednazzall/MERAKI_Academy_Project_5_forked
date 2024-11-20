@@ -121,4 +121,28 @@ CREATE TABLE likes (
     FOREIGN KEY (postId) REFERENCES posts(post_id) ON DELETE CASCADE,
     UNIQUE (userId, postId)
 );
+CREATE TABLE privacy_settings (
+    u_id INT NOT NULL,
+    profile_visibility VARCHAR(20) DEFAULT
+    blocked_accounts TEXT,
+    FOREIGN KEY (u_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE security_settings (
+    userid INT NOT NULL,
+    two_factor_auth BOOLEAN DEFAULT FALSE,
+    active_sessions JSON, 
+    FOREIGN KEY (userid) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE contact_us (
+    id SERIAL PRIMARY KEY,
+    person_id INT NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    submitted_at TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT fk_person FOREIGN KEY (person_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
 
