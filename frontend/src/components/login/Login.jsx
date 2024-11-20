@@ -83,9 +83,11 @@ const Login = () => {
   });
 
   return (
-    <div>
+    <div className="loginPage">
       <br></br>
+      <div className="loginInputs">
       <input
+      className="Email-Input"
         type="email"
         name="email"
         placeholder="Enter your email"
@@ -96,6 +98,7 @@ const Login = () => {
       />
       <br></br>
       <input
+       className="Password-Input"
         type="password"
         name="password"
         placeholder="Enter your password"
@@ -104,22 +107,29 @@ const Login = () => {
         }}
         defaultValue={localStorage.getItem("password") || ""}
       />
+      </div>
       <br></br>
-      <a href="/forget">forget password? </a>
+      <a href="/forget" className="forget">forget password? </a>
       <br></br>
-      <label>
+      <label className="Remember-Label">
         <input type="checkbox" onChange={handleRemMe} defaultChecked="true" />
-       <span> Remember me </span> 
+       <span className="Remember-span"> Remember me </span> 
       </label>
       <br></br>
-      <button onClick={handleLogin}>login</button>
+      <button onClick={handleLogin} className="Login-Button">login</button>
       <br></br>
-          <h4>Don't have an account? <a href="/register">Sign Up</a></h4>
-          <p>Or</p>
-          <a href="#">login by google</a>
+          <h4 className="Register-Login">Don't have an account? <a href="/register">Sign Up</a></h4>
+          <p className="OR">OR</p>
+          <a href="#" className="google">login by google</a>
+          
       {isLoggedIn
         ? message && <LoadingOutlined></LoadingOutlined>
         : message && <p className="failed">{message}</p>}
+        <h4 className="Welcome-Login">Welcome to</h4>
+       <img src="../../Preview.png" className="Moltaqa-Logo"/>
+       <p className="Description-Login">In This Application You Can Contact With Any Person Using This App And Talk About Your Opinions By Creating Posts Or Comments , Also You Can Follow Any User And See His Activities ,
+        Thank You For Choosing Us .
+       </p>
     </div>
   );
 };
