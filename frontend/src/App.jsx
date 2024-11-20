@@ -23,6 +23,7 @@ import AdminUsers from "./components/AdminPanel/AdminUsers/AdminUsers";
 import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
 import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
+import AdminHome from "./components/AdminPanel/AdminDashBoard/AdminHome";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -69,10 +70,10 @@ function App() {
           element: <Profile />,
         },
         {
-          path:"/home/profile/edit",
-          element:<Edit/>
+          path: "/home/profile/edit",
+          element: <Edit />,
         },
-    
+
         {
           path: "/home/profile/f/:id",
           element: <Followers />,
@@ -96,23 +97,19 @@ function App() {
       ],
     },
     {
-  path : 'Admin/Panel',
-  element : <AdminDashBoard />,
+      path: "Admin/Panel",
+      element: <AdminDashBoard />,
+      children: [
+        { path: "", element: <AdminHome/> },
+        { path: "users", element: <AdminUsers /> },
+        { path: "posts", element: <AdminPosts /> },
+        { path: "reports", element: <AdminReports /> },
+        {
+          path: "Is/Login",
+          element: <AdminIsLogin />,
+        },
+      ],
     },
-    {path : 'Admin/Panel/users'
-      ,element : <AdminUsers /> 
-     },
-     {path : 'Admin/Panel/posts'
-      ,element : <AdminPosts /> 
-     },
-     {path : 'Admin/Panel/reports'
-      ,element : <AdminReports /> 
-     },
-     {
-      path: 'Admin/Panel/Is/Login',
-      element:<AdminIsLogin />
-     }
-
   ]);
 
   return (

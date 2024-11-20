@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('user_id')
   const token = localStorage.getItem("token");
-  const [role , setrole] = useState([])
+  const [role , setRole] = useState([])
   
     
  
@@ -34,14 +34,10 @@ const Login = () => {
         .post("http://localhost:5000/users/login", userInfo)
         .then((res) => {
           const decoded = jwtDecode(res.data.token);
-          setrole(decoded.role_id)
+          setRole(decoded.role_id)
           axios.put(`http://localhost:5000/users/islogin/true/${res.data.userId}`,{}).then((result)=>{
-            
-            
-            
           }).catch((err)=>{
             console.log(err);
-            
           })
           dispatch(login(res.data.token));
           dispatch(SetUserId(res.data.userId));
