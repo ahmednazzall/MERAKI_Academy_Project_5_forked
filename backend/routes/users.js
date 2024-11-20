@@ -11,6 +11,7 @@ const {
   hardDeletedUserById,
   ResetPassByEmail,
   confirmPass,
+
   isLogin,
   isNotLogin
 } = require("../controllers/users");
@@ -19,13 +20,14 @@ const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
 usersRouter.post("/login", login);
-usersRouter.post("/checkpass/:id",authentication ,confirmPass);
-usersRouter.get("/all",authentication ,getAllUsers);
-usersRouter.get("/:id",authentication, getUserById);
-usersRouter.get("/userName/search",authentication, getUserByUserName);
-usersRouter.put("/:id",authentication, updateUserById);
-usersRouter.put("/sd/:id", authentication,SoftDeleteUserById);
-usersRouter.delete("/hd/:id",authentication, hardDeletedUserById);
+usersRouter.post("/checkpass/:id", authentication, confirmPass);
+usersRouter.get("/all", authentication, getAllUsers);
+usersRouter.get("/:id", authentication, getUserById);
+usersRouter.get("/userName/search", authentication, getUserByUserName);
+usersRouter.put("/:id", authentication, updateUserById);
+usersRouter.put("/sd/:id", authentication, SoftDeleteUserById);
+usersRouter.delete("/hd/:id", authentication, hardDeletedUserById);
+
 module.exports = usersRouter;
 //reset password
 usersRouter.put("/login/re/", ResetPassByEmail);
@@ -73,4 +75,3 @@ register/user
 
 
 */
- 

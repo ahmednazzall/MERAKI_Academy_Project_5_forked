@@ -5,9 +5,11 @@ import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 const Side = () => {
+
   const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
   const user_id = localStorage.getItem("user_id");
+
   const handleLogout = () => {
     dispatch(Logout());
     axios
@@ -68,6 +70,8 @@ const Side = () => {
       <button onClick={handleLogout} className="LogoutButton">
         logout
       </button>
+
+
     </div>
   );
 };
