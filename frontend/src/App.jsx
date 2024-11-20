@@ -88,6 +88,7 @@ function App() {
           path: "bookmark",
           element: <SavedPost />,
         },
+        
       ],
     },
   ]);

@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
+
 const Side = () => {
   const dispatch = useDispatch();
   const user_id = localStorage.getItem("user_id");
+  const [showSettings, setShowSettings] = useState(false);
+
   const handleLogout = () => {
     dispatch(Logout());
   };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
-    <div>
+    <div className="sidebar">
+      {/* Profile Link */}
       <Link
         to={`/home/profile/${user_id}`}
         onClick={() => {
@@ -19,12 +28,15 @@ const Side = () => {
           }
         }}
       >
-        profile
+        Profile
       </Link>
-      <br></br>
-      <Link to={"/home/explore"}>Explore</Link>
-      <br></br>
+      <br />
 
+      {/* Explore Link */}
+      <Link to={"/home/explore"}>Explore</Link>
+      <br />
+
+      {/* Feeds Link */}
       <Link
         to={"/home/"}
         onClick={() => {
@@ -35,7 +47,9 @@ const Side = () => {
       >
         Feeds
       </Link>
-      <br></br>
+      <br />
+
+      {/* Events Link */}
       <Link
         to={"/home/events"}
         onClick={() => {
@@ -46,21 +60,33 @@ const Side = () => {
       >
         Events
       </Link>
+      <br />
 
-      <br></br>
-      <Link to={"./bookmark"}>Bookmarks</Link>
+      {/* Bookmarks Link */}
+      <Link to={"/home/bookmark"}>Bookmarks</Link>
+      <br />
 
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <button onClick={handleLogout} className="LogoutButton">
-        logout
-      </button>
-      <Link to={"/home/settings"}>Settings</Link>
+      {/* Settings Section */}
+      <div className="settings">
+        <button onClick={toggleSettings} className="settingsToggle">
+          Settings
+        </button>
+        {showSettings && (
+          <div className="settingsMenu">
+            <Link to={"/home/settings/general"}>General Settings</Link>
+            <br />
+            <Link to={"/home/settings/privacy"}>Privacy Settings</Link>
+            <br />
+            <Link to={"/home/settings/security"}>Security Settings</Link>
+            <br />
+            <Link to={"/home/settings/contact"}>Contact Us</Link>
+            <br />
+            <button onClick={handleLogout} className="LogoutButton">
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
