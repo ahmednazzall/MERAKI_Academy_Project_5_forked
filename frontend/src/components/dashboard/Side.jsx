@@ -5,19 +5,17 @@ import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 const Side = () => {
-  const userId = localStorage.getItem('user_id')
-  const dispatch = useDispatch()
-  const user_id=localStorage.getItem("user_id")
+  const userId = localStorage.getItem("user_id");
+  const dispatch = useDispatch();
+  const user_id = localStorage.getItem("user_id");
   const handleLogout = () => {
     dispatch(Logout());
-    axios.put(`http://localhost:5000/users/isNotlogin/false/${userId}`,{}).then((result)=>{
-      
-      
-      
-    }).catch((err)=>{
-      console.log(err);
-      
-    })
+    axios
+      .put(`http://localhost:5000/users/isNotlogin/false/${userId}`, {})
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -56,10 +54,9 @@ const Side = () => {
       >
         Events
       </Link>
-      
+
       <br></br>
       <Link to={"./bookmark"}>Bookmarks</Link>
-
 
       <br></br>
       <br></br>
@@ -69,8 +66,8 @@ const Side = () => {
       <br></br>
       <br></br>
       <button onClick={handleLogout} className="LogoutButton">
-          logout
-        </button>
+        logout
+      </button>
     </div>
   );
 };
