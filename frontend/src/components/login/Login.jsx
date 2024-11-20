@@ -5,10 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { login, SetUserId } from "../redux/reducers/auth";
 import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
-
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userId = localStorage.getItem('user_id')
+  const token = localStorage.getItem("token");
+  const [role , setRole] = useState([])
+  
+    
+ 
+  
+    
+ 
   const [userInfo, setUserInfo] = useState({
     email: localStorage.getItem("email") || null,
     password: localStorage.getItem("password" || null),
@@ -23,6 +33,12 @@ const Login = () => {
       axios
         .post("http://localhost:5000/users/login", userInfo)
         .then((res) => {
+          const decoded = jwtDecode(res.data.token);
+          setRole(decoded.role_id)
+          axios.put(`http://localhost:5000/users/islogin/true/${res.data.userId}`,{}).then((result)=>{
+          }).catch((err)=>{
+            console.log(err);
+          })
           dispatch(login(res.data.token));
           dispatch(SetUserId(res.data.userId));
           setMessage(res?.data.message);
@@ -54,9 +70,14 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && role == 2) {
       setTimeout(() => {
         navigate("/home");
+      }, 1000);
+    }
+    else if(isLoggedIn && role == 1){
+      setTimeout(() => {
+        navigate("/Admin/Panel");
       }, 1000);
     }
   });

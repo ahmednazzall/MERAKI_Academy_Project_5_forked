@@ -18,10 +18,12 @@ import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
 import SavedPost from "./components/saved Post/savedPost";
 import Edit from "./components/profile/Edit";
-import GeneralSettings from "./components/setting/UpdateGeneralSettings";
-import PrivacySettings from "./components/setting/UpdatePrivacySettings";
-import SecuritySettings from "./components/setting/UpdateSecuritySettings";
-import ContactUs from "./components/setting/ContactUs";
+import AdminDashBoard from "./components/AdminPanel/AdminDashBoard/AdminDashBoard";
+import AdminUsers from "./components/AdminPanel/AdminUsers/AdminUsers";
+import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
+import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
+import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
+import AdminHome from "./components/AdminPanel/AdminDashBoard/AdminHome";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -71,6 +73,7 @@ function App() {
           path: "/home/profile/edit",
           element: <Edit />,
         },
+
         {
           path: "/home/profile/f/:id",
           element: <Followers />,
@@ -91,27 +94,19 @@ function App() {
           path: "bookmark",
           element: <SavedPost />,
         },
-        // Settings Route
+      ],
+    },
+    {
+      path: "Admin/Panel",
+      element: <AdminDashBoard />,
+      children: [
+        { path: "", element: <AdminHome/> },
+        { path: "users", element: <AdminUsers /> },
+        { path: "posts", element: <AdminPosts /> },
+        { path: "reports", element: <AdminReports /> },
         {
-          path: "/home/settings",
-          children: [
-            {
-              path: "/home/settings/general",
-              element: <GeneralSettings />,
-            },
-            {
-              path: "/home/settings/privacy",
-              element: <PrivacySettings />,
-            },
-            {
-              path: "/home/settings/security",
-              element: <SecuritySettings />,
-            },
-            {
-              path: "/home/settings/contact",
-              element: <ContactUs />,
-            },
-          ],
+          path: "Is/Login",
+          element: <AdminIsLogin />,
         },
       ],
     },

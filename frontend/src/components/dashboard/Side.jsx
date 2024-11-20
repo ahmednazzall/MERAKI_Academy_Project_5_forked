@@ -4,13 +4,20 @@ import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 
+import axios from "axios";
 const Side = () => {
+
+  const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
   const user_id = localStorage.getItem("user_id");
-  const [showSettings, setShowSettings] = useState(false);
-
   const handleLogout = () => {
     dispatch(Logout());
+    axios
+      .put(`http://localhost:5000/users/isNotlogin/false/${userId}`, {})
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const toggleSettings = () => {
@@ -60,33 +67,21 @@ const Side = () => {
       >
         Events
       </Link>
-      <br />
 
-      {/* Bookmarks Link */}
-      <Link to={"/home/bookmark"}>Bookmarks</Link>
-      <br />
+      <br></br>
+      <Link to={"./bookmark"}>Bookmarks</Link>
 
-      {/* Settings Section */}
-      <div className="settings">
-        <button onClick={toggleSettings} className="settingsToggle">
-          Settings
-        </button>
-        {showSettings && (
-          <div className="settingsMenu">
-            <Link to={"/home/settings/general"}>General Settings</Link>
-            <br />
-            <Link to={"/home/settings/privacy"}>Privacy Settings</Link>
-            <br />
-            <Link to={"/home/settings/security"}>Security Settings</Link>
-            <br />
-            <Link to={"/home/settings/contact"}>Contact Us</Link>
-            <br />
-            <button onClick={handleLogout} className="LogoutButton">
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <button onClick={handleLogout} className="LogoutButton">
+        logout
+      </button>
+      <Link to={"/home/settings"}>Settings</Link>
     </div>
   );
 };

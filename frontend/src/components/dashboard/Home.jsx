@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, Outlet } from "react-router-dom";
@@ -7,16 +7,19 @@ import axios from "axios";
 import Posts from "../posts/Posts";
 import Side from "./Side";
 
-import AdminPanel from "../AdminPanel/AdminPanel";
+
 
 import Search from "../search/Search";
 
 // import Events from "../events/events";
 
 const Home = () => {
+  const userId = localStorage.getItem('user_id')
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+ 
+  
 
   const isLoggedIn = useSelector((auth) => {
     return auth.auth.isLoggedIn;
@@ -26,11 +29,12 @@ const Home = () => {
     if (!isLoggedIn) {
       navigate("/");
     }
+    
   }, [isLoggedIn]);
 
   return (
     <div className="parent">
-      <AdminPanel />
+     
       <div className="nav">
         {" "}
         <img src="../../Preview.png" className="MoltaqaIcon" />

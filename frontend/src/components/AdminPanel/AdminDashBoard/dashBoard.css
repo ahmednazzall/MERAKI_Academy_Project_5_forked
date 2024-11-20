@@ -1,0 +1,43 @@
+.MoltaqaIcon {
+    border-radius: 20%;
+    width: 10%;
+  }
+  .LogoutButton {
+    position: relative;
+    left: 10%;
+    bottom: 10vh;
+  }
+  .parent {
+    display: grid;
+    grid-template-rows: 0.2fr 1fr;
+    padding: 20px;
+  }
+  .AdNav {
+   display: flex;
+   padding: 1em;
+   gap:2em
+  }
+  .org {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr 0.5fr;
+    gap: 10px;
+  }
+  .sidebar {
+    border: 1px solid gray;
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    border: 1px solid gray;
+    width: 100%;
+  }
+  .messages {
+    display: flex;
+    justify-content: center;
+    border: 1px solid gray;
+  }
+  .adminSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

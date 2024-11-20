@@ -1,43 +1,34 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPanel = () => {
-    const [role , setrole] = useState([])
+    const navigate = useNavigate()
     const userId = localStorage.getItem('user_id')
     const token = localStorage.getItem('token')
-    useEffect(() => {
-      axios.get(`http://localhost:5000/users/${userId}`,{
-        headers: {
-            Authorization: `Bearer ${token}`,
-          },
-      }).then((res)=>{
-        setrole(`${res.data.User.role_id}`)
-        
-       
-        
-
-      }).catch((err)=>{
-        console.log(err);
-        
-      })
    
+    const isLoggedIn = useSelector((auth) => {
+      return auth.auth.isLoggedIn;
+    });
+
+    useEffect(() => {
+      if(!isLoggedIn){
+        navigate("/")
+      }
     
       
-    }, [role])
-   
-    //role id static
-    if (role == 2 ) {
-        
-        
-        return (
-            
-            <div>
-                test
+    }, [isLoggedIn])
+    
 
-             </div>
+    //role id static
+   
+        return (
+        <div>
+             test
+        </div>
   )
-}
+
 }
 
 export default AdminPanel
