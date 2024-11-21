@@ -19,6 +19,7 @@ const Posts = () => {
     body: addPost.body || null,
     video: addPost.video || null,
   };
+  
   const { id } = useParams();
   const userId = id ? id : localStorage.getItem("user_id");
 
@@ -127,7 +128,7 @@ const Posts = () => {
   };
   const handelDelete = (postId) => {
     axios
-      .delete(`http://localhost:5000/posts/${postId}/soft`, {
+      .delete(`http://localhost:5000/posts/${postId}/hard`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

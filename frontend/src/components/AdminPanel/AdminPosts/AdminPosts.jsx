@@ -49,6 +49,8 @@ const AdminPosts = () => {
                 },
               })
               .then((res) => {
+              console.log(res);
+              
                 dispatch(deletePost({ post_id: postId }));
               })
               .catch((err) => {

@@ -23,13 +23,15 @@ const AdminSide = () => {
 
   return (
     <div className="adminSide">
+      <Link to={"/Admin/Panel"}>Dashboard</Link>
+      <br></br>
       <Link to={"./users"}>Users</Link>
       <br></br>
       <Link to={"./posts"}>Posts</Link>
       <br></br>
       <Link to={"./Is/Login"}>Logged in users </Link>
       <br></br>
-      <Link to={"./Reports"}>Reports</Link>
+      <Link to={"./reports"}>Reports</Link>
       <br></br>
       <button onClick={handleLogout} >
         logout

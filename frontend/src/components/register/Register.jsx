@@ -3,11 +3,14 @@ import "./register.css";
 import axios from "axios";
 import { register } from "../redux/reducers/sliceUser";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({ gender: "male" });
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -17,11 +20,14 @@ const Register = () => {
         // console.log(result.data.result);
         dispatch(register(result.data.result));
         setStatus(true);
-        setMessage(result?.data.message);
+        setMessage(`${result?.data.message} transferring to login page... `);
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       })
       .catch((err) => {
         console.log(err);
-        
+
         setStatus(false);
         setMessage(err.response.data.message);
       });
@@ -81,6 +87,18 @@ const Register = () => {
           setUserInfo({ ...userInfo, birth_date: e.target.value });
         }}
       />
+      <br></br>
+      <select
+        name="gender"
+        id="gender"
+        onChange={(e) => {
+          setUserInfo({ ...userInfo, gender: e.target.value });
+        }}
+      >
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
       <br></br>
       <input
         type="text"

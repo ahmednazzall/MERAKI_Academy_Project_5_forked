@@ -1,0 +1,34 @@
+.parentHomeAdmin{
+    display: flex;
+    flex-direction: column;
+    height: 50em;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: rgba(228, 230, 232, 0.368);
+
+}
+.statistics{
+    display: flex;
+    /* height:600px; */
+    width: 75em;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+.cards{
+    display: flex;
+    justify-content: space-around;
+}
+
+.cards .card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(128, 128, 128, 0.519);
+    width: 19em;
+    font-weight: 500;
+    gap: 20px;
+}
+.card .innerCard{
+    display: flex;
+    gap: 0.5em;
+}

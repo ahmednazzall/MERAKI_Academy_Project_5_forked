@@ -23,7 +23,7 @@ import AdminUsers from "./components/AdminPanel/AdminUsers/AdminUsers";
 import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
 import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
-import AdminHome from "./components/AdminPanel/AdminDashBoard/AdminHome";
+import AdminHome from "./components/AdminPanel/AdminDashBoard/Admin Home/AdminHome";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
