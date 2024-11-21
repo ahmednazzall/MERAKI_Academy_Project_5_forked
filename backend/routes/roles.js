@@ -10,13 +10,13 @@ const authorization = require('../middleware/authorization');
 
 
 // Route to create a new role
-rolesRouter.post("/role",authentication,createRole);
+rolesRouter.post("/role",createRole);
 
 // Route to create a new permission
-rolesRouter.post("/permissions", authentication, createPermission);
+rolesRouter.post("/permissions", createPermission);
 
 // Route to assign a permission to a role
-rolesRouter.post("/role-permissions", authentication, createRolePermission);
+rolesRouter.post("/role-permissions", createRolePermission);
 
 
 module.exports = rolesRouter;

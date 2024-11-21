@@ -11,10 +11,13 @@ const Explore = () => {
     return state.auth;
   });
 
-  const users = useSelector((state) => {
+  const AllUsers = useSelector((state) => {
     return state.users.users;
   });
   
+  const users=AllUsers.filter((user)=>{
+    return user.role_id!==1
+  })
 
   useEffect(() => {
     axios

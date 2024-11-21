@@ -11,7 +11,7 @@ const {
   hardDeletedUserById,
   ResetPassByEmail,
   confirmPass,
-
+  getAllUsersFoAdmin,
   isLogin,
   isNotLogin
 } = require("../controllers/users");
@@ -22,6 +22,7 @@ usersRouter.post("/register", Register);
 usersRouter.post("/login", login);
 usersRouter.post("/checkpass/:id", authentication, confirmPass);
 usersRouter.get("/all", authentication, getAllUsers);
+usersRouter.get("/admin/all", authentication, getAllUsersFoAdmin);
 usersRouter.get("/:id", authentication, getUserById);
 usersRouter.get("/userName/search", authentication, getUserByUserName);
 usersRouter.put("/:id", authentication, updateUserById);

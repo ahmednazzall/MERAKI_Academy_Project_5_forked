@@ -30,6 +30,8 @@
     justify-content: center;
     border: 1px solid gray;
     width: 100%;
+    justify-content: flex-start;
+    padding: 1em;
   }
   .messages {
     display: flex;

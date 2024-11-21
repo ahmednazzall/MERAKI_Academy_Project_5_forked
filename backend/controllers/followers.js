@@ -103,12 +103,19 @@ const getFollowers = async (req, res) => {
 };
 
 // Get list of users a user is following
-const getFollowingCount = async (req, res) => {
+const getAllFollowers = async (req, res) => {
   const user_id = req.params.user_id;
   try {
     const result = await pool.query(
-      `SELECT count(follower_id) as total_following FROM followers WHERE follower_id=$1 AND is_deleted=0`,
-      [user_id]
+      `   SELECT
+    DATE(followed_at) AS day,
+    COUNT(DISTINCT follower_id) AS new_followers,
+    SUM(COUNT(DISTINCT follower_id)) OVER (ORDER BY DATE(followed_at)) AS cumulative_followers
+      FROM followers
+        GROUP BY
+          DATE(followed_at)
+          ORDER BY
+          day;`
     );
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "No following users found " });
@@ -166,23 +173,22 @@ const getPostsByFollowers = (req, res) => {
 
   const query = `SELECT * FROM posts p
 JOIN users u ON p.user_id = u.user_id
-WHERE p.is_deleted=0 and p.user_id = $1
+WHERE (p.user_id =$1
    OR p.user_id IN (
        SELECT following_id
        FROM followers
-       WHERE follower_id = $1
-       )
+       WHERE follower_id =$1
+       ))
+       and p.is_deleted=0
    
 ORDER BY p.created_at DESC;`;
   pool
     .query(query, [id])
     .then((result) => {
-      res
-        .status(200)
-        .json({
-          message: "posts for user and following users ",
-          data: result.rows,
-        });
+      res.status(200).json({
+        message: "posts for user and following users ",
+        data: result.rows,
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -195,7 +201,7 @@ module.exports = {
   followUser,
   removeFollower,
   getFollowers,
-  getFollowingCount,
+  getAllFollowers,
   getFollowing,
   unfollowUser,
   getPostsByFollowers,
