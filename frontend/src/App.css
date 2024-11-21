@@ -11,7 +11,7 @@
 }
 
 .app.light {
-  background-color: var(--background-light);
+
   color: var(--text-light);
 }
 

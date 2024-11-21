@@ -122,6 +122,7 @@ const Register = () => {
       {status
         ? message && <p className="success">{message}</p>
         : message && <p className="failed">{message}</p>}
+        
     </div>
   );
 };
