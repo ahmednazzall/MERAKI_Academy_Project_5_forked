@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
+
 import axios from "axios";
 const Side = () => {
 
   const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
   const user_id = localStorage.getItem("user_id");
-
   const handleLogout = () => {
     dispatch(Logout());
     axios
@@ -19,8 +19,14 @@ const Side = () => {
         console.log(err);
       });
   };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
-    <div>
+    <div className="sidebar">
+      {/* Profile Link */}
       <Link
         to={`/home/profile/${user_id}`}
         onClick={() => {
@@ -29,12 +35,15 @@ const Side = () => {
           }
         }}
       >
-        profile
+        Profile
       </Link>
-      <br></br>
-      <Link to={"/home/explore"}>Explore</Link>
-      <br></br>
+      <br />
 
+      {/* Explore Link */}
+      <Link to={"/home/explore"}>Explore</Link>
+      <br />
+
+      {/* Feeds Link */}
       <Link
         to={"/home/"}
         onClick={() => {
@@ -45,7 +54,9 @@ const Side = () => {
       >
         Feeds
       </Link>
-      <br></br>
+      <br />
+
+      {/* Events Link */}
       <Link
         to={"/home/events"}
         onClick={() => {
@@ -70,8 +81,7 @@ const Side = () => {
       <button onClick={handleLogout} className="LogoutButton">
         logout
       </button>
-
-
+      <Link to={"/home/settings"}>Settings</Link>
     </div>
   );
 };

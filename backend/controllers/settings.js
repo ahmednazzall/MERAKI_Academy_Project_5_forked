@@ -299,11 +299,15 @@ const updateSecuritySettings = async (req, res) => {
 // retrieving contact information
 const getContactUs = (req, res) => {
   const contactInfo = {
-    email: "",
-    phone: "",
-    social: {
-      facebook: "https://facebook.com/yourwebsite",
-      twitter: "https://twitter.com/yourwebsite",
+    Email: {
+      Serren_Email: "sereenesam@gmail.com",
+      Ahmad_Email: "nazzall.ahmed@gmail.com",
+      Abdulelah_Email: "abdalelahaljamal@gmail.com",
+    },
+    Phone_Number: {
+      Serren_phone: "0539457475",
+      Ahmad_phone: "0798546036",
+      Abdulelah_phone: "0775532898",
     },
   };
 
