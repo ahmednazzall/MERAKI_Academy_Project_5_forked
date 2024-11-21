@@ -23,7 +23,7 @@ import AdminUsers from "./components/AdminPanel/AdminUsers/AdminUsers";
 import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
 import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
-import AdminHome from "./components/AdminPanel/AdminDashBoard/AdminHome";
+import AdminHome from "./components/AdminPanel/AdminDashBoard/Admin Home/AdminHome";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -114,7 +114,7 @@ function App() {
 
   return (
     <div className={`app ${theme}`}>
-      <header className="app-header">
+      {/* <header className="app-header">
         <label htmlFor="theme-select">Choose Theme: </label>
         <select id="theme-select" value={theme} onChange={toggleTheme}>
           {themes.map((t) => (
@@ -123,7 +123,7 @@ function App() {
             </option>
           ))}
         </select>
-      </header>
+      </header> */}
       {element}
     </div>
   );

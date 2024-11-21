@@ -15,9 +15,10 @@ const Register = async (req, res) => {
     country,
     birth_date,
     bio,
+    gender,
   } = req.body;
 
-  const role_id = 1; //! create admin then switch to user
+  const role_id = 2; //! create admin then switch to user
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const query = `INSERT INTO users (user_name,
@@ -28,8 +29,9 @@ const Register = async (req, res) => {
       country,
       birth_date,
       bio,
+      gender,
        role_id) 
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING*`;
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING*`;
   const data = [
     user_name,
     first_name,
@@ -39,6 +41,7 @@ const Register = async (req, res) => {
     country,
     birth_date,
     bio,
+    gender,
     role_id,
   ];
 
@@ -115,6 +118,29 @@ const login = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   const query = `SELECT * FROM users WHERE is_deleted=0`;
+  try {
+    const result = await pool.query(query);
+    if (result.rows.length) {
+      res.status(200).json({
+        success: true,
+        Users: result.rows,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "No users",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error!",
+      error,
+    });
+  }
+};
+const getAllUsersFoAdmin = async (req, res) => {
+  const query = `SELECT * FROM users`;
   try {
     const result = await pool.query(query);
     if (result.rows.length) {
@@ -249,6 +275,7 @@ const updateUserById = async (req, res) => {
     birth_date,
     profile_image,
     bio,
+    is_deleted
   } = req.body;
 
   let updatedPassword = "";
@@ -269,10 +296,11 @@ const updateUserById = async (req, res) => {
     birth_date || null,
     profile_image || null,
     bio || null,
+    is_deleted || null,
     id,
   ];
 
-  const query = `UPDATE users SET user_name=COALESCE($1,user_name),first_name=COALESCE($2,first_name), last_name=COALESCE($3,last_name),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),birth_date=COALESCE($7,birth_date),profile_image=COALESCE($8,profile_image),bio=COALESCE($9,bio) where user_id=$10 RETURNING*`;
+  const query = `UPDATE users SET user_name=COALESCE($1,user_name),first_name=COALESCE($2,first_name), last_name=COALESCE($3,last_name),email=COALESCE($4,email),password=COALESCE($5,password),country=COALESCE($6,country),birth_date=COALESCE($7,birth_date),profile_image=COALESCE($8,profile_image),bio=COALESCE($9,bio),is_deleted=COALESCE($10,is_deleted) where user_id=$11 RETURNING*`;
 
   try {
     const result = await pool.query(query, values);
@@ -317,7 +345,8 @@ const ResetPassByEmail = async (req, res) => {
 
 const SoftDeleteUserById = async (req, res) => {
   const { id } = req.params;
-  const query = `UPDATE users SET is_deleted=1 where user_id=$1`;
+  const query = `UPDATE users SET is_deleted=1 where user_id=$1 RETURNING*`;
+console.log(id);
 
   try {
     const result = await pool.query(query, [id]);
@@ -410,7 +439,7 @@ module.exports = {
   hardDeletedUserById,
   ResetPassByEmail,
   confirmPass,
-
+  getAllUsersFoAdmin,
   isLogin,
   isNotLogin,
 };

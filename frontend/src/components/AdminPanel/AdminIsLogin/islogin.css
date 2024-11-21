@@ -1,0 +1,11 @@
+.parentLoginAdmin{
+    display: flex;
+    width: 900px;
+    justify-content: space-between;
+}
+
+.infoAdminLogin{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}

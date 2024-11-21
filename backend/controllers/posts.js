@@ -1,13 +1,18 @@
 const { pool } = require("../models/db");
 const createPost = async (req, res) => {
-  const { body, image, video } = req.body;
+
+  const { body, image, video} = req.body;
+
+
   const user_id = req.token.userId;
 
-  const query = `INSERT INTO POSTS (body , image , video , user_id) VALUES ($1,$2,$3,$4) RETURNING *`;
-  const data = [body, image, video, user_id];
+  const query = `INSERT INTO POSTS (body , image , video ,user_id) VALUES ($1,$2,$3,$4) RETURNING *`;
+  const data = [body, image, video,user_id];
   pool
     .query(query, data)
     .then((result) => {
+  
+      
       res.status(201).json({
         success: true,
         message: "Post Created Successfully",
@@ -153,7 +158,7 @@ const SoftDeletePostById = (req, res) => {
 };
 const hardDeletedPostById = (req, res) => {
   const postId = req.params.post_id;
-  const query = `DELETE FROM posts WHERE post_id = $1 RETURNING *`;
+  const query = `DELETE FROM posts WHERE post_id = $1 RETURNING*`;
   pool
     .query(query, [postId])
     .then((result) => {
@@ -167,7 +172,7 @@ const hardDeletedPostById = (req, res) => {
       res.status(500).json({
         success: false,
         message: "InValid Move",
-        err: error,
+        err: error.message,
       });
     });
 };

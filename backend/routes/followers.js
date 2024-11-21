@@ -3,12 +3,13 @@ const {
   followUser,
   unfollowUser,
   getFollowers,
-  getFollowingCount,
+  getAllFollowers,
   getFollowing,
   removeFollower,
   getPostsByFollowers
 } = require("../controllers/followers");
 const authentication = require("../middleware/authentication");
+const auth=require("../middleware/authorization")
 const followerRouter = express.Router();
 
 
@@ -33,7 +34,7 @@ followerRouter.get('/posty/:userId',authentication, getPostsByFollowers);
 
 
 // Route to get users a user is following
-// followerRouter.get('/:user_id/followingC',authentication, authentication,getFollowingCount);
+followerRouter.get('/',authentication,auth("EverThing"),getAllFollowers);
 
 // route to get who is user following 
 followerRouter.get('/:id/following',authentication ,getFollowing);

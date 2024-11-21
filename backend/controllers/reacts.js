@@ -66,4 +66,22 @@ const getLikes = async (req, res) => {
   }
 };
 
-module.exports = { toggleLike, getLikes };
+const gitAllLikes= async(req,res)=>{
+  const query=`SELECT * FROM likes`
+
+  try {
+    const result= await pool.query(query)
+    res.status(200).json({
+      success:true,
+      message:"All likes on all posts",
+      likes:result.rows
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message,
+      error
+    })
+  }
+}
+module.exports = { toggleLike, getLikes,gitAllLikes };

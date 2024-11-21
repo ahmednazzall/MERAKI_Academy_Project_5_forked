@@ -19,13 +19,13 @@ const AdminDashBoard = () => {
         return posts.posts.posts
     })
     const isLogin = users.filter((elem)=>{
-        return elem.is_login == true
+        return elem?.is_login == true
     })
 
     const isLoggedIn = useSelector((auth) => {
         return auth.auth.isLoggedIn;
       });
-const AdminProfile = users.find((user=>{return user.role_id===1}))
+const AdminProfile = users.find((user=>{return user?.role_id===1}))
     
       useEffect(() => {
         if (!isLoggedIn) {
