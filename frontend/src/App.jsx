@@ -122,7 +122,7 @@ function App() {
 
   return (
     <div className={`app ${theme}`}>
-      <header className="app-header">
+      {/* <header className="app-header">
         <label htmlFor="theme-select">Choose Theme: </label>
         <select id="theme-select" value={theme} onChange={toggleTheme}>
           {themes.map((t) => (
@@ -131,7 +131,7 @@ function App() {
             </option>
           ))}
         </select>
-      </header>
+      </header> */}
       {element}
     </div>
   );
