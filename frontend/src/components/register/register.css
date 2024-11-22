@@ -1,0 +1,378 @@
+html,
+body {
+  background-color: #85b9dd;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  position: relative;
+}
+
+.frame {
+  width: 500px;
+  height: auto;
+  margin: 15% auto 0;
+  position: absolute;
+  width: 100%;
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/**
+ * Paper Plane
+ */
+/*Paper Plane: Container*/
+.plane-container {
+  width: 200px;
+  margin: 0px auto;
+  z-index: 3;
+}
+ /*Paper Plane: Image*/
+.plane {
+  width: 100%;
+  height: 60px;
+}
+
+/*Paper Plane: Animation*/
+.plane-container {
+  -webkit-animation: paper-plane-scoping 2s alternate infinite;
+  -moz-animation: paper-plane-scoping 2s alternate infinite;
+  animation: paper-plane-scoping 2s alternate infinite;
+
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+@-webkit-keyframes paper-plane-scoping {
+  0% {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(100px);
+    -moz-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+}
+
+.plane {
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+
+  -webkit-animation: paper-plane-soaring 4s forwards infinite;
+  -moz-animation: paper-plane-soaring 4s forwards infinite;
+  animation: paper-plane-soaring 4s forwards infinite;
+}
+@-webkit-keyframes paper-plane-soaring {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  40% {
+    -webkit-transform: rotate(15deg);
+    -moz-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+  50% {
+    -webkit-transform: rotate(15deg);
+    -moz-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+  60% {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+  70% {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+
+/**
+ * Clouds
+ */
+
+.clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.cloud {
+  position: absolute;
+  top: 20%;
+  width: 300px;
+  right: 0;
+  opacity: 1;
+}
+
+.cloud.front {
+  z-index: 9;
+}
+
+.cloud.distant {
+  z-index: 1;
+}
+
+.cloud.background {
+  z-index: 1;
+}
+
+/*Cloud Sizing*/
+.cloud.smaller {
+  margin-right: 400px;
+  width: 100px;
+  margin-top: 50px;
+}
+
+.cloud.small {
+  margin-right: 200px;
+  width: 150px;
+}
+
+.cloud.big {
+  width: 500px;
+  margin-top: 50px;
+  margin-right: 150px;
+}
+
+.cloud.massive {
+  width: 600px;
+  margin-top: 20px;
+  margin-right: 0px;
+}
+
+
+/*Cloud: Animation*/
+.cloud {
+  -webkit-animation-name: cloud-movement;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-direction: forwards;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 8s;
+
+  -moz-animation-name: cloud-movement;
+  -moz-animation-timing-function: linear;
+  -moz-animation-direction: forwards;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-duration: 8s;
+
+  animation-name: cloud-movement;
+  animation-timing-function: linear;
+  animation-direction: forwards;
+  animation-iteration-count: infinite;
+  animation-duration: 8s;
+}
+
+.slow {
+  -webkit-animation-duration: 9.2s;
+  -moz-animation-duration: 9.2s;
+  animation-duration: 9.2s;
+}
+
+.slower {
+  -webkit-animation-duration: 11.2s;
+  -moz-animation-duration: 11.2s;
+  animation-duration: 11.2s;
+}
+
+.slowest {
+  -webkit-animation-duration: 13.5s;
+  -moz-animation-duration: 13.5s;
+  animation-duration: 13.5s;
+}
+
+.super-slow {
+  -webkit-animation-duration: 20.5s;
+  -moz-animation-duration: 20.5s;
+  animation-duration: 20.5s;
+}
+
+@-webkit-keyframes cloud-movement {
+  0% {
+    opacity: 0.1;
+    -webkit-transform: translateX(300px);
+    -moz-transform: translateX(300px);
+    transform: translateX(300px);
+  }
+  10% {
+
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-1000px);
+    -moz-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+  }
+}
+@media screen and (min-width : 1200px)  {
+    .Register-Page{
+     display: flex;
+     flex-direction: row-reverse;
+     justify-content: space-around;
+     background-color: unset !important;
+     
+    }
+    .Register-Inputs{
+     display: flex;
+     flex-direction: column;
+     text-align: center;
+    
+ }
+ .Email-Input-R , .Password-Input-R ,.FirstName-Input , .LastName-Input , .UserName-Input , .Birth-Input ,.Gender-Input ,.Country-Input{
+     
+     height: 5vh;
+     position: relative;
+     margin: 0 auto;
+     border-radius: 5px;
+     font-size: large;
+     right: 70%;
+     top: 30vh;
+ }
+ .FirstName-Input{
+    width: 80%;
+    position: relative;
+    right: 84%;
+ }
+ .LastName-Input{
+    width: 80%;
+    position: relative;
+    right: -3%;
+    top:22.4vh ;
+ }
+ .UserName-Input{
+    width: 80%;
+    position: relative;
+    right: 84%;
+    top: 22vh;
+ }
+ .Birth-Input{
+    width: 80%;
+    position: relative;
+    right: -3%;
+    top:14.3vh ;
+ }
+ .Gender-Input{
+    width: 80%;
+    position: relative;
+    right: 84%;
+    top: 14vh;
+ }
+ .Country-Input{
+    width: 80%;
+    position: relative;
+    right: -3%;
+    top:6.4vh ;
+ }
+ .Email-Input-R , .Password-Input-R{
+    position: relative;
+    top: 5vh;
+    width: 160%;
+ }
+ .Email-Input-R:hover , .Password-Input-R:hover ,.FirstName-Input:hover , .LastName-Input:hover , .UserName-Input:hover , .Birth-Input:hover ,.Gender-Input:hover ,.Country-Input:hover{
+    
+    transform: scale(1.05);
+     transition:0.4s;
+     border: blue solid 0.5px;
+ }
+ 
+ 
+ 
+ .Register-Button{
+ 
+ position: relative;
+ right: 27%;
+ width: 70%;
+ height: 5vh;
+ bottom: 5vh;
+ }
+ .Register-Button:hover{
+ transition:0.7s;
+ opacity: 0.6;
+ }
+ 
+.Have-Account{
+ 
+ position: relative;
+ top: 10vh;
+ right: 36%;
+ }
+ .OR-R{
+ 
+ position: relative;
+ top: 1vh;
+ font-size: x-large;
+ margin: 0 auto;
+ left: 10%;
+ }
+ .google-R{
+ position: relative;
+ top: 4vh;
+ right: 14%;
+ margin: 0 auto;
+ font-size: x-large;
+ width: 100%;
+ text-align: center;
+ height: 7vh;
+ text-decoration: none;
+ 
+ } 
+ 
+ .Moltaqa-Logo-R{
+ width: 24%;
+ border-radius: 10px;
+ position: relative;
+ left: 30%;
+ top: 17vh;
+ }
+ .Welcome-Login-R{
+ position: relative;
+ left: 35%;
+ font-size: large;
+ top: 15vh;
+ }
+ .Description-Login-R{
+ text-wrap: wrap;
+ width: 50%;
+ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ margin: 0 auto;
+ right: 10%;
+ text-align: start;
+ font-size: large;
+ position: relative;
+ top: 20vh;
+ }
+ .Welcome-Div{
+    width: 45%;
+ }
+ .Register-Form{
+    position: relative;
+    left: 0%;
+ }
+ }
