@@ -86,13 +86,13 @@ const Login = () => {
     <>
      <div className="frame">
 <div className="plane-container">
-<a href="http://customer.io/" target="_blank">
+
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 width="1131.53px" height="379.304px" viewBox="0 0 1131.53 379.304" enable-background="new 0 0 1131.53 379.304"
 xml:space="preserve" className="plane">
 <polygon fill="#D8D8D8" points="72.008,0 274.113,140.173 274.113,301.804 390.796,221.102 601.682,367.302 1131.53,0.223  "/>
 <polygon fill="#C4C4C3" points="1131.53,0.223 274.113,140.173 274.113,301.804 390.796,221.102   "/>
-</svg></a>
+</svg>
 
 </div>
 </div>
@@ -140,7 +140,7 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
 </div>
     <div className="loginPage" style={{backgroundColor:"unset"}}>
       <br></br>
-      <div>
+      <div className="Login-Form">
       <div className="loginInputs">
       <input
       className="Email-Input"
@@ -177,12 +177,12 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
           <h4 className="Register-Login">Don't have an account? <a href="/register">Sign Up</a></h4>
           <p className="OR">OR</p>
           <a href="#" className="google">login by google</a>
-          
+         
       {isLoggedIn
-        ? message && <LoadingOutlined></LoadingOutlined>
+        ? message && <LoadingOutlined className="Loading"></LoadingOutlined>
         : message && <p className="failed">{message}</p>}
         </div>
-        <div>
+        <div className="Welcome-Div-L">
         <h4 className="Welcome-Login">Welcome to</h4>
        <img src="../../Preview.png" className="Moltaqa-Logo"/>
        <p className="Description-Login">In This Application You Can Contact With Any Person Using This App And Talk About Your Opinions By Creating Posts Or Comments , Also You Can Follow Any User And See His Activities ,
