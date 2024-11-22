@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button } from "antd";
 import axios from "axios";
 import { getAllUsers } from "../../redux/reducers/sliceUser";
+import {useNavigate} from "react-router-dom"
 const AdminIsLogin = () => {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -32,21 +34,7 @@ const AdminIsLogin = () => {
       });
   }, [users]);
 
-  const handleLogout= async(id)=>{
-    try {
-        const activate = await axios.put(
-          `http://localhost:5000/users/${id}`,
-          { is_deleted: "0" },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
-  }
+
   return (
     <div>
       {isLogin?.map((user) => {
@@ -57,9 +45,7 @@ const AdminIsLogin = () => {
               <h5>@{user.user_name}</h5>
               
             </div>
-            <Button onClick={()=>{
-                handleLogout(user.user_id)
-            }}>logout user</Button>
+            <Button onClick={()=>{navigate(`/home/profile/${user.user_id}`)}}>Visit user</Button>
           </div>
         );
       })}

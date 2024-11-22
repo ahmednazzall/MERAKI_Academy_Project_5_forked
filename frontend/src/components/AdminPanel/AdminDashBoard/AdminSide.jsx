@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Logout } from "../../redux/reducers/auth";
@@ -7,9 +7,9 @@ import axios from "axios";
 
 
 const AdminSide = () => {
-
     const dispatch = useDispatch();
     const userId=localStorage.getItem("user_id")
+      const [active, setActive] = useState("")
 
   const handleLogout = () => {
     dispatch(Logout());
@@ -20,18 +20,20 @@ const AdminSide = () => {
         console.log(err);
       });
   };
-
+  const handleChosen=(e)=>{
+    setActive(e.target.innerText)
+  }
   return (
     <div className="adminSide">
-      <Link to={"/Admin/Panel"}>Dashboard</Link>
+      <Link to={"/Admin/Panel"} className={active=="Dashboard"?"active":"NotActive"} onClick={handleChosen}>Dashboard</Link>
       <br></br>
-      <Link to={"./users"}>Users</Link>
+      <Link to={"./users"} className={active=="Users"?"active":"NotActive"} onClick={handleChosen}>Users</Link>
       <br></br>
-      <Link to={"./posts"}>Posts</Link>
+      <Link to={"./posts"} className={active=="Posts"?"active":"NotActive"} onClick={handleChosen}>Posts</Link>
       <br></br>
-      <Link to={"./Is/Login"}>Logged in users </Link>
+      <Link to={"./Is/Login"}  className={active=="Online users"?"active":"NotActive"} onClick={handleChosen}>Online users </Link>
       <br></br>
-      <Link to={"./reports"}>Reports</Link>
+      <Link to={"./reports"} className={active=="Reports"?"active":"NotActive"} onClick={handleChosen}>Reports</Link>
       <br></br>
       <button onClick={handleLogout} >
         logout
