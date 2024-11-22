@@ -1,6 +1,7 @@
 .MoltaqaIcon {
     border-radius: 20%;
-    width: 10%;
+    /* width: 5%; */
+    height: 100px;
   }
   .LogoutButton {
     position: relative;
@@ -10,28 +11,39 @@
   .parent {
     display: grid;
     grid-template-rows: 0.2fr 1fr;
-    padding: 20px;
+    padding: 10px;
+    background-color: rgb(246,248,250);
+    /* height: 92.2vh; */
+    /* width: 215vh; */
   }
   .AdNav {
    display: flex;
-   padding: 1em;
-   gap:2em
+   /* padding: 1em; */
+   
+   gap:7em;
+  height: 5em;
   }
   .org {
     display: grid;
     grid-template-columns: 0.5fr 3fr 0.5fr;
     gap: 10px;
+    width: 100%;
   }
   .sidebar {
-    border: 1px solid gray;
+    border: 1px solid rgba(128, 128, 128, 0.54);  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   .content {
     display: flex;
     justify-content: center;
-    border: 1px solid gray;
+    border: 1px solid rgba(128, 128, 128, 0.54);
     width: 100%;
     justify-content: flex-start;
     padding: 1em;
+    background-color: hwb(0 100% 0%);
+    border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   }
   .messages {
     display: flex;

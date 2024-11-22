@@ -1,12 +1,28 @@
 .parentRender{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
-    width: 1000px;
+    /* width: 1000px; */
+    height: 23em;
     align-items: center;
     justify-content: center;
+    gap: 2em;
+    width: 75em;
+    padding: 10px;
+   
 }
 .parentUserAdmin{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.51);
+   border-radius: 10px;
+}
+
+.parentUserAdmin:hover{
+    box-shadow: 1px 1px 4px 2px rgba(128, 128, 128, 0.344) ;
+}
+.parentUserAdmin .image{
+    height: 50px;
+    width: 50px;
+    
 }

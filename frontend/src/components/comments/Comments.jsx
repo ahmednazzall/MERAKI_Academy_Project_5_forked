@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setComments } from "../redux/reducers/sliceComments";
 import "./comments.css";
 import { useNavigate,useParams } from "react-router-dom";
-
 const Comments = () => {
   const user_id = localStorage.getItem('user_id')
   const [editingCommentId, setEditingCommentId] = useState(null);

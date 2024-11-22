@@ -86,23 +86,24 @@ const Followers = () => {
       {!show ? (
         <div>
           {follower?.length ? (
-            follower.map((elem) => {
-              return (
-                <div key={elem.follower_id}>
-                  <h3>Followers</h3>
+            <>
+              <h3>Followers</h3>
+              {follower.map((elem) => {
+                return (
+                  <div key={elem.follower_id}>
+                    <h5>@{elem.user_name}</h5>
 
-                  <h5>@{elem.user_name}</h5>
-
-                  <button
-                    onClick={() => {
-                      handleUnfollow(elem.follower_id);
-                    }}
-                  >
-                    remove follower
-                  </button>
-                </div>
-              );
-            })
+                    <button
+                      onClick={() => {
+                        handleUnfollow(elem.follower_id);
+                      }}
+                    >
+                      remove follower
+                    </button>
+                  </div>
+                );
+              })}
+            </>
           ) : (
             <h3>Followers list empty</h3>
           )}
