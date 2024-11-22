@@ -1,0 +1,45 @@
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 10;
+  max-height: 80vh; 
+  overflow: hidden;
+}
+.popContent {
+  max-height: 70vh; 
+  overflow-y: auto; 
+  display: grid;
+   align-items: center;
+ gap: 20px;
+}
+.btnComment {
+  background-color: brown;
+  color: aliceblue;
+  width: 30px;
+}
+.commentHeader {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+.parentComment {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 1px 1px 2px 1px rgba(128, 128, 128, 0.647);
+  align-items: start;
+}
+.CommentBody {
+  padding-left: 3em;
+}
+.parentComment Button {
+  align-self: flex-end;
+}

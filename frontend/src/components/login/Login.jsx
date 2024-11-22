@@ -51,7 +51,7 @@ const Login = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setMessage(err.response?.data?.message);
         });
     } else {

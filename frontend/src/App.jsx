@@ -24,6 +24,7 @@ import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
 import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
 import AdminHome from "./components/AdminPanel/AdminDashBoard/Admin Home/AdminHome";
+import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -102,7 +103,14 @@ function App() {
       children: [
         { path: "", element: <AdminHome/> },
         { path: "users", element: <AdminUsers /> },
-        { path: "posts", element: <AdminPosts /> },
+        { path: "posts", element: <AdminPosts />,
+          children:[
+            {
+              path:"comments/:postId",
+              element: <AdminComments/>
+            }
+          ]
+         },
         { path: "reports", element: <AdminReports /> },
         {
           path: "Is/Login",
