@@ -6,11 +6,16 @@ import axios from "axios";
 import { deletePost, setPosts } from "../../redux/reducers/slicePosts";
 import { Outlet, useNavigate } from "react-router-dom";
 import AdminComments from "./adminComments/AdminComments";
-import { getAllUsers } from "../../redux/reducers/sliceUser";
+import { Modal, Space } from 'antd';
+import { ExclamationCircleFilled } from "@ant-design/icons";
+const { confirm } = Modal;
+
 const AdminPosts = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
+
+
 
   const token = localStorage.getItem("token");
   const posts = useSelector((posts) => {
@@ -41,10 +46,13 @@ const AdminPosts = () => {
       })
       .then((res) => {
         dispatch(deletePost({ post_id: postId }));
+        success()
+        return res
       })
       .catch((err) => {
         console.error(err);
-        console.log('"Failed to create post."');
+        error()
+       return err
       });
   };
   const handelHardDelete = (postId) => {
@@ -55,18 +63,54 @@ const AdminPosts = () => {
         },
       })
       .then((res) => {
-        console.log(res);
-
         dispatch(deletePost({ post_id: postId }));
+        success()
+        return true
       })
       .catch((err) => {
         console.error(err);
-        console.log('"Failed to delete post."');
+        error()
+        return false
       });
   };
 
-  // console.log(posts);
-
+  const showPromiseConfirmSoftDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this post?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this post will be disappeared from user posts but as an admin you can retrieve it later.",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handelDelete(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
+  const showPromiseConfirmHardDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this post?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this post will be deleted permanently",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handelHardDelete(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
+  const error = () => {
+    Modal.error({
+      title: 'Error',
+      content: 'Failed to delete post',
+    });
+  };
+  const success = () => {
+    Modal.success({
+      content: 'Post deleted successfully',
+    });
+  };
   return (
     <div className="parentPostAdmin">
       {posts?.map((post, index) => (
@@ -89,17 +133,17 @@ const AdminPosts = () => {
           <div className="postContentAdmin">
             <p>{post.body}</p>
 
-            <div >
+            <div>
               <Button
                 onClick={(e) => {
-                  handelDelete(post.post_id);
+                  showPromiseConfirmSoftDeleted(post.post_id)
                 }}
               >
                 Soft DELETE
               </Button>
               <Button
-                onClick={(e) => {
-                  handelHardDelete(post.post_id);
+                onClick={() => {
+                  showPromiseConfirmHardDeleted(post.post_id)
                 }}
               >
                 Hard DELETE
@@ -117,6 +161,7 @@ const AdminPosts = () => {
           {isVisible && <AdminComments setIsVisible={setIsVisible} />}
         </div>
       ))}
+   
     </div>
   );
 };

@@ -8,6 +8,9 @@ import {
 import axios from "axios";
 import "./adminComment.css";
 import { Avatar, Button } from "antd";
+import { Modal } from 'antd';
+import { ExclamationCircleFilled } from "@ant-design/icons";
+const { confirm } = Modal;
 
 const AdminComments = ({ id, setIsVisible }) => {
     const navigate=useNavigate()
@@ -43,13 +46,39 @@ const AdminComments = ({ id, setIsVisible }) => {
       })
       .then(() => {
         dispatch(deleteComment(commentId));
+        success()
       })
       .catch((err) => {
         console.log(err);
+        error()
+        
       });
   };
 
-  
+  const showPromiseConfirmSoftDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this comment?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this comment will be will be deleted permanently",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handleDeleteComment(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
+  const error = () => {
+    Modal.error({
+      title: 'Error',
+      content: 'Failed to delete comment',
+    });
+  };
+  const success = () => {
+    Modal.success({
+      content: 'comment deleted successfully',
+    });
+  };
   return (
     <div className="popup">
     <div className="popContent">
@@ -75,7 +104,8 @@ const AdminComments = ({ id, setIsVisible }) => {
             </div>
             <Button
               onClick={() => {
-                handleDeleteComment(comment.comment_id);
+                // handleDeleteComment(comment.comment_id);
+                showPromiseConfirmSoftDeleted(comment.comment_id)
               }}
             >
               delete

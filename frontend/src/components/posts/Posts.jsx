@@ -186,8 +186,8 @@ const Posts = () => {
   const handleAddSave = (postId) => {
     axios
       .post(
-        "http://localhost:5000/posts/save",
-        { post_id: postId },
+        `http://localhost:5000/posts/add&save/${postId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
