@@ -13,11 +13,6 @@ const Login = () => {
   const userId = localStorage.getItem('user_id')
   const token = localStorage.getItem("token");
   const [role , setRole] = useState([])
-  
-    
- 
-  
-    
  
   const [userInfo, setUserInfo] = useState({
     email: localStorage.getItem("email") || null,

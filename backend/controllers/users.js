@@ -278,9 +278,6 @@ const updateUserById = async (req, res) => {
     is_deleted
   } = req.body;
 
-  
-  
-
   let updatedPassword = "";
   if (password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -398,36 +395,40 @@ const hardDeletedUserById = async (req, res) => {
     });
   }
 };
-const isLogin = (req,res)=>{
-  const userId = req.params.userId
-  const query = `UPDATE users SET is_login = $1 WHERE user_id = $2`
-  pool.query(query , [true , userId]).then((result)=>{
-    res.status(200).json({
-      success : true
+const isLogin = (req, res) => {
+  const userId = req.params.userId;
+  const query = `UPDATE users SET is_login = $1 WHERE user_id = $2`;
+  pool
+    .query(query, [true, userId])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+      });
     })
-  }).catch((err)=>{
-    console.log(err)
-    res.status(500).json({
-      success : false
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+      });
+    });
+};
+const isNotLogin = (req, res) => {
+  const userId = req.params.userId;
+  const query = `UPDATE users SET is_login = $1 WHERE user_id = $2`;
+  pool
+    .query(query, [false, userId])
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+      });
     })
-    
-  })
-}
-const isNotLogin = (req,res)=>{
-  const userId = req.params.userId
-  const query = `UPDATE users SET is_login = $1 WHERE user_id = $2`
-  pool.query(query , [false , userId]).then((result)=>{
-    res.status(200).json({
-      success : true
-    })
-  }).catch((err)=>{
-    console.log(err)
-    res.status(500).json({
-      success : false
-    })
-    
-  })
-}
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+      });
+    });
+};
 module.exports = {
   Register,
   login,
@@ -441,5 +442,5 @@ module.exports = {
   confirmPass,
   getAllUsersFoAdmin,
   isLogin,
-  isNotLogin
+  isNotLogin,
 };

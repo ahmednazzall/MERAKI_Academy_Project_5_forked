@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  FaUser,
+  FaSearch,
+  FaHome,
+  FaCalendarAlt,
+  FaBookmark,
+  FaCog,
+  FaLock,
+  FaPhoneAlt,
+} from "react-icons/fa";
 import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
-
 import axios from "axios";
-const Side = () => {
 
+const Side = () => {
   const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
-  const user_id = localStorage.getItem("user_id");
+  const [showSettings, setShowSettings] = useState(false); // إدارة حالة القائمة المنسدلة
+
   const handleLogout = () => {
     dispatch(Logout());
     axios
@@ -21,27 +31,27 @@ const Side = () => {
   };
 
   const toggleSettings = () => {
-    setShowSettings(!showSettings);
+    setShowSettings((prevState) => !prevState); // تبديل حالة القائمة المنسدلة
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar1">
       {/* Profile Link */}
       <Link
-        to={`/home/profile/${user_id}`}
+        to={`/home/profile/${userId}`}
         onClick={() => {
           if (localStorage.getItem("postId")) {
             localStorage.removeItem("postId");
           }
         }}
       >
-        Profile
+        <FaUser className="sidebar-icon" /> Profile
       </Link>
-      <br />
 
       {/* Explore Link */}
-      <Link to={"/home/explore"}>Explore</Link>
-      <br />
+      <Link to={"/home/explore"}>
+        <FaSearch className="sidebar-icon" /> Explore
+      </Link>
 
       {/* Feeds Link */}
       <Link
@@ -52,9 +62,8 @@ const Side = () => {
           }
         }}
       >
-        Feeds
+        <FaHome className="sidebar-icon" /> Feeds
       </Link>
-      <br />
 
       {/* Events Link */}
       <Link
@@ -65,23 +74,44 @@ const Side = () => {
           }
         }}
       >
-        Events
+        <FaCalendarAlt className="sidebar-icon" /> Events
       </Link>
 
-      <br></br>
-      <Link to={"./bookmark"}>Bookmarks</Link>
+      <Link to={"./bookmark"}>
+        <FaBookmark className="sidebar-icon" /> Bookmarks
+      </Link>
 
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <button onClick={handleLogout} className="LogoutButton">
-        logout
-      </button>
-      <Link to={"/home/settings"}>Settings</Link>
+      {/* Settings Section */}
+      <div className="settings">
+        <button className="settingsToggle" onClick={toggleSettings}>
+          <FaCog className="sidebar-icon" /> Settings
+        </button>
+
+        {/* Settings Menu (Dropdown) */}
+        {showSettings && (
+          <div className="settingsMenu">
+            <Link to={"/home/setting/howToUse"}>
+              <FaLock className="sidebar-icon" /> How To Use Our Website
+            </Link>
+            <Link to={"/home/setting/general"}>
+              <FaCog className="sidebar-icon" /> General Settings
+            </Link>
+            <Link to={"/home/setting/privacy"}>
+              <FaLock className="sidebar-icon" /> Privacy Settings
+            </Link>
+            <Link to={"/home/setting/security"}>
+              <FaLock className="sidebar-icon" /> Security Settings
+            </Link>
+            <Link to={"/home/setting/contact"}>
+              <FaPhoneAlt className="sidebar-icon" /> Contact Us
+            </Link>
+          </div>
+        )}
+      </div>
+
+      <Link to="#" onClick={handleLogout} className="LogoutLink">
+        <FaLock className="sidebar1-icon" /> Logout
+      </Link>
     </div>
   );
 };

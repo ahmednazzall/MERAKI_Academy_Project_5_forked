@@ -18,7 +18,7 @@ const UpdateGeneralSettings = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/settings/general", formData, {
+      .put("http://localhost:5000/settings/general", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((response) => {
