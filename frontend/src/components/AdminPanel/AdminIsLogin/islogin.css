@@ -16,6 +16,7 @@
     align-items: center;
     border: 1px solid rgba(128, 128, 128, 0.51);
    border-radius: 10px;
+   padding: 1em;
 }
 .infoAdminLogin{
     display: flex;

@@ -26,17 +26,17 @@ const AdminDashBoard = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="parent">
+    <div className="parentDash">
       <div className="AdNav">
         {" "}
-        <img src="../../Preview.png" className="MoltaqaIcon" />
+        <img src="../../Preview.png" className="Icon" />
         <h3>Hi {AdminProfile?.user_name}</h3>
       </div>
-      <div className="org">
-        <div className="sidebar">
+      <div className="orgAdmin">
+        <div className="sidebarAdmin">
           <AdminSide />
         </div>
-        <div className="content">
+        <div className="contentAdmin">
           <Outlet />
         </div>
       </div>

@@ -1,21 +1,19 @@
-.parentPost {
+.parentPostAdmin {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  /* width: 100%; */
   width: 75em;
-
 }
 
-.post {
+.postAdmin {
   display: flex;
   flex-direction: column;
   border: 1px solid gray;
-  
   border-radius: 10px;
   box-shadow: 1px 1px 2px 1px rgba(128, 128, 128, 0.647);
+  gap: 1em;
 }
-.postHeader {
+.postHeaderAdmin {
   display: flex;
   align-items: center;
   gap: 0.5em;
@@ -24,8 +22,9 @@
   border-radius: 10px;
 }
 
-.postContent{
+.postContentAdmin{
     display: flex;
     flex-direction: column;
     padding: 15px;
+    gap: 1em;
 }
