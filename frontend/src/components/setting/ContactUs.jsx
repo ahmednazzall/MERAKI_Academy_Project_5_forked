@@ -33,7 +33,7 @@ const ContactUs = () => {
     setError(null);
 
     axios
-      .post("http://localhost:5000/settings/contactUs", formData, {
+      .put("http://localhost:5000/settings/contactUs", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((response) => {

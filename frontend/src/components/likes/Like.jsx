@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { LikeOutlined, DislikeOutlined } from "@ant-design/icons"; // استيراد الأيقونات من Ant Design
 
 const Like = ({ postId, userId }) => {
   const [likesCount, setLikesCount] = useState(0);
@@ -56,18 +57,30 @@ const Like = ({ postId, userId }) => {
       {/* زر الإعجاب */}
       <button
         onClick={toggleLike}
-        onMouseEnter={() => setShowUsers(true)}  // عرض الأسماء عند التمرير
+        onMouseEnter={() => setShowUsers(true)} // عرض الأسماء عند التمرير
         onMouseLeave={() => setShowUsers(false)} // إخفاء الأسماء عند الخروج من الزر
         style={{
           background: "none",
           border: "none",
-          color: isLiked ? "red" : "blue", // لون مختلف للإعجاب
+          color: isLiked ? "red" : "gray", // لون مختلف للإعجاب
           textDecoration: "none",
           cursor: "pointer",
-          fontSize: "1rem",
+          fontSize: "1.5rem", // حجم الأيقونة
+          display: "flex", // استخدام Flexbox لتوزيع العناصر
+          alignItems: "center", // محاذاة الأيقونة مع العدد
         }}
       >
-        {isLiked ? "Unlike" : "Like"} ({likesCount})
+        {/* عرض أيقونة الإعجاب */}
+        {isLiked ? (
+          <LikeOutlined style={{ fontSize: "1.5rem", color: "red" }} />
+        ) : (
+          <DislikeOutlined style={{ fontSize: "1.5rem", color: "gray" }} />
+        )}
+
+        {/* عدد اللايكات بجانب الأيقونة */}
+        <span style={{ marginLeft: "8px", fontSize: "1.2rem", color: "black" }}>
+          {likesCount}
+        </span>
       </button>
 
       {/* إظهار أسماء المستخدمين عند التمرير */}
@@ -83,10 +96,17 @@ const Like = ({ postId, userId }) => {
             borderRadius: "5px",
             width: "200px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            zIndex: 10,
           }}
         >
           <p style={{ margin: "0", fontWeight: "bold" }}>Liked by:</p>
-          <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
+          <ul
+            style={{
+              listStyleType: "none",
+              paddingLeft: "0",
+              marginTop: "5px",
+            }}
+          >
             {likedBy.map((username, index) => (
               <li key={index} style={{ marginBottom: "5px" }}>
                 {username}
