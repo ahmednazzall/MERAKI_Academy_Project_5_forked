@@ -36,9 +36,10 @@ const commentsSlice = createSlice({
       //   );
     },
     deleteComment: (state, action) => {
-      state.comments = state.comments.filter(
+      const deleted = state.comments.filter(
         (comment) => comment.comment_id !== action.payload
       );
+      state.comments=deleted
     },
     setError: (state, action) => {
       state.error = action.payload;

@@ -33,7 +33,7 @@ followerRouter.get('/posty/:userId',authentication, getPostsByFollowers);
 
 
 
-// Route to get users a user is following
+// Route to get all followers
 followerRouter.get('/',authentication,auth("EverThing"),getAllFollowers);
 
 // route to get who is user following 

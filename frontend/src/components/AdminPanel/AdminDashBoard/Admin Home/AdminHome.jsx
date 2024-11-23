@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "antd";
-
+import { Button, Card } from "antd";
+import { AiOutlineUsergroupDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getAllUsers } from "../../../redux/reducers/sliceUser";
 import { setPosts } from "../../../redux/reducers/slicePosts";
 import { ResponsivePie } from "@nivo/pie";
 import { ResponsiveFunnel } from "@nivo/funnel";
+import { AiTwotoneFileAdd } from "react-icons/ai";
+import { BsPersonLinesFill } from "react-icons/bs";
+import { BiSolidReport } from "react-icons/bi";
+
 import "./AdminHome.css";
 import { useNavigate } from "react-router-dom";
 const AdminHome = () => {
@@ -29,25 +33,24 @@ const AdminHome = () => {
   });
   
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/users/admin/all", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
+    // axios
+    //   .get("http://localhost:5000/users/admin/all", {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((res) => {
 
-        dispatch(getAllUsers(res.data.Users));
-        const AdminProfile = res.data.Users.find((user) => {
-          return user.role_id === 1;
-        });
-        // console.log(admin);
-        setAdmin(AdminProfile);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    //     dispatch(getAllUsers(res.data.Users));
+    //     // const AdminProfile = res.data.Users.find((user) => {
+    //     //   return user.role_id === 1;
+    //     // });
+    //     // // console.log(admin);
+    //     // setAdmin(AdminProfile);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     axios
       .get("http://localhost:5000/reacts/likesAll", {
@@ -91,7 +94,7 @@ const AdminHome = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [users]);
+  }, [posts]);
 
   useEffect(() => {
     axios
@@ -193,55 +196,64 @@ const AdminHome = () => {
       <div className="cards">
         <Card title="Users" bordered={true} hoverable className="card">
           <div className="innerCard">
+          <AiOutlineUsergroupDelete style={{fontSize:"25px"}}/>
+
             <p>{users.length}</p>
             <p>users</p>
           </div>
-          <button
+          <Button
             onClick={() => {
               navigate("./users");
             }}
           >
             show users
-          </button>
+          </Button>
         </Card>
         <Card title="Posts" bordered={true} hoverable className="card">
           <div className="innerCard">
+          <AiTwotoneFileAdd  style={{fontSize:"25px"}}/>
             <p>{posts.length}</p>
             <p>posts</p>
           </div>
-          <button
+
+          <Button
             onClick={() => {
               navigate("./posts");
             }}
           >
             show posts
-          </button>
+          </Button>
         </Card>
         <Card title="Online" bordered={true} className="card" hoverable>
           <div className="innerCard">
+          <BsPersonLinesFill style={{fontSize:"25px"}}/>
+
             <p>{isLogin.length}</p>
             <p>online users</p>
           </div>
-          <button
+          <Button
             onClick={() => {
               navigate("./Is/Login");
             }}
           >
-            show users
-          </button>
+            show online users
+          </Button>
         </Card>
-        <Card title="Reports" bordered={true} className="card" hoverable>
+        <Card
+         title={'Reports'}
+        bordered={true} className="card" hoverable>
           <div className="innerCard">
+          <BiSolidReport   style={{fontSize:"25px"}}/>
             <p>2</p>
             <p>reports pending</p>
           </div>
-          <button
+          <Button
             onClick={() => {
               navigate("./Reports");
             }}
           >
-            show users
-          </button>
+            show reports
+          </Button>
         </Card>
       </div>
       <div className="statistics">

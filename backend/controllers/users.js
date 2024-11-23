@@ -346,7 +346,6 @@ const ResetPassByEmail = async (req, res) => {
 const SoftDeleteUserById = async (req, res) => {
   const { id } = req.params;
   const query = `UPDATE users SET is_deleted=1 where user_id=$1 RETURNING*`;
-console.log(id);
 
   try {
     const result = await pool.query(query, [id]);
@@ -354,6 +353,7 @@ console.log(id);
       res.status(200).json({
         success: true,
         message: "Deleted successfully",
+        result:result.rows
       });
     } else {
       res.status(200).json({
@@ -379,6 +379,7 @@ const hardDeletedUserById = async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Deleted successfully",
+        result:result.rows
       });
     } else {
       res.status(200).json({

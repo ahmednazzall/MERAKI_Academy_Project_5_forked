@@ -1,23 +1,26 @@
 .parentHomeAdmin{
     display: flex;
     flex-direction: column;
-    height: 50em;
-    width: 100%;
+    /* height: 50em; */
+    /* width: 100%; */
     justify-content: space-evenly;
-    background-color: rgba(228, 230, 232, 0.368);
-
+    padding: 5px;
+    gap: 5em;
+    background-color: rgb(255, 255, 255);
 }
 .statistics{
     display: flex;
-    /* height:600px; */
     width: 75em;
     justify-content: space-around;
     align-items: center;
+    background-color: white;
+
     
 }
 .cards{
     display: flex;
     justify-content: space-around;
+    background-color: white;
 }
 
 .cards .card{
@@ -27,8 +30,12 @@
     width: 19em;
     font-weight: 500;
     gap: 20px;
+    background-color: white;
+
 }
 .card .innerCard{
     display: flex;
     gap: 0.5em;
+    background-color: white;
+
 }
