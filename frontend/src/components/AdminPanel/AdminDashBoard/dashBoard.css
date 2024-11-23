@@ -1,39 +1,39 @@
-body {
- }
-.MoltaqaIcon {
+.Icon {
   border-radius: 20%;
-  /* width: 5%; */
+  width: 10%;
   height: 100px;
 }
-.LogoutButton {
+
+/* .LogoutButton {
    position: relative; 
    left: 10%; 
    bottom: 10vh; 
-}
-.parent {
-  display: grid;
-  grid-template-rows: 0.2fr 1fr;
+} */
+.parentDash {
+  display: flex;
+  flex-direction: column;
+  /* grid-template-rows: 1fr 1fr; */
   padding: 10px;
-  height: 92.2vh;
+  height: 119vh;
   background-color: rgb(246, 248, 250);
 }
 .AdNav {
   display: flex;
   align-items: center;
   gap: 7em;
-  height: 5em;
 }
-.org {
+.orgAdmin {
   display: grid;
   grid-template-columns: 0.5fr 3fr 0.5fr;
   gap: 10px;
   width: 100%;
 }
-.sidebar {
+.sidebarAdmin {
   border: 1px solid rgba(128, 128, 128, 0.54);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
-.content {
+.contentAdmin {
   display: flex;
   justify-content: center;
   border: 1px solid rgba(128, 128, 128, 0.54);
@@ -44,11 +44,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: hwb(0 100% 0%);
 }
-.messages {
-  display: flex;
-  justify-content: center;
-  border: 1px solid gray;
-}
+
 .adminSide {
   display: flex;
   flex-direction: column;
@@ -56,11 +52,25 @@ body {
   background-color: hsl(0, 0%, 100%);
   padding: 1em;
   gap: 9em;
+  border-radius: 10px;
 }
 
-.logoutBTN{
-  align-self: flex-end;
-  justify-self: end;
+.logoutBTN {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: rgb(189, 46, 46);
+  color: aliceblue;
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+  width: 120px;
+}
+.logoutBTN p{
+  font-size: 18px;
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+  width: 100px;
 }
 .active {
   display: flex;
@@ -73,8 +83,8 @@ body {
   text-align: center;
   background-color: rgb(249, 249, 249);
   position: relative;
-  width: 162%;
-  right: 31%;
+  width: 128%;
+  right: 14%;
 }
 .NotActive {
   display: flex;
@@ -87,10 +97,13 @@ body {
   text-align: center;
   background-color: rgb(255, 255, 255);
   position: relative;
-  width: 162%;
-  right: 31%;}
+  width: 128%;
+  right: 14%;
+}
 a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.875);
-
+  font-family: "Courgette", serif;
+  font-weight: 400;
+  font-style: normal;
 }

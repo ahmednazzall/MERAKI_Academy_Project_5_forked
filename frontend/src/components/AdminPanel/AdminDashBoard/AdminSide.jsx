@@ -6,6 +6,7 @@ import "./dashBoard.css";
 import axios from "axios";
 import { BiSolidDashboard } from "react-icons/bi";
 import { BiSolidUser } from "react-icons/bi";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 
 import { BiSolidReport } from "react-icons/bi";
 import { AiTwotoneFileAdd } from "react-icons/ai";
@@ -14,7 +15,7 @@ import { getAllUsers } from "../../redux/reducers/sliceUser";
 import { BsPersonLinesFill } from "react-icons/bs";
 import { Button } from "antd";
 const AdminSide = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("user_id");
   const [active, setActive] = useState(
@@ -57,69 +58,115 @@ const AdminSide = () => {
   return (
     <div className="adminSide">
       <div>
-      <div className={active == "Dashboard" ? "active" : "NotActive"}>
-        <BiSolidDashboard  style={{cursor:"pointer"}}  fontSize={"24px"}  onClick={()=>{
-          navigate("/Admin/Panel")
-          handleChosen("Dashboard")
-          }}/>
-        <Link to={"/Admin/Panel"} onClick={()=>{handleChosen("Dashboard")}}>
-          Dashboard
-        </Link>
-      </div>
-
-      <div className={active == "Users" ? "active" : "NotActive"}>
-        <FaUsers fontSize={"24px"} style={{cursor:"pointer"}} onClick={()=>{
-          handleChosen("Users")
-          navigate("./users")
-        }}/>
-
-        <Link to={"./users"} onClick={()=>{handleChosen("Users")}}>
-          Users
-        </Link>
-      </div>
-
-      <div className={active == "Posts" ? "active" : "NotActive"}>
-        <AiTwotoneFileAdd style={{cursor:"pointer"}} fontSize={"24px"} onClick={()=>{
-          handleChosen("Posts")
-          navigate("./posts")
-          }} />
-
-        <Link to={"./posts"} onClick={()=>{handleChosen("Posts")}}>
-          Posts
-        </Link>
-      </div>
-
-      <div className={active == "Online users" ? "active" : "NotActive"}>
-        <BsPersonLinesFill style={{cursor:"pointer"}} fontSize={"24px"} onClick={()=>{
-          handleChosen("Online users")
-          navigate("./Is/Login")
-        }} />
-        <Link to={"./Is/Login"} onClick={()=>{
-          handleChosen("Online users")
-        }}>
-          Online users{" "}
-        </Link>
-      </div>
-
-      <div className={active == "Reports" ? "active" : "NotActive"}>
-        <BiSolidReport style={{cursor:"pointer"}} fontSize={"24px"}  onClick={()=>{
-          handleChosen("Reports")
-          navigate("./reports")
-        }}/>
-        <Link to={"./reports"} onClick={()=>{
-          handleChosen("Reports")
-        }}>
-          Reports
-        </Link>
-      </div>
-
-
-      </div>
-      
-        <div>
-      <Button className="logoutBTN" onClick={handleLogout}>logout</Button>
-
+        <div className={active == "Dashboard" ? "active" : "NotActive"}>
+          <BiSolidDashboard
+            style={{ cursor: "pointer" }}
+            fontSize={"24px"}
+            onClick={() => {
+              navigate("/Admin/Panel");
+              handleChosen("Dashboard");
+            }}
+          />
+          <Link
+            to={"/Admin/Panel"}
+            onClick={() => {
+              handleChosen("Dashboard");
+            }}
+          >
+            Dashboard
+          </Link>
         </div>
+
+        <div className={active == "Users" ? "active" : "NotActive"}>
+          <FaUsers
+            fontSize={"24px"}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              handleChosen("Users");
+              navigate("./users");
+            }}
+          />
+
+          <Link
+            to={"./users"}
+            onClick={() => {
+              handleChosen("Users");
+            }}
+          >
+            Users
+          </Link>
+        </div>
+
+        <div className={active == "Posts" ? "active" : "NotActive"}>
+          <AiTwotoneFileAdd
+            style={{ cursor: "pointer" }}
+            fontSize={"24px"}
+            onClick={() => {
+              handleChosen("Posts");
+              navigate("./posts");
+            }}
+          />
+
+          <Link
+            to={"./posts"}
+            onClick={() => {
+              handleChosen("Posts");
+            }}
+          >
+            Posts
+          </Link>
+        </div>
+
+        <div className={active == "Online users" ? "active" : "NotActive"}>
+          <BsPersonLinesFill
+            style={{ cursor: "pointer" }}
+            fontSize={"24px"}
+            onClick={() => {
+              handleChosen("Online users");
+              navigate("./Is/Login");
+            }}
+          />
+          <Link
+            to={"./Is/Login"}
+            onClick={() => {
+              handleChosen("Online users");
+            }}
+          >
+            Online users{" "}
+          </Link>
+        </div>
+
+        <div className={active == "Reports" ? "active" : "NotActive"}>
+          <BiSolidReport
+            style={{ cursor: "pointer" }}
+            fontSize={"24px"}
+            onClick={() => {
+              handleChosen("Reports");
+              navigate("./reports");
+            }}
+          />
+          <Link
+            to={"./reports"}
+            onClick={() => {
+              handleChosen("Reports");
+            }}
+          >
+            Reports
+          </Link>
+        </div>
+      </div>
+
+      <div>
+        <button className="logoutBTN" onClick={handleLogout}>
+          <div>
+            <FaArrowRightFromBracket
+              style={{ cursor: "pointer" }}
+              fontSize={"22px"}
+            />
+          </div>
+          <p>Sign out</p>
+        </button>
+      </div>
     </div>
   );
 };

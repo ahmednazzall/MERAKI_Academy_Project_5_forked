@@ -1,7 +1,6 @@
-.parentRender{
+.parentRenderUserAdmin{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
-    /* width: 1000px; */
     height: 23em;
     align-items: center;
     justify-content: center;
@@ -15,9 +14,15 @@
     flex-direction: column;
     align-items: center;
     border: 1px solid rgba(128, 128, 128, 0.51);
-   border-radius: 10px;
+    border-radius: 10px;
+    gap: 1em;
+    padding: 1em;
 }
-
+.adminUserHeader{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
 .parentUserAdmin:hover{
     box-shadow: 1px 1px 4px 2px rgba(128, 128, 128, 0.344) ;
 }
