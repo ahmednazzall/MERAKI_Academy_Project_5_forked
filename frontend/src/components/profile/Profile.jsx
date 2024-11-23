@@ -4,8 +4,16 @@ import "./Profile.css";
 import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { getUserById } from "../redux/reducers/sliceUser";
-import { createPost, deletePost, setPosts, updatePost } from "../redux/reducers/slicePosts";
-import { Input, Button, FloatButton, Avatar } from "antd";
+import {
+  createPost,
+  deletePost,
+  setPosts,
+  updatePost,
+} from "../redux/reducers/slicePosts";
+import { Input, Button, Card, Avatar, Typography, Row, Col, Space } from "antd";
+
+const { Title, Paragraph } = Typography;
+
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -15,29 +23,21 @@ const ProfilePage = () => {
   const [savedPost, setSavedPost] = useState([]);
   const userId = id ? id : localStorage.getItem("user_id");
 
-  // const userId = id;
   const [addPost, setAddPost] = useState({});
   const postInfo = {
     image: addPost.image || null,
     body: addPost.body || null,
     video: addPost.video || null,
   };
+
   const [following, setFollowing] = useState();
   const [follower, setFollower] = useState();
-  const [show, setShow] = useState(false);
+
   const dispatch = useDispatch();
-  const token = useSelector((state) => {
-    return state.auth.token;
-  });
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.users.users);
+  const posts = useSelector((state) => state.posts.posts);
 
-  const user = useSelector((state) => {
-    return state.users.users;
-  });
-  const posts = useSelector((state) => {
-    return state.posts.posts;
-  });
-
-  // getting user and his post
   useEffect(() => {
     axios
       .get(`http://localhost:5000/users/${userId}`, {
@@ -51,6 +51,7 @@ const ProfilePage = () => {
       .catch((err) => {
         console.log(err);
       });
+
     axios
       .get(`http://localhost:5000/posts/${userId}/user`, {
         headers: {
@@ -65,7 +66,6 @@ const ProfilePage = () => {
       });
   }, [posts]);
 
-  // fetching following and followers
   useEffect(() => {
     axios
       .get(`http://localhost:5000/followers/${id}/following`, {
@@ -74,13 +74,11 @@ const ProfilePage = () => {
         },
       })
       .then((result) => {
-        // console.log(result);
         setFollowing(result.data.data?.length);
       })
       .catch((err) => {
         console.log(err);
       });
-    // console.log(userId);
 
     axios
       .get(`http://localhost:5000/followers/${id}/follower`)
@@ -91,8 +89,6 @@ const ProfilePage = () => {
         console.log(err);
       });
   }, [user]);
-
-  //fetch saved posts
 
   useEffect(() => {
     axios
@@ -120,15 +116,15 @@ const ProfilePage = () => {
         },
       })
       .then((res) => {
-        dispatch(createPost(res.data.post[0]))
-      
-        setAddPost({}); // Reset the input fields
+        dispatch(createPost(res.data.post[0]));
+        setAddPost({});
       })
       .catch((err) => {
         console.error(err);
         console.log('"Failed to create post."');
       });
   };
+
   const handelDelete = (postId) => {
     axios
       .delete(`http://localhost:5000/posts/${postId}/soft`, {
@@ -144,6 +140,7 @@ const ProfilePage = () => {
         console.log('"Failed to create post."');
       });
   };
+
   const handleAddSave = (id) => {
     if (!savedPost.includes(id)) {
       axios
@@ -166,6 +163,7 @@ const ProfilePage = () => {
       return console.log("already saved");
     }
   };
+
   const handelUpdatePost = (postId) => {
     axios
       .put(
@@ -180,8 +178,6 @@ const ProfilePage = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.UpdatedPost);
-        // updatePost
         dispatch(updatePost(res.data.UpdatedPost[0]));
       })
       .catch((err) => {
@@ -189,93 +185,74 @@ const ProfilePage = () => {
         console.log('"Failed to create post."');
       });
   };
+
   return (
     <div className="profile-container">
-      <div className="sidebar">Sidebar</div>
-      <div className="profile-content">
-        <div className="profile-header">
-          <div className="profile-picture">
-            <img
-              src={user[0]?.profile_image || "default-profile.png"}
-              alt="Profile"
-            />
-          </div>
-          <div className="profile-info">
-            <h2>{user[0]?.first_name}</h2>
-            <p>@{user[0]?.user_name}</p>
-          </div>
-          {user[0]?.user_id == localStorage.getItem("user_id") && (
-            <button
-              className="edit-profile-button"
-              onClick={() => {
-                navigate(`/home/profile/edit`);
-              }}
-            >
-              Edit Profile
-            </button>
-          )}
+      <div className="profile-header">
+        <div className="profile-picture">
+          <Avatar
+            size={120}
+            src={user[0]?.profile_image || "default-profile.png"}
+          />
         </div>
-
-        <div className="bio-section">{user?.bio}</div>
-
-        <div className="details-section">
-          <div className="detail-item">Location: {user[0]?.country}</div>
-          <div className="detail-item">Joined: {user[0]?.created_at}</div>
-
-          {follower ? (
-            <div className="detail-item">
-              Followers:
-              <Link to={`/home/profile/f/${0}`}>{follower}</Link>
-            </div>
-          ) : (
-            <div className="detail-item">Followers:0</div>
-          )}
-
-          {following ? (
-            <div className="detail-item">
-              Following:
-              <Link to={`/home/profile/f/${1}`}>{following}</Link>
-            </div>
-          ) : (
-            <div className="detail-item">Following:0</div>
-          )}
+        <div className="profile-info">
+          <Title level={2}>{user[0]?.first_name}</Title>
+          <p>@{user[0]?.user_name}</p>
         </div>
-        <div className="posts-section">
-          <h3>User Posts</h3>
+        {user[0]?.user_id === localStorage.getItem("user_id") && (
+          <Button type="primary" onClick={() => navigate(`/home/profile/edit`)}>
+            Edit Profile
+          </Button>
+        )}
+      </div>
 
-          <div className="posts-section">
-          <div className="createPost">
-                  <Input.TextArea
-                    placeholder="What's on your mind?"
-                    value={addPost.body || ""}
-                    onChange={(e) =>
-                      setAddPost({ ...addPost, body: e.target.value })
-                    }
-                    rows={3}
-                    className="create-post-input"
-                  />
-                  <Button type="primary" onClick={handleAddPost}>
-                    Post
-                  </Button>
-                </div>
-            {posts?.map((post, index) => (
-            (  <div key={index} className="post">
-                <Avatar
-                  src={post?.profile_image}
-                  className="post-avatar"
-                  onClick={() => {
-                    navigate(`/home/profile/${post.user_id}`);
-                  }}
-                />
+      <Paragraph>{user?.bio}</Paragraph>
 
-                <div className="post-content">
+      <Row gutter={16}>
+        <Col span={8}>
+          <Card>
+            <p>Location: {user[0]?.country}</p>
+            <p>Joined: {user[0]?.created_at}</p>
+          </Card>
+        </Col>
+
+        <Col span={8}>
+          <Card>
+            <p>Followers: {follower || 0}</p>
+            <p>Following: {following || 0}</p>
+          </Card>
+        </Col>
+      </Row>
+
+      <div className="createPost">
+        <Input.TextArea
+          placeholder="What's on your mind?"
+          value={addPost.body || ""}
+          onChange={(e) => setAddPost({ ...addPost, body: e.target.value })}
+          rows={3}
+        />
+        <Button type="primary" onClick={handleAddPost}>
+          Post
+        </Button>
+      </div>
+
+      <div className="posts-section">
+        <h3>User Posts</h3>
+        {posts?.map((post, index) => (
+          <Card key={index} style={{ marginBottom: "20px" }}>
+            <Space direction="vertical" size="large">
+              <Row>
+                <Col span={4}>
+                  <Avatar size="large" src={post?.profile_image} />
+                </Col>
+                <Col span={20}>
                   <h3>{post?.user_name}</h3>
                   <p>{post?.body}</p>
-                  {post?.user_id == userId ? (
-                    <div className="UD-Post">
+                  {post?.user_id === userId && (
+                    <div className="post-actions">
                       {!updateClicked && (
                         <Button
-                          onClick={(e) => {
+                          onClick={() => {
                             setUpdateClicked(true);
                             setPostId(post.post_id);
                           }}
@@ -283,76 +260,57 @@ const ProfilePage = () => {
                           Update
                         </Button>
                       )}
-
-                      {updateClicked && postId == post?.post_id ? (
+                      {updateClicked && postId === post?.post_id && (
                         <>
                           <Input
-                            onChange={(e) => {
-                              setEditPostText(e.target.value);
-                            }}
+                            value={editPostText}
+                            onChange={(e) => setEditPostText(e.target.value)}
                           />
-
                           <Button
-                            onClick={(e) => {
+                            onClick={() => {
                               handelUpdatePost(post.post_id);
                               setUpdateClicked(false);
                             }}
                           >
                             Save
                           </Button>
-                          <Button
-                            onClick={(e) => {
-                              setUpdateClicked(false);
-                            }}
-                          >
+                          <Button onClick={() => setUpdateClicked(false)}>
                             Cancel
                           </Button>
                         </>
-                      ) : null}
-                      <Button
-                        onClick={(e) => {
-                          handelDelete(post.post_id);
-                        }}
-                      >
-                        DELETE
+                      )}
+                      <Button onClick={() => handelDelete(post.post_id)}>
+                        Delete
                       </Button>
                     </div>
-                  ) : null}
-                  <div className="post-actions">
-                    {!savedPost.includes(post?.post_id) ? (
-                      <Button
-                        type="link"
-                        onClick={() => {
-                          handleAddSave(post.post_id);
-                        }}
-                      >
-                        Save Post
-                      </Button>
-                    ) : (
-                      <Button danger type="text" disabled>
-                        Saved
-                      </Button>
-                    )}
+                  )}
+                </Col>
+              </Row>
 
-                    <Button
-                      type="link"
-                      onClick={() => {
-                        localStorage.setItem("postId", post?.post_id);
-
-                        navigate(`/home/comments/${post?.post_id}`);
-                      }}
-                    >
-                      Comments
-                    </Button>
-                    <Button type="link">Like</Button>
-                  </div>
-                </div>
-              </div>)
-            ))}
-          </div>
-
-          {/* <Posts/> */}
-        </div>
+              <div className="post-actions">
+                {!savedPost.includes(post?.post_id) ? (
+                  <Button
+                    type="link"
+                    onClick={() => handleAddSave(post.post_id)}
+                  >
+                    Save Post
+                  </Button>
+                ) : (
+                  <Button type="text" disabled>
+                    Saved
+                  </Button>
+                )}
+                <Button
+                  type="link"
+                  onClick={() => navigate(`/home/comments/${post?.post_id}`)}
+                >
+                  Comments
+                </Button>
+                <Button type="link">Like</Button>
+              </div>
+            </Space>
+          </Card>
+        ))}
       </div>
     </div>
   );

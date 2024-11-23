@@ -54,7 +54,7 @@ const UpdatePrivacySettings = () => {
 
     // إرسال طلب الحظر
     try {
-      await axios.post(
+      await axios.put(
         "http://localhost:5000/settings/privacy",
         { blocked_accounts: [userName] },
         {
