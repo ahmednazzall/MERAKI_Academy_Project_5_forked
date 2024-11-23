@@ -6,19 +6,21 @@
     justify-content: space-evenly;
     padding: 5px;
     gap: 5em;
-
+    background-color: rgb(255, 255, 255);
 }
 .statistics{
     display: flex;
-    /* height:600px; */
     width: 75em;
     justify-content: space-around;
     align-items: center;
+    background-color: white;
+
     
 }
 .cards{
     display: flex;
     justify-content: space-around;
+    background-color: white;
 }
 
 .cards .card{
@@ -28,8 +30,12 @@
     width: 19em;
     font-weight: 500;
     gap: 20px;
+    background-color: white;
+
 }
 .card .innerCard{
     display: flex;
     gap: 0.5em;
+    background-color: white;
+
 }

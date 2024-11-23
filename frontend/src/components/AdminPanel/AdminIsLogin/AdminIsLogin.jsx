@@ -19,32 +19,33 @@ const AdminIsLogin = () => {
   });
   // console.log(users);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/users/all", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        dispatch(getAllUsers(res.data.Users));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [users]);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/users/all", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       dispatch(getAllUsers(res.data.Users));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [users]);
 
 
   return (
-    <div>
+    <div className="parentLoginAdmin">
       {isLogin?.map((user) => {
         return (
-          <div key={user.user_id} className="parentLoginAdmin" >
+          <div key={user.user_id} className="innerLoginAdmin" >
             <div className="infoAdminLogin">
               <Avatar src={user.profile_image} />
               <h5>@{user.user_name}</h5>
               
             </div>
+
             <Button onClick={()=>{navigate(`/home/profile/${user.user_id}`)}}>Visit user</Button>
           </div>
         );

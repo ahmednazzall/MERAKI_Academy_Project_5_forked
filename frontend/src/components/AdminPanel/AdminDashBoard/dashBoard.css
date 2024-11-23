@@ -1,4 +1,4 @@
-* {
+body {
   background-color: rgb(246, 248, 250);
 }
 .MoltaqaIcon {
@@ -7,17 +7,16 @@
   height: 100px;
 }
 .LogoutButton {
-  position: relative;
-  left: 10%;
-  bottom: 10vh;
+   position: relative; 
+   left: 10%; 
+   bottom: 10vh; 
 }
 .parent {
   display: grid;
   grid-template-rows: 0.2fr 1fr;
   padding: 10px;
-  background-color: rgb(246, 248, 250);
   height: 92.2vh;
-  /* width: 215vh; */
+  background-color: rgb(246, 248, 250);
 }
 .AdNav {
   display: flex;
@@ -42,9 +41,9 @@
   width: 100%;
   justify-content: flex-start;
   padding: 1em;
-  background-color: hwb(0 100% 0%);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: hwb(0 100% 0%);
 }
 .messages {
   display: flex;
@@ -56,21 +55,43 @@
   flex-direction: column;
   align-items: center;
   background-color: hsl(0, 0%, 100%);
+  padding: 1em;
+  gap: 9em;
 }
 
-a{
+.logoutBTN{
+  align-self: flex-end;
+  justify-self: end;
+}
+.active {
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
-  background-color: rgb(255, 255, 255);
   color: rgba(0, 0, 0, 0.875);
-}
-.active{
-  border: 1px solid gray;
-  box-shadow: 1px 1px 3px 1px grey ;
-  width: 7em;
+  padding: 1em;
+  align-items: center;
+  gap: 0.5em;
   text-align: center;
-  padding:1em ;
+  background-color: rgb(249, 249, 249);
+  position: relative;
+  width: 162%;
+  right: 31%;
 }
+.NotActive {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.875);
+  padding: 1em;
+  align-items: center;
+  gap: 0.5em;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  width: 162%;
+  right: 31%;}
+a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.875);
 
-.NotActive{
-  border:none
 }
