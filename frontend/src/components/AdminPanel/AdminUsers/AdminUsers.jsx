@@ -3,11 +3,7 @@ import "./users.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button } from "antd";
 import axios from "axios";
-import {
-  getAllUsers,
-  SoftDeleteUserById,
-  updateUserById,
-} from "../../redux/reducers/sliceUser";
+import { getAllUsers, SoftDeleteUserById, updateUserById } from "../../redux/reducers/sliceUser";
 const AdminUsers = () => {
   const dispatch = useDispatch();
   const users = useSelector((users) => {
@@ -42,6 +38,8 @@ const AdminUsers = () => {
           },
         }
       );
+      console.log(deactivate.data);
+      dispatch(updateUserById(deactivate.data.result[0]))
     } catch (error) {
       console.log(error);
     }
@@ -57,11 +55,12 @@ const AdminUsers = () => {
           },
         }
       );
+      dispatch(SoftDeleteUserById(deleteSUers.data.result[0]))
     } catch (error) {
       console.log(error);
     }
   };
-
+  // activate user
   const handleActivate = async (id) => {
     try {
       const activate = await axios.put(
@@ -72,21 +71,28 @@ const AdminUsers = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
+      );      
+      dispatch(updateUserById(activate.data.result[0]))
     } catch (error) {
       console.log(error);
     }
   };
+  // console.log(users);
+  const showedUser=users.filter((user)=>{
+    return user.role_id !=1
+  })
+  // console.log(showedUser);
+  
   return (
     <div className="parentRender">
-      {users?.map((elem) => {
+      {showedUser?.map((elem) => {
         return (
           <div key={elem?.user_id}>
             {elem.user_id != localStorage.getItem("user_id") && (
               <div className="parentUserAdmin">
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar src={elem?.profile_image} />
-                  <h4>@{elem?.user_name}</h4>
+                <div style={{ display: "flex", alignItems: "flex-end",gap:"1em" }}>
+                  <Avatar src={elem?.profile_image}  className="image"/>
+                  <h3>@{elem?.user_name}</h3>
                 </div>
                 <p>online: {elem?.is_login ? "true" : "false"}</p>
                 <div>

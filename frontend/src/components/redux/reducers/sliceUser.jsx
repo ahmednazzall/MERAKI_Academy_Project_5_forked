@@ -5,50 +5,46 @@ import { act } from "react";
 export const sliceUser = createSlice({
   name: "User",
   initialState: {
-    users: []
+    users: [],
   },
   reducers: {
     register: (state, action) => {
       state.users.push(action.payload);
     },
     getAllUsers: (state, action) => {
-      state.users = action.payload;
+      state.users = action.payload.reverse();
     },
-    getUserById: (state, action) => {      
+    getUserById: (state, action) => {
       state.users = [action.payload];
     },
     getUserByUserName: (state, action) => {
       state.users = action.payload;
     },
     updateUserById: (state, action) => {
-      
       const updated = state.users.map((user) => {
-        console.log(user);
-        
         if (user.user_id == action.payload.user_id) {
-           user=action.payload;
+          user = action.payload;
         }
-        return user
+        return user;
       });
-      
-       state.users=updated;
+
+      state.users = updated;
     },
     SoftDeleteUserById: (state, action) => {
       const deleted = state.users.filter((user) => {
         return user.user_id !== action.payload;
       });
-       state.users=deleted;
+      state.users = deleted;
     },
-    updateProfileImage:(state,action)=>{
+    updateProfileImage: (state, action) => {
       state.users = state.users.map((user) => {
         if (user.user_id === action.payload.user_id) {
           return action.payload;
         }
       });
       return users;
-    }
+    },
   },
-
 });
 
 export const {
@@ -59,6 +55,5 @@ export const {
   updateUserById,
   SoftDeleteUserById,
 } = sliceUser.actions;
-
 
 export default sliceUser.reducer;
