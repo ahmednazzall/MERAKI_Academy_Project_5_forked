@@ -27,6 +27,8 @@ import PrivacySettings from "./components/setting/UpdatePrivacySettings";
 import SecuritySettings from "./components/setting/UpdateSecuritySettings";
 import ContactUs from "./components/setting/ContactUs";
 import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
+// import { Provider } from "@/components/ui/provider"
+// import { Provider } from "@/components/ui/provider";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -129,14 +131,16 @@ function App() {
       children: [
         { path: "", element: <AdminHome /> },
         { path: "users", element: <AdminUsers /> },
-        { path: "posts", element: <AdminPosts />,
-          children:[
+        {
+          path: "posts",
+          element: <AdminPosts />,
+          children: [
             {
-              path:"comments/:postId",
-              element: <AdminComments/>
-            }
-          ]
-         },
+              path: "comments/:postId",
+              element: <AdminComments />,
+            },
+          ],
+        },
         { path: "reports", element: <AdminReports /> },
         {
           path: "Is/Login",
@@ -146,7 +150,28 @@ function App() {
     },
   ]);
 
+
   return <div className={`app ${theme}`}>{element}</div>;
+
+  return (
+    <div className={`app ${theme}`}>
+      {/* <header className="app-header">
+        <label htmlFor="theme-select">Choose Theme: </label>
+        <select id="theme-select" value={theme} onChange={toggleTheme}>
+          {themes.map((t) => (
+            <option key={t} value={t}>
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </option>
+          ))}
+        </select>
+      </header> */}
+        {element}
+
+
+   
+    </div>
+  );
+
 }
 
 export default App;

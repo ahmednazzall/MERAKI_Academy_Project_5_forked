@@ -6,16 +6,19 @@ import axios from 'axios'
 import { deletePost, setPosts } from '../../redux/reducers/slicePosts'
 import { Outlet, useNavigate } from 'react-router-dom'
 import AdminComments from './adminComments/AdminComments'
+import { getAllUsers } from '../../redux/reducers/sliceUser'
 const AdminPosts = () => {
     const navigate=useNavigate()
     const dispatch = useDispatch()
   const [isVisible, setIsVisible] = useState(false);
 
     const token = localStorage.getItem('token')
+    // const AdminProfile=localStorage.getItem("Admin")
     const posts = useSelector((posts)=>{
         return posts.posts.posts
     })
-   
+
+
     useEffect(() => {
         axios.get('http://localhost:5000/posts',{
             headers: {
