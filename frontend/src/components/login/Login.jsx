@@ -65,12 +65,12 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (isLoggedIn && role == 2) {
+    if (isLoggedIn && role == 1) {
       setTimeout(() => {
         navigate("/home");
       }, 1000);
     }
-    else if(isLoggedIn && role == 1){
+    else if(isLoggedIn && role == 2){
       setTimeout(() => {
         navigate("/Admin/Panel");
       }, 1000);
