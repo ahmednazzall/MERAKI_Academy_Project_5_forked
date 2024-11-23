@@ -33,25 +33,24 @@ const AdminHome = () => {
   });
   
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/users/admin/all", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
+    // axios
+    //   .get("http://localhost:5000/users/admin/all", {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((res) => {
 
-        dispatch(getAllUsers(res.data.Users));
-        const AdminProfile = res.data.Users.find((user) => {
-          return user.role_id === 1;
-        });
-        // console.log(admin);
-        setAdmin(AdminProfile);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    //     dispatch(getAllUsers(res.data.Users));
+    //     // const AdminProfile = res.data.Users.find((user) => {
+    //     //   return user.role_id === 1;
+    //     // });
+    //     // // console.log(admin);
+    //     // setAdmin(AdminProfile);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     axios
       .get("http://localhost:5000/reacts/likesAll", {
@@ -95,7 +94,7 @@ const AdminHome = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [users]);
+  }, [posts]);
 
   useEffect(() => {
     axios

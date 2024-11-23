@@ -25,6 +25,8 @@ import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
 import AdminHome from "./components/AdminPanel/AdminDashBoard/Admin Home/AdminHome";
 import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
+// import { Provider } from "@/components/ui/provider"
+// import { Provider } from "@/components/ui/provider";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -101,16 +103,18 @@ function App() {
       path: "Admin/Panel",
       element: <AdminDashBoard />,
       children: [
-        { path: "", element: <AdminHome/> },
+        { path: "", element: <AdminHome /> },
         { path: "users", element: <AdminUsers /> },
-        { path: "posts", element: <AdminPosts />,
-          children:[
+        {
+          path: "posts",
+          element: <AdminPosts />,
+          children: [
             {
-              path:"comments/:postId",
-              element: <AdminComments/>
-            }
-          ]
-         },
+              path: "comments/:postId",
+              element: <AdminComments />,
+            },
+          ],
+        },
         { path: "reports", element: <AdminReports /> },
         {
           path: "Is/Login",
@@ -132,7 +136,10 @@ function App() {
           ))}
         </select>
       </header> */}
-      {element}
+        {element}
+
+
+   
     </div>
   );
 }
