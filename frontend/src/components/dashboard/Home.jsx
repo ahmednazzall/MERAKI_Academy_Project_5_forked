@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-
-import React, { useEffect, useState } from "react";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, Outlet } from "react-router-dom";
@@ -16,7 +14,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isLoggedIn = useSelector((auth) => auth.auth.isLoggedIn);
+ 
   const isLoggedIn = useSelector((auth) => {
     return auth.auth.isLoggedIn;
   });
@@ -57,7 +55,7 @@ const Home = () => {
         <div className="messages">messages here</div>
 
       </div>
-    </div>
+    
   );
 };
 

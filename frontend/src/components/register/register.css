@@ -310,7 +310,7 @@ svg {
  right: 27%;
  width: 70%;
  height: 5vh;
- bottom: 5vh;
+ bottom: 3vh;
  }
  .Register-Button:hover{
  transition:0.7s;
@@ -370,6 +370,8 @@ svg {
  }
  .Welcome-Div{
     width: 45%;
+    position: relative;
+    top: 7vh;
  }
  .Register-Form{
     position: relative;

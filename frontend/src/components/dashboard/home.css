@@ -6,10 +6,10 @@
 }
 
 body {
-  background-image:url("background.png");
+  /* background-image:url("background.png");
   background-repeat: no-repeat;
   color: #333;
-  padding-top: 80px;
+  padding-top: 80px; */
 }
 
 .parent {
