@@ -5,11 +5,11 @@ const { getHowToUse,updateGeneralSettings, updatePrivacySettings, updateSecurity
 const authentication = require("../middleware/authentication");
 
 settingsRouter.get("/howToUse", authentication, getHowToUse);
-settingsRouter.post("/general", authentication, updateGeneralSettings);
-settingsRouter.post("/privacy", authentication, updatePrivacySettings);
-settingsRouter.post("/security", authentication, updateSecuritySettings);
-settingsRouter.get("/contactUs", authentication, getContactUs);
-settingsRouter.post("/contactUs", postContactUs);
+settingsRouter.put("/general", authentication, updateGeneralSettings);
+settingsRouter.put("/privacy", authentication, updatePrivacySettings);
+settingsRouter.put("/security", authentication, updateSecuritySettings);
+settingsRouter.put("/contactUs", authentication, getContactUs);
+settingsRouter.put("/contactUs", postContactUs);
 
 
 

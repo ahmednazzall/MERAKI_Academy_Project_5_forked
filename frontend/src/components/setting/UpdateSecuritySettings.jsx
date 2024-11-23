@@ -37,7 +37,7 @@ const UpdateSecuritySettings = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/settings/security", formData, {
+      .put("http://localhost:5000/settings/security", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((response) => {

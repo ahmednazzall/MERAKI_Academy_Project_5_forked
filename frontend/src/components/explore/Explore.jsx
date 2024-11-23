@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../redux/reducers/sliceUser";
+import "./Explore.css";
 
 const Explore = () => {
   const dispatch = useDispatch();
   const [following, setFollowing] = useState([]);
+
   const { token, userId } = useSelector((state) => {
     return state.auth;
   });
@@ -14,10 +15,10 @@ const Explore = () => {
   const AllUsers = useSelector((state) => {
     return state.users.users;
   });
-  
-  const users=AllUsers.filter((user)=>{
-    return user.role_id!==1
-  })
+
+  const users = AllUsers.filter((user) => {
+    return user.role_id !== 1;
+  });
 
   useEffect(() => {
     axios
@@ -42,16 +43,13 @@ const Explore = () => {
         },
       })
       .then((result) => {
-        let found = result.data.data.map((elem) => {
-          return elem.following_id;
-        });
-
+        const found = result.data.data.map((elem) => elem.following_id);
         setFollowing(found);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [following]);
+  }, []);
 
   const handFollow = (id) => {
     axios
@@ -65,7 +63,7 @@ const Explore = () => {
         }
       )
       .then((res) => {
-        console.log(res);
+        setFollowing([...following, id]);
       })
       .catch((err) => {
         console.log(err);
@@ -73,29 +71,34 @@ const Explore = () => {
   };
 
   return (
-    <div>
-      <h5>Connect with new people</h5>
-      {users?.map((user) => {
-        return (
-          <div key={user.user_id}>
-            {(user.user_id != userId && !following.includes(user.user_id)) && (
-              <div>
-                <img src={user.profile_image} />
-                <p>{`${user.user_name} ${user.last_name}`}</p>
-                <p>@{user.user_name}</p>
-
+    <div className="explore-container">
+      <h2 className="explore-title">Discover Amazing People</h2>
+      <div className="users-list">
+        {users?.map((user) => {
+          return (
+            user.user_id !== userId &&
+            !following.includes(user.user_id) && (
+              <div key={user.user_id} className="user-card">
+                <img
+                  src={user.profile_image || "/default-avatar.png"}
+                  alt={`${user.user_name} ${user.last_name}`}
+                  className="user-avatar"
+                />
+                <div className="user-info">
+                  <h3 className="user-name">{`${user.user_name} ${user.last_name}`}</h3>
+                  <p className="user-username">@{user.user_name}</p>
+                </div>
                 <button
-                  onClick={() => {
-                    handFollow(user.user_id);
-                  }}
+                  onClick={() => handFollow(user.user_id)}
+                  className="follow-button"
                 >
-                  follow
+                  Follow
                 </button>
               </div>
-            )}
-          </div>
-        );
-      })}
+            )
+          );
+        })}
+      </div>
     </div>
   );
 };
