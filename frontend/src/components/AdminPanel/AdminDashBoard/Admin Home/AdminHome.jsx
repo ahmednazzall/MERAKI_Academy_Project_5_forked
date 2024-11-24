@@ -196,7 +196,7 @@ const AdminHome = () => {
       <div className="cards">
         <Card title="Users" bordered={true} hoverable className="card">
           <div className="innerCard">
-          <AiOutlineUsergroupDelete style={{fontSize:"25px"}}/>
+          <AiOutlineUsergroupDelete className="logosIcon"/>
 
             <p>{users.length}</p>
             <p>users</p>
@@ -211,7 +211,7 @@ const AdminHome = () => {
         </Card>
         <Card title="Posts" bordered={true} hoverable className="card">
           <div className="innerCard">
-          <AiTwotoneFileAdd  style={{fontSize:"25px"}}/>
+          <AiTwotoneFileAdd  className="logosIcon"/>
             <p>{posts.length}</p>
             <p>posts</p>
           </div>
@@ -226,7 +226,7 @@ const AdminHome = () => {
         </Card>
         <Card title="Online" bordered={true} className="card" hoverable>
           <div className="innerCard">
-          <BsPersonLinesFill style={{fontSize:"25px"}}/>
+          <BsPersonLinesFill className="logosIcon"/>
 
             <p>{isLogin.length}</p>
             <p>online users</p>
@@ -243,7 +243,7 @@ const AdminHome = () => {
          title={'Reports'}
         bordered={true} className="card" hoverable>
           <div className="innerCard">
-          <BiSolidReport   style={{fontSize:"25px"}}/>
+          <BiSolidReport  className="logosIcon"/>
             <p>2</p>
             <p>reports pending</p>
           </div>

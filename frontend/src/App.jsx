@@ -8,7 +8,7 @@ import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
 import { useState } from "react";
 import Comments from "./components/comments/Comments";
-import Explore from "./components/explore/explore";
+
 import SearchBar from "./components/search/Search";
 import Followers from "./components/profile/Followers";
 import NextStep from "./components/forgetPassword/NextStep";
@@ -27,6 +27,7 @@ import PrivacySettings from "./components/setting/UpdatePrivacySettings";
 import SecuritySettings from "./components/setting/UpdateSecuritySettings";
 import ContactUs from "./components/setting/ContactUs";
 import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
+import Explore from "./components/explore/Explore";
 // import { Provider } from "@/components/ui/provider"
 // import { Provider } from "@/components/ui/provider";
 
