@@ -54,6 +54,7 @@ const AdminComments = ({ id, setIsVisible }) => {
         
       });
   };
+// console.log(comments);
 
   const showPromiseConfirmSoftDeleted = (id) => {
     confirm({
@@ -92,7 +93,7 @@ const AdminComments = ({ id, setIsVisible }) => {
       >
         X
       </button>
-      {comments?.map((comment) => {
+      { comments?.map((comment) => {
         return (
           <div key={comment.comment_id} className="parentComment">
             <div className="commentHeader">

@@ -344,7 +344,7 @@ const Posts = () => {
               <Like postId={post.post_id} />
               <Button
                 icon={<CommentOutlined />}
-                onClick={() => navigate(`/comments/${post.post_id}`)}
+                onClick={() => navigate(`./comments/${post.post_id}`)}
               >
                 Comments
               </Button>

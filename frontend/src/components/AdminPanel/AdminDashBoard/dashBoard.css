@@ -4,17 +4,11 @@
   height: 100px;
 }
 
-/* .LogoutButton {
-   position: relative; 
-   left: 10%; 
-   bottom: 10vh; 
-} */
 .parentDash {
   display: flex;
   flex-direction: column;
-  /* grid-template-rows: 1fr 1fr; */
   padding: 10px;
-  height: 119vh;
+  height: 122vh;
   background-color: rgb(246, 248, 250);
 }
 .AdNav {
@@ -24,9 +18,10 @@
 }
 .orgAdmin {
   display: grid;
-  grid-template-columns: 0.5fr 3fr 0.5fr;
+  grid-template-columns: 0.5fr 3fr;
   gap: 10px;
   width: 100%;
+  
 }
 .sidebarAdmin {
   border: 1px solid rgba(128, 128, 128, 0.54);
@@ -43,6 +38,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: hwb(0 100% 0%);
+  
 }
 
 .adminSide {
@@ -53,6 +49,7 @@
   padding: 1em;
   gap: 9em;
   border-radius: 10px;
+  height: 103vh;
 }
 
 .logoutBTN {
@@ -63,10 +60,10 @@
   font-family: "Courgette", serif;
   font-weight: 500;
   font-style: normal;
-  width: 120px;
+  width: 100px;
 }
-.logoutBTN p{
-  font-size: 18px;
+.logoutBTN p {
+  font-size: 15px;
   font-family: "Courgette", serif;
   font-weight: 500;
   font-style: normal;
@@ -106,4 +103,93 @@ a {
   font-family: "Courgette", serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.labelIcon {
+  cursor: pointer;
+  font-size: 24px;
+}
+@media screen and (max-width: 376px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 137em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
 }

@@ -43,6 +43,7 @@ const AdminSide = () => {
 
   const handleLogout = () => {
     dispatch(Logout());
+    localStorage.removeItem("active");
     axios
       .put(`http://localhost:5000/users/isNotlogin/false/${userId}`, {})
       .then((result) => {})
@@ -57,11 +58,10 @@ const AdminSide = () => {
   };
   return (
     <div className="adminSide">
-      <div>
+      <div className="directions">
         <div className={active == "Dashboard" ? "active" : "NotActive"}>
           <BiSolidDashboard
-            style={{ cursor: "pointer" }}
-            fontSize={"24px"}
+            className="labelIcon"
             onClick={() => {
               navigate("/Admin/Panel");
               handleChosen("Dashboard");
@@ -79,8 +79,7 @@ const AdminSide = () => {
 
         <div className={active == "Users" ? "active" : "NotActive"}>
           <FaUsers
-            fontSize={"24px"}
-            style={{ cursor: "pointer" }}
+            className="labelIcon"
             onClick={() => {
               handleChosen("Users");
               navigate("./users");
@@ -99,8 +98,7 @@ const AdminSide = () => {
 
         <div className={active == "Posts" ? "active" : "NotActive"}>
           <AiTwotoneFileAdd
-            style={{ cursor: "pointer" }}
-            fontSize={"24px"}
+            className="labelIcon"
             onClick={() => {
               handleChosen("Posts");
               navigate("./posts");
@@ -119,8 +117,7 @@ const AdminSide = () => {
 
         <div className={active == "Online users" ? "active" : "NotActive"}>
           <BsPersonLinesFill
-            style={{ cursor: "pointer" }}
-            fontSize={"24px"}
+            className="labelIcon"
             onClick={() => {
               handleChosen("Online users");
               navigate("./Is/Login");
@@ -138,8 +135,7 @@ const AdminSide = () => {
 
         <div className={active == "Reports" ? "active" : "NotActive"}>
           <BiSolidReport
-            style={{ cursor: "pointer" }}
-            fontSize={"24px"}
+            className="labelIcon"
             onClick={() => {
               handleChosen("Reports");
               navigate("./reports");
@@ -160,8 +156,7 @@ const AdminSide = () => {
         <button className="logoutBTN" onClick={handleLogout}>
           <div>
             <FaArrowRightFromBracket
-              style={{ cursor: "pointer" }}
-              fontSize={"22px"}
+              className="labelIcon"
             />
           </div>
           <p>Sign out</p>

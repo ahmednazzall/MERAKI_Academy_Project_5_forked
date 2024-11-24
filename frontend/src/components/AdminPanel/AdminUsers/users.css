@@ -31,3 +31,10 @@
     width: 50px;
     
 }
+@media screen and (max-width:376px) {
+    .parentRenderUserAdmin{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: unset;
+    }    
+}

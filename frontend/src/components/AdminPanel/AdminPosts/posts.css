@@ -28,3 +28,10 @@
     padding: 15px;
     gap: 1em;
 }
+
+@media screen and (max-width:376px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}

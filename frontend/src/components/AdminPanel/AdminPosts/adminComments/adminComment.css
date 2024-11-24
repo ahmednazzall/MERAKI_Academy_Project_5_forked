@@ -43,3 +43,28 @@
 .parentComment Button {
   align-self: flex-end;
 }
+
+
+@media screen and (max-width:376px) {
+  .popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 200vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 170vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
