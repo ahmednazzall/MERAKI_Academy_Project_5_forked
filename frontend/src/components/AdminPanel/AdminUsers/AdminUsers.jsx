@@ -124,18 +124,14 @@ const AdminUsers = () => {
     });
   };
   return (
-    <div className="parentRender">
+    <div className="parentRenderUserAdmin">
       {showedUser?.map((elem) => {
         return (
           <div key={elem?.user_id}>
             {elem.user_id != localStorage.getItem("user_id") && (
               <div className="parentUserAdmin">
                 <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-end",
-                    gap: "1em",
-                  }}
+                 className="adminUserHeader"
                 >
                   <Avatar src={elem?.profile_image} className="image" />
                   <h3>@{elem?.user_name}</h3>

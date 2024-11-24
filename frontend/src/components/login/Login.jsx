@@ -65,12 +65,12 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (isLoggedIn && role == 1) {
+    if (isLoggedIn && role == 2) {
       setTimeout(() => {
         navigate("/home");
       }, 1000);
     }
-    else if(isLoggedIn && role == 2){
+    else if(isLoggedIn && role == 1){
       setTimeout(() => {
         navigate("/Admin/Panel");
       }, 1000);
@@ -78,7 +78,7 @@ const Login = () => {
   });
 
   return (
-    <>
+    <div className="Body-Login">
      <div className="frame">
 <div className="plane-container">
 
@@ -187,7 +187,7 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
        
     </div>
    
-   </>
+   </div>
   );
 };
 

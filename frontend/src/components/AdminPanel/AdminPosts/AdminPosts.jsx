@@ -1,84 +1,121 @@
-import React, { useEffect ,useState} from 'react'
-import './posts.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { Avatar, Button } from 'antd'
-import axios from 'axios'
-import { deletePost, setPosts } from '../../redux/reducers/slicePosts'
-import { Outlet, useNavigate } from 'react-router-dom'
-import AdminComments from './adminComments/AdminComments'
-import { getAllUsers } from '../../redux/reducers/sliceUser'
+import React, { useEffect, useState } from "react";
+import "./posts.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Button } from "antd";
+import axios from "axios";
+import { deletePost, setPosts } from "../../redux/reducers/slicePosts";
+import { Outlet, useNavigate } from "react-router-dom";
+import AdminComments from "./adminComments/AdminComments";
+import { Modal, Space } from 'antd';
+import { ExclamationCircleFilled } from "@ant-design/icons";
+const { confirm } = Modal;
+
 const AdminPosts = () => {
-    const navigate=useNavigate()
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
 
-    const token = localStorage.getItem('token')
-    // const AdminProfile=localStorage.getItem("Admin")
-    const posts = useSelector((posts)=>{
-        return posts.posts.posts
-    })
 
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/posts',{
-            headers: {
-                Authorization: `Bearer ${token}`,
-              },
-        }).then((res)=>{
-            dispatch(setPosts(res.data.Posts))
-            
-            
-        }).catch((err)=>{
-            console.log(err);
-            
-        })
-       
-    }, [posts]);
+  const token = localStorage.getItem("token");
+  const posts = useSelector((posts) => {
+    return posts.posts.posts;
+  });
 
-   
-   
-  
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/posts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(setPosts(res.data.Posts));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [posts]);
 
-    const handelDelete = (postId) => {
-        axios
-          .delete(`http://localhost:5000/posts/${postId}/soft`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            dispatch(deletePost({ post_id: postId }));
-          })
-          .catch((err) => {
-            console.error(err);
-            console.log('"Failed to create post."');
-          });
-        }
-          const handelHardDelete = (postId) => {
-            axios
-              .delete(`http://localhost:5000/posts/${postId}/hard`, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              })
-              .then((res) => {
-              console.log(res);
-              
-                dispatch(deletePost({ post_id: postId }));
-              })
-              .catch((err) => {
-                console.error(err);
-                console.log('"Failed to create post."');
-              });
-      };
-    
-      // console.log(posts);
-      
+  const handelDelete = (postId) => {
+    axios
+      .delete(`http://localhost:5000/posts/${postId}/soft`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(deletePost({ post_id: postId }));
+        success()
+        return res
+      })
+      .catch((err) => {
+        console.error(err);
+        error()
+       return err
+      });
+  };
+  const handelHardDelete = (postId) => {
+    axios
+      .delete(`http://localhost:5000/posts/${postId}/hard`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(deletePost({ post_id: postId }));
+        success()
+        return true
+      })
+      .catch((err) => {
+        console.error(err);
+        error()
+        return false
+      });
+  };
+
+  const showPromiseConfirmSoftDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this post?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this post will be disappeared from user posts but as an admin you can retrieve it later.",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handelDelete(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
+  const showPromiseConfirmHardDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this post?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this post will be deleted permanently",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handelHardDelete(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
+  const error = () => {
+    Modal.error({
+      title: 'Error',
+      content: 'Failed to delete post',
+    });
+  };
+  const success = () => {
+    Modal.success({
+      content: 'Post deleted successfully',
+    });
+  };
   return (
-    <div className='parentPost'>
-        {posts?.map((post, index) => (
-          <div key={index} className="post">
-            <div className='postHeader'>
+    <div className="parentPostAdmin">
+      {posts?.map((post, index) => (
+        <div key={index} className="postAdmin">
+          <div className="postHeaderAdmin">
             {post.profile_image ? (
               <Avatar
                 src={post.profile_image}
@@ -91,46 +128,42 @@ const AdminPosts = () => {
               <Avatar icon={<UserOutlined />} className="post-avatar" />
             )}
 
-              <h3>{post.user_name}</h3>
-
-            </div>
-            <div className="postContent">
-              <p>{post.body}</p>
-          
-                <div className="D-Post">
-                  
-
-                  
-                  <Button
-                    onClick={(e) => {
-                      handelDelete(post.post_id);
-                    }}
-                  >
-                   Soft DELETE
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      handelHardDelete(post.post_id);
-                    }}
-                  >
-                   Hard DELETE
-                  </Button>
-                  <Button onClick={()=>{
-                    setIsVisible(true)
-                    navigate(`./comments/${post.post_id}`)
-                  }}>
-                    Show comments
-                  </Button>
-                </div>
-            
-              
-            </div>
-            {isVisible&& <AdminComments setIsVisible={setIsVisible}/>}
+            <h3>{post.user_name}</h3>
           </div>
-        ))}
+          <div className="postContentAdmin">
+            <p>{post.body}</p>
 
+            <div>
+              <Button
+                onClick={(e) => {
+                  showPromiseConfirmSoftDeleted(post.post_id)
+                }}
+              >
+                Soft DELETE
+              </Button>
+              <Button
+                onClick={() => {
+                  showPromiseConfirmHardDeleted(post.post_id)
+                }}
+              >
+                Hard DELETE
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsVisible(true);
+                  navigate(`./comments/${post.post_id}`);
+                }}
+              >
+                Show comments
+              </Button>
+            </div>
+          </div>
+          {isVisible && <AdminComments setIsVisible={setIsVisible} />}
+        </div>
+      ))}
+   
     </div>
-  )
-}
+  );
+};
 
-export default AdminPosts
+export default AdminPosts;

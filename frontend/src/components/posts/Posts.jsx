@@ -186,8 +186,8 @@ const Posts = () => {
   const handleAddSave = (postId) => {
     axios
       .post(
-        "http://localhost:5000/posts/save",
-        { post_id: postId },
+        `http://localhost:5000/posts/add&save/${postId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -344,7 +344,7 @@ const Posts = () => {
               <Like postId={post.post_id} />
               <Button
                 icon={<CommentOutlined />}
-                onClick={() => navigate(`/comments/${post.post_id}`)}
+                onClick={() => navigate(`./comments/${post.post_id}`)}
               >
                 Comments
               </Button>
