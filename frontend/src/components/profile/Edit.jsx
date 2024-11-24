@@ -1,12 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getUserById, updateUserById } from "../redux/reducers/sliceUser";
 import {
-  getUserById,
-  updateUserById,
-  SoftDeleteUserById,
-} from "../redux/reducers/sliceUser";
-import "./edit.css"
+  Button,
+  Input,
+  Form,
+  Upload,
+  Typography,
+  Space,
+  Avatar,
+  message,
+} from "antd";
+import { CameraOutlined } from "@ant-design/icons";
+import "./edit.css";
+
+const { Title } = Typography;
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -15,9 +24,7 @@ const Edit = () => {
   const [showPass, setShowPass] = useState(false);
   const userId = localStorage.getItem("user_id");
   const token = localStorage.getItem("token");
-  const user = useSelector((state) => {
-    return state.users.users;
-  });
+  const user = useSelector((state) => state.users.users);
 
   useEffect(() => {
     axios
@@ -52,7 +59,6 @@ const Edit = () => {
         axios
           .put(
             `http://localhost:5000/users/${userId}`,
-
             {
               profile_image: data.url,
             },
@@ -64,6 +70,7 @@ const Edit = () => {
           )
           .then((res) => {
             dispatch(updateUserById(res.data.result[0]));
+            message.success("Profile image updated successfully!");
           })
           .catch((err) => {
             console.log(err);
@@ -74,21 +81,15 @@ const Edit = () => {
 
   const handleUpdate = () => {
     axios
-      .put(
-        `http://localhost:5000/users/${userId}`,
-
-        userInfo,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .put(`http://localhost:5000/users/${userId}`, userInfo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
-        // alert(" updated successfully");
-        // console.log(res.data.result[0]);
         dispatch(updateUserById(res.data.result[0]));
         setUserInfo({});
+        message.success("User information updated successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -96,8 +97,6 @@ const Edit = () => {
   };
 
   const handleChangePass = () => {
-    setShowPass(false);
-
     if (newPass.new_pass === newPass.confirm) {
       if (newPass.oldPass) {
         axios
@@ -124,9 +123,8 @@ const Edit = () => {
                     },
                   }
                 )
-                .then((res) => {
-                  console.log(res.data);
-                  alert("password updated successfully");
+                .then(() => {
+                  message.success("Password updated successfully!");
                 })
                 .catch((err) => {
                   console.log(err);
@@ -137,150 +135,132 @@ const Edit = () => {
             console.log(err);
           });
       } else {
-        alert("please insert the old password");
+        message.warning("Please insert the old password");
       }
     } else {
-      alert("passwords must match");
+      message.warning("Passwords must match");
     }
   };
 
-  //   console.log(newPass);
-
   return (
-    <div>
-      <h3>Edit</h3>
-        <div className="profile-picture">
+    <div className="edit-container">
+      <Title level={3}>Edit Profile</Title>
 
-      <img src={user[0]?.profile_image} />
+      <div className="profile-picture">
+        <div className="profile-image-container">
+          <Avatar size={120} src={user[0]?.profile_image} />
+          <label htmlFor="file-upload" className="camera-icon-overlay">
+            <CameraOutlined className="camera-icon" />
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
         </div>
-      <div>
-        <input type="file" onChange={handleFileChange} />
       </div>
 
-      <br></br>
-
-      <label>
-        <span>User name</span>
-        <input
-          type="text"
-          defaultValue={user[0]?.user_name}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, user_name: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-      <label>
-        <span>First name</span>
-        <input
-          type="text"
-          defaultValue={user[0]?.first_name}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, first_name: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-
-      <label>
-        <span>Last name</span>
-        <input
-          type="text"
-          defaultValue={user[0]?.last_name}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, last_name: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-
-      <label>
-        <span>Email</span>
-        <input
-          type="email"
-          defaultValue={user[0]?.email}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, email: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-
-      <label>
-        <span>country</span>
-        <input
-          type="text"
-          defaultValue={user[0]?.country}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, country: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-      <label>
-        <span>bio</span>
-        <textarea
-          type="text"
-          defaultValue={user[0]?.bio}
-          onChange={(e) => {
-            setUserInfo({ ...userInfo, bio: e.target.value });
-          }}
-        />
-      </label>
-      <br></br>
-      <button type="submit" onClick={handleUpdate}>
-        save
-      </button>
-
-      <br></br>
-
-      {!showPass ? (
-        <a
-          href="#"
-          onClick={() => {
-            setShowPass(true);
-          }}
-        >
-          change password?
-        </a>
-      ) : (
-        <form onSubmit={handleChangePass}>
-          <input
-            type="password"
-            placeholder="enter old password"
+      <Form
+        layout="vertical"
+        initialValues={{
+          user_name: user[0]?.user_name,
+          first_name: user[0]?.first_name,
+          last_name: user[0]?.last_name,
+          email: user[0]?.email,
+          country: user[0]?.country,
+          bio: user[0]?.bio,
+        }}
+      >
+        <Form.Item label="User name" name="user_name">
+          <Input
             onChange={(e) => {
-              setNewPass({ ...newPass, oldPass: e.target.value });
+              setUserInfo({ ...userInfo, user_name: e.target.value });
             }}
           />
-          <br></br>
+        </Form.Item>
 
-          <input
-            type="password"
-            placeholder="enter new password"
+        <Form.Item label="First name" name="first_name">
+          <Input
             onChange={(e) => {
-              setNewPass({ ...newPass, new_pass: e.target.value });
+              setUserInfo({ ...userInfo, first_name: e.target.value });
             }}
           />
-          <br></br>
+        </Form.Item>
 
-          <input
-            type="password"
-            placeholder="confirm new password"
+        <Form.Item label="Last name" name="last_name">
+          <Input
             onChange={(e) => {
-              setNewPass({ ...newPass, confirm: e.target.value });
+              setUserInfo({ ...userInfo, last_name: e.target.value });
             }}
           />
-          <br></br>
-          <button type="submit">submit</button>
-          <button
-            onClick={() => {
-              setShowPass(false);
+        </Form.Item>
+
+        <Form.Item label="Email" name="email">
+          <Input
+            type="email"
+            onChange={(e) => {
+              setUserInfo({ ...userInfo, email: e.target.value });
             }}
-          >
-            Cancel
-          </button>
-        </form>
-      )}
+          />
+        </Form.Item>
+
+        <Form.Item label="Country" name="country">
+          <Input
+            onChange={(e) => {
+              setUserInfo({ ...userInfo, country: e.target.value });
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item label="Bio" name="bio">
+          <Input.TextArea
+            onChange={(e) => {
+              setUserInfo({ ...userInfo, bio: e.target.value });
+            }}
+          />
+        </Form.Item>
+
+        <Button type="primary" onClick={handleUpdate}>
+          Save Changes
+        </Button>
+      </Form>
+
+      <div className="password-section">
+        {!showPass ? (
+          <a href="#" onClick={() => setShowPass(true)}>
+            Change Password?
+          </a>
+        ) : (
+          <div>
+            <Input.Password
+              placeholder="Enter old password"
+              onChange={(e) =>
+                setNewPass({ ...newPass, oldPass: e.target.value })
+              }
+            />
+            <Input.Password
+              placeholder="Enter new password"
+              onChange={(e) =>
+                setNewPass({ ...newPass, new_pass: e.target.value })
+              }
+            />
+            <Input.Password
+              placeholder="Confirm new password"
+              onChange={(e) =>
+                setNewPass({ ...newPass, confirm: e.target.value })
+              }
+            />
+            <Space>
+              <Button type="primary" onClick={handleChangePass}>
+                Submit
+              </Button>
+              <Button onClick={() => setShowPass(false)}>Cancel</Button>
+            </Space>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

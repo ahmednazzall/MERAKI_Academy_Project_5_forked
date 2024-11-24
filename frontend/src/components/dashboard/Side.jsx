@@ -18,7 +18,7 @@ import axios from "axios";
 const Side = () => {
   const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
-  const [showSettings, setShowSettings] = useState(false); // إدارة حالة القائمة المنسدلة
+  const [showSettings, setShowSettings] = useState(false); 
 
   const handleLogout = () => {
     dispatch(Logout());
@@ -31,7 +31,7 @@ const Side = () => {
   };
 
   const toggleSettings = () => {
-    setShowSettings((prevState) => !prevState); // تبديل حالة القائمة المنسدلة
+    setShowSettings((prevState) => !prevState); 
   };
 
   return (

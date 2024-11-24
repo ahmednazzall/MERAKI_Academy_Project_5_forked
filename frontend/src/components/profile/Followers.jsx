@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom"; // Import Link
+import { Card, Button, Row, Col } from "antd";
 import {
   setFollowers,
   setFollowing,
   unFollow,
   removeFollower,
 } from "../redux/reducers/sliceFollowers";
-useParams;
+import "./follower.css";
+
 const Followers = () => {
   const dispatch = useDispatch();
   const condition = useParams();
   const [show, setShow] = useState(condition.id == 1 ? true : false);
-  const { token, userId } = useSelector((state) => {
-    return state.auth;
-  });
+  const { token, userId } = useSelector((state) => state.auth);
 
-  const following = useSelector((state) => {
-    return state.followers.following;
-  });
-  const follower = useSelector((state) => {
-    return state.followers.myFollowers;
-  });
+  const following = useSelector((state) => state.followers.following);
+  const follower = useSelector((state) => state.followers.myFollowers);
 
   useEffect(() => {
     show
@@ -35,18 +31,14 @@ const Followers = () => {
           .then((result) => {
             dispatch(setFollowing(result.data.data));
           })
-          .catch((err) => {
-            console.log(err);
-          })
+          .catch((err) => console.log(err))
       : axios
           .get(`http://localhost:5000/followers/${userId}/follower`)
           .then((result) => {
             dispatch(setFollowers(result.data.data));
           })
-          .catch((err) => {
-            console.log(err);
-          });
-  }, []);
+          .catch((err) => console.log(err));
+  }, [show]);
 
   const handleUnfollow = (id) => {
     if (!show) {
@@ -58,12 +50,8 @@ const Followers = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((result) => {
-          // console.log(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((result) => {})
+        .catch((err) => console.log(err));
     } else {
       dispatch(unFollow(id));
       axios
@@ -72,66 +60,81 @@ const Followers = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((result) => {
-          // console.log(result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((result) => {})
+        .catch((err) => console.log(err));
     }
   };
 
   return (
-    <div>
-      {!show ? (
-        <div>
-          {follower?.length ? (
-            <>
-              <h3>Followers</h3>
-              {follower.map((elem) => {
-                return (
-                  <div key={elem.follower_id}>
-                    <h5>@{elem.user_name}</h5>
-
-                    <button
-                      onClick={() => {
-                        handleUnfollow(elem.follower_id);
-                      }}
+    <div style={{ padding: "20px" }}>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Card
+            title="Followers"
+            bordered={false}
+            style={{ width: "100%", textAlign: "center" }}
+            onClick={() => setShow(false)}
+          >
+            <Button type="link" size="large">
+              {follower?.length} Followers
+            </Button>
+            {follower?.length ? (
+              <div style={{ marginTop: "10px" }}>
+                {follower.map((elem) => (
+                  <div key={elem.follower_id} style={{ marginBottom: "10px" }}>
+                    {/* Wrap the username in a Link component */}
+                    <Link to={`/profile/${elem.follower_id}`}>
+                      <h5>@{elem.user_name}</h5>
+                    </Link>
+                    <Button
+                      type="link"
+                      danger
+                      onClick={() => handleUnfollow(elem.follower_id)}
                     >
-                      remove follower
-                    </button>
+                      Remove Follower
+                    </Button>
                   </div>
-                );
-              })}
-            </>
-          ) : (
-            <h3>Followers list empty</h3>
-          )}
-        </div>
-      ) : (
-        <div>
-          {following?.length ? (
-            following.map((elem) => {
-              return (
-                <div key={elem.following_id}>
-                  <h3>People you are Following</h3>
-                  <h5>@{elem.user_name}</h5>
-
-                  <button
-                    onClick={() => {
-                      handleUnfollow(elem.following_id);
-                    }}
-                  >
-                    unfollow
-                  </button>
-                </div>
-              );
-            })
-          ) : (
-            <h3>Following list empty</h3>
-          )}
-        </div>
-      )}
+                ))}
+              </div>
+            ) : (
+              <p>No followers</p>
+            )}
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card
+            title="Following"
+            bordered={false}
+            style={{ width: "100%", textAlign: "center" }}
+            onClick={() => setShow(true)}
+          >
+            <Button type="link" size="large">
+              {following?.length} Following
+            </Button>
+            {following?.length ? (
+              <div style={{ marginTop: "10px" }}>
+                {following.map((elem) => (
+                  <div key={elem.following_id} style={{ marginBottom: "10px" }}>
+                    {/* Wrap the username in a Link component */}
+                    <Link to={`/profile/${elem.following_id}`}>
+                      <h5>@{elem.user_name}</h5>
+                    </Link>
+                    <Button
+                      type="link"
+                      danger
+                      onClick={() => handleUnfollow(elem.following_id)}
+                    >
+                      Unfollow
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No following</p>
+            )}
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

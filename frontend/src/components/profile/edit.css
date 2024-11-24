@@ -1,7 +1,46 @@
-.profile-picture img {
-    width: 300px;
-    height: 300px;
-    border-radius:50%;
-    object-fit:cover;
-    margin-bottom: 10px;
-  }
+.edit-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.profile-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.camera-icon-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.camera-icon {
+  font-size: 30px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+.password-section {
+  margin-top: 20px;
+}
+
+input[type="file"] {
+  display: none;
+}

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { LikeOutlined, DislikeOutlined } from "@ant-design/icons"; // استيراد الأيقونات من Ant Design
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 
-const Like = ({ postId, userId }) => {
+const Like = ({ postId }) => {
   const [likesCount, setLikesCount] = useState(0);
   const [likedBy, setLikedBy] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
-  const [showUsers, setShowUsers] = useState(false); // حالة لعرض الأسماء عند التمرير
+  const [showUsers, setShowUsers] = useState(false);
   const token = localStorage.getItem("token");
 
   // Fetch likes data
@@ -22,7 +22,7 @@ const Like = ({ postId, userId }) => {
       );
       setLikesCount(response.data.count);
       setLikedBy(response.data.users);
-      setIsLiked(response.data.isLiked); // تحديث حالة الإعجاب
+      setIsLiked(response.data.isLiked);
     } catch (error) {
       console.error("Error fetching likes:", error);
     }
@@ -54,36 +54,37 @@ const Like = ({ postId, userId }) => {
 
   return (
     <div style={{ position: "relative", display: "inline-block" }}>
-      {/* زر الإعجاب */}
+      {/* Like button */}
       <button
         onClick={toggleLike}
-        onMouseEnter={() => setShowUsers(true)} // عرض الأسماء عند التمرير
-        onMouseLeave={() => setShowUsers(false)} // إخفاء الأسماء عند الخروج من الزر
+        onMouseEnter={() => setShowUsers(true)}
+        onMouseLeave={() => setShowUsers(false)}
         style={{
           background: "none",
           border: "none",
-          color: isLiked ? "red" : "gray", // لون مختلف للإعجاب
-          textDecoration: "none",
+          color: isLiked ? "red" : "gray",
           cursor: "pointer",
-          fontSize: "1.5rem", // حجم الأيقونة
-          display: "flex", // استخدام Flexbox لتوزيع العناصر
-          alignItems: "center", // محاذاة الأيقونة مع العدد
+          fontSize: "1.5rem",
+          display: "flex",
+          alignItems: "center",
         }}
       >
-        {/* عرض أيقونة الإعجاب */}
         {isLiked ? (
-          <LikeOutlined style={{ fontSize: "1.5rem", color: "red" }} />
+          <HeartFilled style={{ fontSize: "1.5rem", color: "red" }} />
         ) : (
-          <DislikeOutlined style={{ fontSize: "1.5rem", color: "gray" }} />
+          <HeartOutlined style={{ fontSize: "1.5rem", color: "gray" }} />
         )}
 
-        {/* عدد اللايكات بجانب الأيقونة */}
         <span style={{ marginLeft: "8px", fontSize: "1.2rem", color: "black" }}>
-          {likesCount}
+          Like
+        </span>
+
+        <span style={{ marginLeft: "8px", fontSize: "1.2rem", color: "black" }}>
+         ({likesCount})
         </span>
       </button>
 
-      {/* إظهار أسماء المستخدمين عند التمرير */}
+      {/* Show users who liked the post */}
       {showUsers && likedBy.length > 0 && (
         <div
           style={{
