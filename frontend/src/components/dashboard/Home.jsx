@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 
 import React, { useEffect, useState } from "react";
 import "./home.css";
@@ -17,9 +16,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const isLoggedIn = useSelector((auth) => auth.auth.isLoggedIn);
-  const isLoggedIn = useSelector((auth) => {
-    return auth.auth.isLoggedIn;
-  });
+
   const users = useSelector((state) => {
     return state.users.users;
   });
@@ -41,22 +38,19 @@ const Home = () => {
         </div>
 
         <Search token={token} />
-  </div>
+      </div>
       <div className="org">
         {/* <div className="sidebar"> */}
-          <Side />
+        <Side />
         {/* </div> */}
         {/* <div className="content"> */}
-          <Outlet />
+        <Outlet />
 
         {/* </div> */}
         {/* <div className="messages">Messages here</div> */}
-
-        </div>
-
-        <div className="messages">messages here</div>
-
       </div>
+
+      <div className="messages">messages here</div>
     </div>
   );
 };

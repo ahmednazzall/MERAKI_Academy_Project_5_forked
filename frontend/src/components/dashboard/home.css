@@ -1,16 +1,14 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Arial", sans-serif;
-}
+} */
 
-body {
-  background-image:url("background.png");
-  background-repeat: no-repeat;
+/* body {
   color: #333;
   padding-top: 80px;
-}
+} */
 
 .parent {
   display: flex;
