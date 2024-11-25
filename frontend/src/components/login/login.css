@@ -1415,12 +1415,9 @@ top: 20vh;
     position: relative;
     font-size: 60px;
     color: grey;
-    right: 83%;
+    right: 15%;
     top: 40vh;
 }
-}
-html{
-    height: 100vh;
 }
 .Body-Login {
   background-color: #85b9dd;
@@ -1430,7 +1427,11 @@ html{
 * {
   position: relative;
 }
-
+.google-L{
+    position: relative;
+    top: 32vh;
+    right: 55%;
+}
 .frame {
   width: 500px;
   height: auto;

@@ -4,6 +4,8 @@ import axios from "axios";
 import { register } from "../redux/reducers/sliceUser";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 const Register = () => {
   const [userInfo, setUserInfo] = useState({ gender: "male" });
   const [message, setMessage] = useState("");
@@ -34,7 +36,7 @@ const Register = () => {
   };
 
   return (
-    <div className="Body-Login ">
+    <div className="Body-Login">
     <div className="frame">
 <div className="plane-container">
 
@@ -183,7 +185,37 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
       <br></br>
 
       <p className="OR-R">Or</p>
-      <a href="#" className="google-R">Google link</a>
+      <div className="google-R">
+      <GoogleLogin 
+  onSuccess={credentialResponse => {
+    const decode = jwtDecode(credentialResponse.credential)
+    const data = {user_name : decode.given_name,first_name:decode.given_name , last_name:decode.family_name,email:decode.email,password:decode.sub,image:decode.picture,
+    }
+    axios
+    .post("http://localhost:5000/users/register", data)
+    .then((result) => {
+      // console.log(result.data.result);
+      dispatch(register(result.data.result));
+      setStatus(true);
+      setMessage(`${result?.data.message} transferring to login page... `);
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    })
+    .catch((err) => {
+      console.log(err);
+
+      setStatus(false);
+      setMessage(err.response.data.message);
+    });
+    console.log(decode)
+  }}
+  onError={() => {
+    console.log('Login Failed')
+  }}
+  useOneTap
+/>
+     </div>
       {status
         ? message && <p className="success">{message}</p>
         : message && <p className="failed">{message}</p>}

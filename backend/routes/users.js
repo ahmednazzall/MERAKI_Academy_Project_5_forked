@@ -13,13 +13,18 @@ const {
   confirmPass,
   getAllUsersFoAdmin,
   isLogin,
-  isNotLogin
+  isNotLogin,
+  createUserByGoogle,
+  LoginByGoogle
 } = require("../controllers/users");
 
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
+
+
 usersRouter.post("/login", login);
+
 usersRouter.post("/checkpass/:id", authentication, confirmPass);
 usersRouter.get("/all", authentication, getAllUsers);
 usersRouter.get("/admin/all", authentication, getAllUsersFoAdmin);

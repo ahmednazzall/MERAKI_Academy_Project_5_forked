@@ -332,15 +332,9 @@ svg {
  left: 10%;
  }
  .google-R{
- position: relative;
- top: 4vh;
- right: 14%;
- margin: 0 auto;
- font-size: x-large;
- width: 100%;
- text-align: center;
- height: 7vh;
- text-decoration: none;
+position: relative;
+right: 35%;
+top: 5vh;
  
  } 
  
