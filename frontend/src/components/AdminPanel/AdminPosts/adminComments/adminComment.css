@@ -68,3 +68,143 @@
    gap: 20px;
   }
 }
+
+@media screen and (max-width:431px) {
+  .popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 200vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 170vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
+
+@media screen and (max-width:541px) {
+  .popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 200vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 170vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
+@media screen and (max-width:641px) {
+  .popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 200vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 170vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
+@media screen and (max-width:741px) {
+  .popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 200vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 170vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
+@media screen and (max-width:841px) {
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 110vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 90vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}
+@media screen and (max-width:941px) {
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 900vh; 
+    overflow: hidden;
+  }
+  .popContent {
+    max-height: 65vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }
+}

@@ -1,34 +1,98 @@
-.parentLoginAdmin{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr ;
-    /* width: 1000px; */
-    height: 9em;
-    align-items: center;
-    justify-content: center;
-    gap: 2em;
-    width: 75em;
-    padding: 10px;
+.parentLoginAdmin {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* width: 1000px; */
+  height: 9em;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+  width: 75em;
+  padding: 10px;
+}
+.innerLoginAdmin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(128, 128, 128, 0.51);
+  border-radius: 10px;
+  padding: 1em;
+  gap: 1em;
+}
+.infoAdminLogin {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.innerLoginAdmin:hover {
+  box-shadow: 1px 1px 4px 2px rgba(128, 128, 128, 0.344);
+}
 
+.infoAdminLogin img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
 }
-.innerLoginAdmin{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid rgba(128, 128, 128, 0.51);
-   border-radius: 10px;
-   padding: 1em;
-   gap: 1em;
+@media screen and (max-width: 376px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
 }
-.infoAdminLogin{
-    display: flex;
-    align-items: center;
-    gap: 1em;
+@media screen and (max-width: 431px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
 }
-.innerLoginAdmin:hover{
-    box-shadow: 1px 1px 4px 2px rgba(128, 128, 128, 0.344) ;
+@media screen and (max-width: 541px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
 }
-
-.infoAdminLogin img{
-    height: 50px;
-    width: 50px;
+@media screen and (max-width: 641px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
+}
+@media screen and (max-width: 741px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
+}
+@media screen and (max-width: 841px) {
+  .parentLoginAdmin {
+    height: unset;
+  }
+}
+@media screen and (min-width: 842px) {
+  .parentLoginAdmin {
+    width: 60em;
+  }
+  .innerLoginAdmin {
+    padding: 2em;
+    width: 20em;
+  }
+  .infoAdminLogin img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+  .infoAdminLogin h5 {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .parentLoginAdmin {
+    width: 50em;
+  }
+  .innerLoginAdmin {
+    padding: 2em;
+    width: 20em;
+  }
+  .infoAdminLogin img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+  .infoAdminLogin h5 {
+    font-size: 20px;
+  }
 }
