@@ -41,7 +41,7 @@ const AdminIsLogin = () => {
         return (
           <div key={user.user_id} className="innerLoginAdmin" >
             <div className="infoAdminLogin">
-              <Avatar src={user.profile_image} />
+              <img src={user.profile_image} />
               <h5>@{user.user_name}</h5>
               
             </div>

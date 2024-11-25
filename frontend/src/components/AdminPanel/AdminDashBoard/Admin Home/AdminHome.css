@@ -1,8 +1,6 @@
 .parentHomeAdmin {
   display: flex;
   flex-direction: column;
-  /* height: 50em; */
-  /* width: 100%; */
   justify-content: space-evenly;
   padding: 5px;
   gap: 5em;
@@ -92,6 +90,462 @@
 .statistics {
     display: flex;
     width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (max-width: 431px) {
+  .parentHomeAdmin {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 9em;
+    width: 73em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 73em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    background-color: white;
+    width: 40em;
+    /* height: 20em; */
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (max-width: 541px) {
+  .parentHomeAdmin {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 9em;
+    width: 73em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 73em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    background-color: white;
+    width: 40em;
+    /* height: 20em; */
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (max-width: 641px) {
+  .parentHomeAdmin {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 9em;
+    width: 73em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 73em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    background-color: white;
+    width: 40em;
+    /* height: 20em; */
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (max-width: 741px) {
+  .parentHomeAdmin {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 9em;
+    width: 73em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 73em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    background-color: white;
+    width: 40em;
+    /* height: 20em; */
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (max-width: 841px) {
+  .parentHomeAdmin {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 9em;
+    width: 73em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 73em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+    background-color: white;
+    width: 40em;
+    /* height: 20em; */
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 73em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (min-width: 842px) and (max-width:1099px) {
+  .parentHomeAdmin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 5em;
+    background-color: rgb(255, 255, 255);
+    width: 61em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 60em;
+    height: 40em;
+  }
+  .cards .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3em;
+    background-color: white;
+    width: 30em;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 60em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (min-width: 1100px) and (max-width:1350px){
+  .parentHomeAdmin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 5em;
+    background-color: rgb(255, 255, 255);
+    width: unset;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 40em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 0em;
+    background-color: white;
+    width:28em;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 50em;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    gap: 4em;
+  }
+}
+@media screen and (min-width: 1351px) and (max-width:1450px){
+  .parentHomeAdmin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 5em;
+    background-color: rgb(255, 255, 255);
+    width: 60em;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1em;
+    width: 50em;
+    height: 40em;
+  }
+  .cards .card {
+    display: flex;
+    flex-direction: row;
+    gap: 0em;
+    background-color: white;
+    width:39em;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head {
+    font-size: 30px;
+  }
+  :where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 0 0 8px 8px;
+    font-size:25px;
+    
+}
+:where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined, :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-dashed{
+    font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-49qm).ant-card .ant-card-head-title {
+  font-family: "Courgette", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.logosIcon{
+  font-size: 40px;
+}
+
+.statistics {
+    display: flex;
+    width: 60em;
     justify-content: space-around;
     align-items: center;
     background-color: white;

@@ -35,3 +35,45 @@
     width: 70em;
   }
 }
+@media screen and (max-width:431px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}
+@media screen and (max-width:541px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}
+@media screen and (max-width:641px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}
+@media screen and (max-width:741px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}
+@media screen and (max-width:841px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 70em;
+  }
+}
+@media screen and (min-width:842px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 60em;
+  }
+}
+@media screen and (min-width:1000px) {
+  .parentPostAdmin {
+    gap: 2em;
+    width: 50em;
+  }
+}

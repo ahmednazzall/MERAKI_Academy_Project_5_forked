@@ -1,0 +1,13 @@
+
+@media screen and (min-width:842px) {
+    .adminParentReports{
+        width: 60em;
+        height: max-content;
+    }
+}
+@media screen and (min-width:1000px) {
+    .adminParentReports{
+        width: 50em;
+        height: unset;
+    }
+}

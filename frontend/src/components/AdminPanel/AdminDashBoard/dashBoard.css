@@ -21,7 +21,6 @@
   grid-template-columns: 0.5fr 3fr;
   gap: 10px;
   width: 100%;
-  
 }
 .sidebarAdmin {
   border: 1px solid rgba(128, 128, 128, 0.54);
@@ -38,7 +37,6 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: hwb(0 100% 0%);
-  
 }
 
 .adminSide {
@@ -137,7 +135,6 @@ a {
     background-color: white;
     width: 75em;
     margin-left: 0.5em;
-
   }
   .adminSide {
     display: flex;
@@ -154,6 +151,700 @@ a {
     align-items: center;
     justify-content: space-between;
     width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (max-width: 431px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 167em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (max-width: 541px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 167em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (max-width: 641px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 167em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (max-width: 741px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 167em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (max-width: 841px) {
+  .contentAdmin {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .AdNav {
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .parentDash {
+    padding: 5px;
+    height: 167em;
+    width: 77em;
+  }
+  .orgAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    display: flex;
+    height: 20vh;
+    padding: 0px;
+    align-items: center;
+    background-color: white;
+    width: 75em;
+    margin-left: 0.5em;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    height: 8em;
+    width: 75em;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .directions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50em;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (min-width: 843px) and (max-width:1199px) {
+  .contentAdmin {
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: hwb(0 100% 0%);
+  }
+  .AdNav {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+  }
+  .parentDash {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 109.6em;
+    width:unset;
+    background-color: rgb(246, 248, 250);
+  }
+  .orgAdmin {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: white;
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsl(0, 0%, 100%);
+    padding: 1em;
+    gap: 9em;
+    border-radius: 10px;
+    height: 103vh;
+    width: 8em;
+  }
+  .directions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: unset;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (min-width: 1200px) and(max-width:1350px){
+  .contentAdmin {
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: hwb(0 100% 0%);
+  }
+  .AdNav {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+  }
+  .parentDash {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: unset;
+    width:50em;
+    background-color: rgb(246, 248, 250);
+  }
+  .orgAdmin {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color:white
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsl(0, 0%, 100%);
+    padding: 1em;
+    gap: 9em;
+    border-radius: 10px;
+    height: 103vh;
+    width: 8em;
+  }
+  .directions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: unset;
+  }
+  .labelIcon {
+    font-size: 30px;
+  }
+  a {
+    font-size: 20px;
+  }
+  .NotActive {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8em;
+    width: 8em;
+  }
+  .active {
+    position: relative;
+    width: 10em;
+    right: 0;
+    justify-content: center;
+    left: 0;
+    padding: 0px;
+    height: 8.4em;
+    width: 8em;
+  }
+  .logoutBTN {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 6em;
+  }
+  .logoutBTN p {
+    font-size: 20px;
+    width: 90px;
+  }
+}
+@media screen and (min-width: 1351px) and(max-width:1617px){
+  .contentAdmin {
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: hwb(0 100% 0%);
+  }
+  .AdNav {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+  }
+  .parentDash {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: unset;
+    width:unset;
+    background-color: rgb(246, 248, 250);
+  }
+  .orgAdmin {
+    display: grid;
+    grid-template-columns: 0.5fr 3fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .sidebarAdmin {
+    border: 1px solid rgba(128, 128, 128, 0.54);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color:white
+  }
+  .adminSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsl(0, 0%, 100%);
+    padding: 1em;
+    gap: 9em;
+    border-radius: 10px;
+    height: 103vh;
+    width: 8em;
+  }
+  .directions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: unset;
   }
   .labelIcon {
     font-size: 30px;
