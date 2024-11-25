@@ -6,6 +6,9 @@ import { login, SetUserId } from "../redux/reducers/auth";
 import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
 import { jwtDecode } from "jwt-decode";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+
 const Login = () => {
   
   const dispatch = useDispatch();
@@ -171,8 +174,52 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
       <br></br>
           <h4 className="Register-Login">Don't have an account? <a href="/register">Sign Up</a></h4>
           <p className="OR">OR</p>
-          <a href="#" className="google">login by google</a>
-         
+          <div className="google-L">
+          <GoogleLogin 
+  onSuccess={credentialResponse => {
+    const decode = jwtDecode(credentialResponse.credential)
+    const data = {email:decode.email,password:decode.sub
+    }
+    axios
+        .post("http://localhost:5000/users/login", data)
+        .then((res) => {
+          const decoded = jwtDecode(res.data.token);
+          
+          
+          setRole(decoded.role_id)
+          axios.put(`http://localhost:5000/users/islogin/true/${res.data.userId}`,{}).then((result)=>{
+          }).catch((err)=>{
+            console.log(err , 'here');
+          })
+          dispatch(login(res.data.token));
+          dispatch(SetUserId(res.data.userId));
+          setMessage(res?.data.message);
+          if (rememberMe) {
+            localStorage.setItem("email", userInfo.email);
+            localStorage.setItem("password", userInfo.password);
+          } else {
+            localStorage.removeItem("email");
+            localStorage.removeItem("password");
+          }
+        })
+        .catch((err) => {
+          console.log('here');
+          
+           console.log(err);
+          setMessage(err.response?.data?.message);
+        });
+    } 
+} 
+    
+  
+  onError={() => {
+    console.log('Login Failed')
+  }}
+  
+/>
+</div>        
+          
+  
       {isLoggedIn
         ? message && <LoadingOutlined className="Loading"></LoadingOutlined>
         : message && <p className="failed">{message}</p>}

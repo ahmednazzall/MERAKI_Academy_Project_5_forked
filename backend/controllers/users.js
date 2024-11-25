@@ -15,7 +15,7 @@ const Register = async (req, res) => {
     country,
     birth_date,
     bio,
-    gender,
+    
   } = req.body;
 
   const role_id = 2; //! create admin then switch to user
@@ -29,9 +29,8 @@ const Register = async (req, res) => {
       country,
       birth_date,
       bio,
-      gender,
        role_id) 
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING*`;
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING*`;
   const data = [
     user_name,
     first_name,
@@ -41,7 +40,7 @@ const Register = async (req, res) => {
     country,
     birth_date,
     bio,
-    gender,
+   
     role_id,
   ];
 
@@ -54,6 +53,8 @@ const Register = async (req, res) => {
       result: result.rows[0],
     });
   } catch (error) {
+    console.log(error);
+    
     res.status(409).json({
       success: false,
       message: "The email already exists",
@@ -72,10 +73,12 @@ const login = async (req, res) => {
       try {
         const valid = await bcrypt.compare(password, result.rows[0].password);
         if (valid) {
+         
+          
           const payload = {
             userId: result.rows[0].user_id,
             role_id: result.rows[0].role_id,
-            country: result.rows[0].country,
+            country: result.rows[0].country || null,
           };
           const options = { expiresIn: "1d" };
           const token = jwt.sign(payload, process.env.SECRET, options);
@@ -90,6 +93,7 @@ const login = async (req, res) => {
             throw Error;
           }
         } else {
+         
           res.status(403).json({
             success: false,
             message: `The email doesn’t exist or the password you’ve entered is incorrect`,
@@ -429,6 +433,7 @@ const isNotLogin = (req, res) => {
       });
     });
 };
+
 module.exports = {
   Register,
   login,
@@ -443,4 +448,5 @@ module.exports = {
   getAllUsersFoAdmin,
   isLogin,
   isNotLogin,
+  
 };
