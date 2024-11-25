@@ -46,8 +46,8 @@ const getLikes = async (req, res) => {
     const likesData = await pool.query(
       `SELECT u.user_id AS user_id, u.user_name AS user_name FROM likes l 
        INNER JOIN users u ON l.userId = u.user_id 
-       WHERE l.postId = $1`,
-      [postId]
+       WHERE l.postId = $1 AND l.userId=$2`,
+      [postId, userId]
     );
 
     const userLiked = likesData.rows.some((like) => like.user_id === userId);
@@ -66,22 +66,22 @@ const getLikes = async (req, res) => {
   }
 };
 
-const gitAllLikes= async(req,res)=>{
-  const query=`SELECT * FROM likes`
+const gitAllLikes = async (req, res) => {
+  const query = `SELECT * FROM likes`;
 
   try {
-    const result= await pool.query(query)
+    const result = await pool.query(query);
     res.status(200).json({
-      success:true,
-      message:"All likes on all posts",
-      likes:result.rows
-    })
+      success: true,
+      message: "All likes on all posts",
+      likes: result.rows,
+    });
   } catch (error) {
     res.status(500).json({
-      success:false,
-      message:error.message,
-      error
-    })
+      success: false,
+      message: error.message,
+      error,
+    });
   }
-}
-module.exports = { toggleLike, getLikes,gitAllLikes };
+};
+module.exports = { toggleLike, getLikes, gitAllLikes };

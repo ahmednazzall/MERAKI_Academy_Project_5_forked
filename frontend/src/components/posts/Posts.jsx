@@ -33,6 +33,8 @@ import {
   CommentOutlined,
   SendOutlined,
   CameraOutlined,
+  HeartFilled, 
+  MessageOutlined,
 } from "@ant-design/icons";
 
 const { Header, Content, Footer } = Layout;
@@ -61,6 +63,7 @@ const Posts = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const [savedPost, setSavedPost] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]); 
 
   const posts = useSelector((state) => state.posts.posts);
 
@@ -235,7 +238,7 @@ const Posts = () => {
           rows={4}
           style={{ width: "100%", marginBottom: "10px" }}
         />
-        {/* زر الكاميرا وزر البوست بجانب بعض */}
+
         <div
           style={{
             display: "flex",
@@ -341,22 +344,49 @@ const Posts = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Like postId={post.post_id} />
+              {/* Like Button  */}
+              <Like
+                postId={post.post_id}
+                likedPosts={likedPosts}
+                setLikedPosts={setLikedPosts}
+                token={token}
+                icon={
+                  <HeartFilled
+                    style={{
+                      color: likedPosts.includes(post.post_id)
+                        ? "red"
+                        : "black",
+                    }}
+                  />
+                } 
+              />
+
+              {/* Comment Button */}
               <Button
-                icon={<CommentOutlined />}
+                icon={<MessageOutlined />}
+                type="link"
+                style={{
+                  color: "blue",
+                  fontSize: "20px",
+                }}
                 onClick={() => navigate(`./comments/${post.post_id}`)}
               >
                 Comments
               </Button>
+
+              {/* Save Button */}
               <Button
                 icon={<SaveOutlined />}
-                type={savedPost.includes(post.post_id) ? "primary" : "default"}
+                type="link"
                 onClick={() => handleAddSave(post.post_id)}
               >
                 Save
               </Button>
+
+              {/* Edit Button */}
               <Button
                 icon={<EditOutlined />}
+                type="link"
                 onClick={() => {
                   setPostId(post.post_id);
                   setEditPostText(post.body);
@@ -365,8 +395,11 @@ const Posts = () => {
               >
                 Edit
               </Button>
+
+              {/* Delete Button */}
               <Button
                 icon={<DeleteOutlined />}
+                type="link"
                 danger
                 onClick={() => handleDelete(post.post_id)}
               >
