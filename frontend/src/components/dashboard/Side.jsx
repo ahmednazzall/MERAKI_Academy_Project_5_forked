@@ -10,6 +10,7 @@ import {
   FaLock,
   FaPhoneAlt,
 } from "react-icons/fa";
+import { HiMiniChatBubbleLeftRight } from "react-icons/hi2";
 import "./sideStyle.css";
 import { Logout } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
@@ -65,6 +66,11 @@ const Side = () => {
         <FaHome className="sidebar-icon" /> Feeds
       </Link>
 
+        <Link
+         to={"/chat/"}
+         >
+        <HiMiniChatBubbleLeftRight className="sidebar-icon"></HiMiniChatBubbleLeftRight>Chatting
+        </Link>
       {/* Events Link */}
       <Link
         to={"/home/events"}
