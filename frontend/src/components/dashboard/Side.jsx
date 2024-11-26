@@ -19,7 +19,7 @@ import axios from "axios";
 const Side = () => {
   const userId = localStorage.getItem("user_id");
   const dispatch = useDispatch();
-  const [showSettings, setShowSettings] = useState(false); 
+  const [showSettings, setShowSettings] = useState(false);
 
   const handleLogout = () => {
     dispatch(Logout());
@@ -32,11 +32,22 @@ const Side = () => {
   };
 
   const toggleSettings = () => {
-    setShowSettings((prevState) => !prevState); 
+    setShowSettings((prevState) => !prevState);
   };
 
   return (
     <div className="sidebar1">
+      {/* Feeds Link */}
+      <Link
+        to={"/home/"}
+        onClick={() => {
+          if (localStorage.getItem("postId")) {
+            localStorage.removeItem("postId");
+          }
+        }}
+      >
+        <FaHome className="sidebar-icon" /> Feeds
+      </Link>
       {/* Profile Link */}
       <Link
         to={`/home/profile/${userId}`}
@@ -54,23 +65,10 @@ const Side = () => {
         <FaSearch className="sidebar-icon" /> Explore
       </Link>
 
-      {/* Feeds Link */}
-      <Link
-        to={"/home/"}
-        onClick={() => {
-          if (localStorage.getItem("postId")) {
-            localStorage.removeItem("postId");
-          }
-        }}
-      >
-        <FaHome className="sidebar-icon" /> Feeds
+      <Link to={"/chat/"}>
+        <HiMiniChatBubbleLeftRight className="sidebar-icon"></HiMiniChatBubbleLeftRight>
+        Chatting
       </Link>
-
-        <Link
-         to={"/chat/"}
-         >
-        <HiMiniChatBubbleLeftRight className="sidebar-icon"></HiMiniChatBubbleLeftRight>Chatting
-        </Link>
       {/* Events Link */}
       <Link
         to={"/home/events"}
