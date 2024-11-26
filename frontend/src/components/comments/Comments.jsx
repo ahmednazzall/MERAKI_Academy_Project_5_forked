@@ -5,12 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { setComments } from "../redux/reducers/sliceComments";
 import "./comments.css";
 import { useNavigate,useParams } from "react-router-dom";
+import { Avatar, Button, Card, Input, List, Space } from "antd";
+import { Modal } from 'antd';
+import { ExclamationCircleFilled } from "@ant-design/icons";
+const { confirm } = Modal;
+
+import Like from "../likes/Like";
+import { HeartFilled } from "@ant-design/icons";
+
 const Comments = () => {
   const user_id = localStorage.getItem('user_id')
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [newComment, setNewComment] = useState("");
   const posts = useSelector((reducer) => {
+    
     return reducer.posts.posts;
   });
 
@@ -26,7 +35,7 @@ const Comments = () => {
   const post = posts.filter((elem, ind) => {
     return elem.post_id == postId;
   });
-// console.log(post);
+ //console.log(posts);
 
   const dispatch = useDispatch();
   const comments = useSelector((reducers) => {
@@ -48,6 +57,7 @@ const Comments = () => {
   }, [comments]);
 
   const handleComment = (e) => {
+    
     axios
       .post(
         `http://localhost:5000/comments/${postId}`,
@@ -60,7 +70,9 @@ const Comments = () => {
           },
         }
       )
-      .then((res) => {})
+      .then((res) => {
+        setNewComment('')
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -111,64 +123,140 @@ const Comments = () => {
         console.log(err);
       });
   };
-
+  const showPromiseConfirmSoftDeleted = (id) => {
+    confirm({
+      title: 'Do you want to delete this comment?',
+      icon: <ExclamationCircleFilled />,
+      content:"When clicked the OK button, this comment will be will be deleted permanently",
+      onOk() {
+        return new Promise((resolve, reject) => {          
+        return  setTimeout(handleDeleteComment(id)? resolve : reject, 1500);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel() {},
+    });
+  };
   return (
-    <div>
-      <div>
-        {post[0]?.profile_image ? (
-          <img src={post[0]?.profile_image} className="profPic" alt="Profile" />
-        ) : null}
-        <div className="innerPost">
-          <h3>{post[0]?.user_name}</h3>
-          <p>{post[0]?.body}</p>
-        </div>
-      </div>
-      {comments?.map((comment) => (
-        <div key={comment.comment_id}>
-          {editingCommentId === comment.comment_id ? (
-            <div>
-              <input
-                value={editingText}
-                onChange={(e) => setEditingText(e.target.value)}
-                placeholder="Edit your comment"
+    <div className="Comment-Page">
+      
+      <List
+        dataSource={post}
+        style={{
+          width: "100%",
+          flexGrow: 1,
+        }}
+        renderItem={(post) => (
+          <Card
+            className="Card-Comment"
+            style={{
+              marginBottom: "20px",
+              padding: "15px",
+              width: "100%",
+              boxSizing: "border-box",
+              borderRadius: "10px",
+              backgroundColor: "#f9f9f9",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <List.Item key={post.post_id}>
+              <List.Item.Meta
+                avatar={
+                  post.profile_image ? (
+                    <Avatar
+                      size={50}
+                      src={post.profile_image}
+                      style={{ borderRadius: "50%" }}
+                    />
+                  ) : (
+                    <Avatar icon={<UserOutlined />} />
+                  )
+                }
+                title={<strong>{post.user_name}</strong>}
+                description={post.body}
+               
               />
-              <button onClick={() => handleEditComment(comment.comment_id)}>
-                Save
-              </button>
-              <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+            
+              {post.image && (
+                <img
+                  src={post.image}
+                  alt="post"
+                  style={{
+                    width: "100%",
+                    borderRadius: "8px",
+                    marginTop: "10px",
+                  }}
+                />
+              )}
+              {post.video && (
+                <video
+                  controls
+                  style={{
+                    width: "100%",
+                    marginTop: "10px",
+                    borderRadius: "8px",
+                  }}
+                  src={post.video}
+                />
+              )}
+            </List.Item>
+            <Space
+              style={{
+                marginTop: "15px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+            </Space>
+          </Card>
+        )}
+      />
+       <div className="popup">
+    <div className="popContent">
+      <button
+        className="btnComment"
+        onClick={() => {
+       
+          navigate("../")
+          dispatch(setComments([]));
+        }}
+      >
+        X
+      </button>
+      { comments?.map((comment) => {
+        return (
+          <div key={comment.comment_id} className="parentComment">
+            <div className="commentHeader">
+              <Avatar src={comment.profile_image} />
+              <p>{comment.user_name}</p>
             </div>
-          ) : (
-            <div>
-              <span>
-                <img src={comment.profile_image} width={100}></img>
-                <h4>{comment.user_name}</h4>
-                <p>{comment.created_at}</p>
+            <div className="CommentBody">
               <p>{comment.comment}</p>
-              </span>
-              {comment.commenter == user_id ? <> <button
-                onClick={() => {
-                  setEditingCommentId(comment.comment_id);
-                  setEditingText(comment.comment);
-                }}
-              >
-                Edit
-              </button>
-              <button onClick={() => handleDeleteComment(comment.comment_id)}>
-                Delete
-              </button></>: null}
             </div>
-          )}
-        </div>
-      ))}
-      <div>
-        <input
+            <Button
+              onClick={() => {
+                // handleDeleteComment(comment.comment_id);
+                showPromiseConfirmSoftDeleted(comment.comment_id)
+              }}
+            >
+              delete
+            </Button>
+          </div>
+        );
+      })}
+      </div>
+      <div className="Create-Comment">
+        <Input
+        value={newComment}
+        className="Add-Comment"
           placeholder="Add Comment"
           onChange={(e) => {
             setNewComment(e.target.value);
           }}
         />
-        <button onClick={handleComment}>Comment</button>
+        <Button onClick={handleComment}
+        className="Comment-Button">Comment</Button>
       </div>
+    </div>
     </div>
   );
 };
