@@ -116,22 +116,22 @@ const Posts = () => {
   };
 
   const handleAddPost = () => {
+    const data = {body : postInfo.body ,image : postInfo.image||null ,video : postInfo.video||null }
     const formData = new FormData();
     formData.append("body", postInfo.body);
     if (postInfo.image) formData.append("image", postInfo.image);
     if (postInfo.video) formData.append("video", postInfo.video);
-
+    console.log(postInfo.body);
+    
     axios
-      .post("http://localhost:5000/posts", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
+    .post("http://localhost:5000/posts", postInfo, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+        console.log( data.image);
         dispatch(createPost(res.data.post[0]));
-        setAddPost({ body: "", image: null, video: null });
         message.success("Post created successfully!");
+        setAddPost({ body: "", image: null, video: null });
       })
       .catch((err) => {
         console.error(err);
@@ -234,7 +234,9 @@ const Posts = () => {
         <TextArea
           placeholder="What's on your mind?"
           value={addPost.body || ""}
-          onChange={(e) => setAddPost({ ...addPost, body: e.target.value })}
+          onChange={(e) => setAddPost({ ...addPost, body: e.target.value }) 
+        
+        }
           rows={4}
           style={{ width: "100%", marginBottom: "10px" }}
         />
@@ -313,7 +315,9 @@ const Posts = () => {
                 }
                 title={<strong>{post.user_name}</strong>}
                 description={post.body}
+               
               />
+            
               {post.image && (
                 <img
                   src={post.image}

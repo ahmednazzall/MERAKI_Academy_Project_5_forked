@@ -20,14 +20,16 @@ const Search = () => {
         }
       )
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
 
         if (response.data.success) {
           setSearchResults(response.data.User); // Update state with results
-          message.success("User(s) found!");
+          
         }
       })
       .catch((error) => {
+        console.log(error);
+        
         if (error.response) {
           // Handle specific backend error responses
           if (error.response.status === 404) {
@@ -47,6 +49,7 @@ const Search = () => {
 
   return (
     <div>
+      
       <Input.Search
         placeholder="Search for a user"
         value={searchInput}
