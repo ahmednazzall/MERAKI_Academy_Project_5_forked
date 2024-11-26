@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./savePost.css";
 
 const SavedPost = () => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
-  const token = useSelector((state) => {
-    return state.auth.token;
-  });
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     axios
@@ -36,11 +35,8 @@ const SavedPost = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
-        // console.log(res);
-        const removed = posts.filter((post) => {
-          return post.post_id !== id;
-        });
+      .then(() => {
+        const removed = posts.filter((post) => post.post_id !== id);
         setPosts(removed);
       })
       .catch((err) => {
@@ -49,38 +45,41 @@ const SavedPost = () => {
   };
 
   return (
-    <div>
-      <h2>Saved Posts</h2>
+    <div className="saved-posts-container">
+      <h2 className="title">Saved Posts</h2>
       {posts.length ? (
-        posts.map((post) => {
-          return (
-            <div key={post.saved_post_id}>
-              <button
-                onClick={() => {
-                  handleRemove(post.post_id);
-                }}
-              >
-                remove from bookmark
-              </button>
-              <div
-                onClick={() => {
-                  handleClick(post.post_id);
-                }}
-              >
-                <img src={post?.profile_image} />@{post.user_name}
-                <div>
-                  <br></br>
-                  {post.body}
-                </div>
-                <p>saved at {post.saved_at}</p>
+        posts.map((post) => (
+          <div key={post.saved_post_id} className="post-card">
+            <div className="post-header">
+              <div className="user-info">
+                <img
+                  src={post?.profile_image}
+                  alt="Profile"
+                  className="profile-image"
+                />
+                <span className="username">@{post.user_name}</span>
               </div>
+              <button
+                className="remove-btn"
+                onClick={() => handleRemove(post.post_id)}
+              >
+                ✕ Remove
+              </button>
             </div>
-          );
-        })
+            <div
+              className="post-content"
+              onClick={() => handleClick(post.post_id)}
+            >
+              <p className="post-body">{post.body}</p>
+              <p className="saved-at">Saved at {post.saved_at}</p>
+            </div>
+          </div>
+        ))
       ) : (
-        <p>No saved posts</p>
+        <p className="no-posts">No saved posts</p>
       )}
     </div>
   );
 };
+
 export default SavedPost;

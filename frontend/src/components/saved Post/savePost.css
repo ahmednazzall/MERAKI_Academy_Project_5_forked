@@ -1,0 +1,102 @@
+.saved-posts-container {
+  padding: 20px;
+  width: 1000px;
+  margin: 0 auto;
+  font-family: "Poppins", sans-serif;
+  color: #2c3e50;
+  background-color: #f4f6f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #3498db;
+}
+
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #e1e8ed;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #ecf0f1;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3498db;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+
+
+.post-content {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.post-body {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #34495e;
+  line-height: 1.6;
+}
+
+.saved-at {
+  font-size: 14px;
+  color: #95a5a6;
+  text-align: right;
+}
+
+.no-posts {
+  text-align: center;
+  font-size: 18px;
+  color: #7f8c8d;
+  margin-top: 20px;
+}

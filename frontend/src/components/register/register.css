@@ -1,10 +1,8 @@
-
 .Body-Login {
   background-color: #85b9dd;
   margin: 0;
   padding: 0;
   width: 100%;
-  
 }
 
 * {
@@ -25,6 +23,52 @@ svg {
   display: block;
 }
 
+/* Style for the modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.success {
+  color: green;
+}
+
+.failed {
+  color: red;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /**
  * Paper Plane
  */
@@ -34,7 +78,7 @@ svg {
   margin: 0px auto;
   z-index: 3;
 }
- /*Paper Plane: Image*/
+/*Paper Plane: Image*/
 .plane {
   width: 100%;
   height: 60px;
@@ -164,7 +208,6 @@ svg {
   margin-right: 0px;
 }
 
-
 /*Cloud: Animation*/
 .cloud {
   -webkit-animation-name: cloud-movement;
@@ -218,7 +261,6 @@ svg {
     transform: translateX(300px);
   }
   10% {
-
     opacity: 0.7;
   }
   90% {
@@ -231,144 +273,149 @@ svg {
     transform: translateX(-1000px);
   }
 }
-@media screen and (min-width : 1200px)  {
-    .Register-Page{
-     display: flex;
-     flex-direction: row-reverse;
-     justify-content: space-around;
-     background-color: unset !important;
-     
-    }
-    .Register-Inputs{
-     display: flex;
-     flex-direction: column;
-     text-align: center;
-    
- }
- .Email-Input-R , .Password-Input-R ,.FirstName-Input , .LastName-Input , .UserName-Input , .Birth-Input ,.Gender-Input ,.Country-Input{
-     
-     height: 5vh;
-     position: relative;
-     margin: 0 auto;
-     border-radius: 5px;
-     font-size: large;
-     right: 70%;
-     top: 30vh;
- }
- .FirstName-Input{
+@media screen and (min-width: 1200px) {
+  .Register-Page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    background-color: unset !important;
+  }
+  .Register-Inputs {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .Email-Input-R,
+  .Password-Input-R,
+  .FirstName-Input,
+  .LastName-Input,
+  .UserName-Input,
+  .Birth-Input,
+  .Gender-Input,
+  .Country-Input {
+    height: 5vh;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 5px;
+    font-size: large;
+    right: 70%;
+    top: 30vh;
+  }
+  .FirstName-Input {
     width: 80%;
     position: relative;
     right: 84%;
- }
- .LastName-Input{
+  }
+  .LastName-Input {
     width: 80%;
     position: relative;
     right: -3%;
-    top:22.4vh ;
- }
- .UserName-Input{
+    top: 22.4vh;
+  }
+  .UserName-Input {
     width: 80%;
     position: relative;
     right: 84%;
     top: 22vh;
- }
- .Birth-Input{
+  }
+  .Birth-Input {
     width: 80%;
     position: relative;
     right: -3%;
-    top:14.3vh ;
- }
- .Gender-Input{
+    top: 14.3vh;
+  }
+  .Gender-Input {
     width: 80%;
     position: relative;
     right: 84%;
     top: 14vh;
- }
- .Country-Input{
+  }
+  .Country-Input {
     width: 80%;
     position: relative;
     right: -3%;
-    top:6.4vh ;
- }
- .Email-Input-R , .Password-Input-R{
+    top: 6.4vh;
+  }
+  .Email-Input-R,
+  .Password-Input-R {
     position: relative;
     top: 5vh;
     width: 160%;
- }
- .Email-Input-R:hover , .Password-Input-R:hover ,.FirstName-Input:hover , .LastName-Input:hover , .UserName-Input:hover , .Birth-Input:hover ,.Gender-Input:hover ,.Country-Input:hover{
-    
+  }
+  .Email-Input-R:hover,
+  .Password-Input-R:hover,
+  .FirstName-Input:hover,
+  .LastName-Input:hover,
+  .UserName-Input:hover,
+  .Birth-Input:hover,
+  .Gender-Input:hover,
+  .Country-Input:hover {
     transform: scale(1.05);
-     transition:0.4s;
-     border: blue solid 0.5px;
- }
- 
- 
- 
- .Register-Button{
- 
- position: relative;
- right: 27%;
- width: 70%;
- height: 5vh;
- bottom: 3vh;
- }
- .Register-Button:hover{
- transition:0.7s;
- opacity: 0.6;
- }
- 
-.Have-Account{
- 
- position: relative;
- top: 10vh;
- right: 36%;
- }
- .OR-R{
- 
- position: relative;
- top: 1vh;
- font-size: x-large;
- margin: 0 auto;
- left: 10%;
- }
- .google-R{
-position: relative;
-right: 35%;
-top: 5vh;
- 
- } 
- 
- .Moltaqa-Logo-R{
- width: 24%;
- border-radius: 10px;
- position: relative;
- left: 30%;
- top: 17vh;
- }
- .Welcome-Login-R{
- position: relative;
- left: 35%;
- font-size: large;
- top: 15vh;
- }
- .Description-Login-R{
- text-wrap: wrap;
- width: 50%;
- font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- margin: 0 auto;
- right: 10%;
- text-align: start;
- font-size: large;
- position: relative;
- top: 20vh;
- }
- .Welcome-Div{
+    transition: 0.4s;
+    border: blue solid 0.5px;
+  }
+
+  .Register-Button {
+    position: relative;
+    right: 27%;
+    width: 70%;
+    height: 5vh;
+    bottom: 3vh;
+  }
+  .Register-Button:hover {
+    transition: 0.7s;
+    opacity: 0.6;
+  }
+
+  .Have-Account {
+    position: relative;
+    top: 10vh;
+    right: 36%;
+  }
+  .OR-R {
+    position: relative;
+    top: 1vh;
+    font-size: x-large;
+    margin: 0 auto;
+    left: 10%;
+  }
+  .google-R {
+    position: relative;
+    right: 35%;
+    top: 5vh;
+  }
+
+  .Moltaqa-Logo-R {
+    width: 24%;
+    border-radius: 10px;
+    position: relative;
+    left: 30%;
+    top: 17vh;
+  }
+  .Welcome-Login-R {
+    position: relative;
+    left: 35%;
+    font-size: large;
+    top: 15vh;
+  }
+  .Description-Login-R {
+    text-wrap: wrap;
+    width: 50%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    right: 10%;
+    text-align: start;
+    font-size: large;
+    position: relative;
+    top: 20vh;
+  }
+  .Welcome-Div {
     width: 45%;
     position: relative;
     top: 7vh;
- }
- .Register-Form{
+  }
+  .Register-Form {
     position: relative;
     left: 0%;
- }
- }
+  }
+}
