@@ -1,0 +1,42 @@
+.Comment-Page{
+    width: 100%;
+}
+.Add-Comment{
+    width: 60%;
+    
+}
+.Create-Comment{
+    margin: 0 0 0 20%; 
+    position: sticky;
+    bottom: 0vh;  
+}
+.Comment-Card{
+    width: 85%;
+    margin: 0 auto;
+    
+}
+.Card-Comment-comment{
+    
+   height: 10vh;
+}
+.nafithaMonpatheqa {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    max-height: 80vh; 
+    overflow: hidden;
+  }
+  .nafithaMonpatheqaContent {
+    max-height: 70vh; 
+    overflow-y: auto; 
+    display: grid;
+     align-items: center;
+   gap: 20px;
+  }

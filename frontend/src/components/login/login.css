@@ -1379,7 +1379,7 @@ text-decoration: none;
 
 } 
 .Welcome-Div-L{
-    width: 60%;
+    width: 45%;
     position: relative;
     top: 5vh;
 }
@@ -1409,6 +1409,7 @@ top: 20vh;
 }
 .Login-Form{
     position: relative;
+    left: 10%;
   
 }
 .Loading{
