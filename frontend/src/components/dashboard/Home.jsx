@@ -113,6 +113,7 @@ const Home = () => {
               }}
             /> : <button onClick={(e)=>{
               setdisplay(false)
+              setSearchTerm('')
             }}>cancel</button>}
           </button>
         </div>
