@@ -30,11 +30,9 @@ import {
   UsergroupAddOutlined,
   CameraOutlined,
   SendOutlined,
-
 } from "@ant-design/icons";
 import "./Profile.css";
 import Like from "../likes/Like";
-
 
 const { Title, Paragraph } = Typography;
 
@@ -253,7 +251,11 @@ const ProfilePage = () => {
           <Card className="profile-stat">
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
+
               <Link to={`/home/profile/f/1`}>
+
+              <Link to={`/home/profile/f/${id}`}>
+
                 <Title level={5}>Following</Title>
               </Link>
             </Space>
@@ -318,108 +320,100 @@ const ProfilePage = () => {
             </Button>
           </Tooltip>
         </div>
-
-     
       </div>
       <br /> <br /> <br /> <br />
       <div className="posts-section">
         <h3>Your Posts</h3>
         {posts?.map((post, index) => (
-          <Card
-            key={index}
-            style={{ marginBottom: "20px" }}
-            className="post-card"
-          >
-            <Space direction="vertical" size="large">
-              <Row>
-                <Col span={4}>
-                  <Avatar size="large" src={post?.profile_image} />
-                </Col>
-                <Col span={20}>
-                  <h3>{post?.user_name}</h3>
-                  <p>{post?.body}</p>
-                  {post?.user_id === userId && (
-                    <div className="post-actions">
-                      <Button
-                        onClick={() => {
-                          setUpdateClicked(true);
-                          setPostId(post.post_id);
-                        }}
-                        className="update-button"
-                      >
-                        Update
-                      </Button>
-                      {updateClicked && postId === post?.post_id && (
-                        <>
-                          <Input
-                            value={editPostText}
-                            onChange={(e) => setEditPostText(e.target.value)}
-                          />
-                          <Button
-                            onClick={() => {
-                              handelUpdatePost(post.post_id);
-                              setUpdateClicked(false);
-                            }}
-                          >
-                            Save
-                          </Button>
-                          <Button onClick={() => setUpdateClicked(false)}>
-                            Cancel
-                          </Button>
-                        </>
-                      )}
-                      <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => handelDelete(post.post_id)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  )}
-                </Col>
-              </Row>
-
-              <div className="post-actions">
-                <Like
-                  postId={post.post_id}
-                  likedPosts={likedPosts}
-                  setLikedPosts={setLikedPosts}
-                  token={token}
-                  icon={
-                    <HeartFilled
-                      style={{
-                        color: likedPosts.includes(post.post_id)
-                          ? "red"
-                          : "black",
+          <div className="post-card" key={index}>
+            <Row>
+              <Col span={4} className="post-avatar">
+                <Avatar size="large" src={post?.profile_image} />
+              </Col>
+              <Col span={20}>
+                <h3>{post?.user_name}</h3>
+                <p className="post-body">{post?.body}</p>
+                {post?.user_id === userId && (
+                  <div className="post-actions">
+                    <Button
+                      onClick={() => {
+                        setUpdateClicked(true);
+                        setPostId(post.post_id);
                       }}
-                    />
-                  }
-                />
-                <Button
-                  icon={<MessageOutlined />}
-                  type="link"
-                  onClick={() => navigate(`./comments/${post.post_id}`)}
-                >
-                  Comments
-                </Button>
-
-                {!savedPost.includes(post?.post_id) ? (
-                  <Button
-                    type="link"
-                    onClick={() => handleAddSave(post.post_id)}
-                    icon={<SaveOutlined />}
-                  >
-                    Save Post
-                  </Button>
-                ) : (
-                  <Button type="text" disabled>
-                    Saved
-                  </Button>
+                      className="update-button"
+                    >
+                      Update
+                    </Button>
+                    {updateClicked && postId === post?.post_id && (
+                      <>
+                        <Input
+                          value={editPostText}
+                          onChange={(e) => setEditPostText(e.target.value)}
+                        />
+                        <Button
+                          onClick={() => {
+                            handelUpdatePost(post.post_id);
+                            setUpdateClicked(false);
+                          }}
+                        >
+                          Save
+                        </Button>
+                        <Button onClick={() => setUpdateClicked(false)}>
+                          Cancel
+                        </Button>
+                      </>
+                    )}
+                    <Button
+                      icon={<DeleteOutlined />}
+                      danger
+                      onClick={() => handelDelete(post.post_id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 )}
-              </div>
-            </Space>
-          </Card>
+              </Col>
+            </Row>
+
+            <div className="post-actions">
+              <Like
+                postId={post.post_id}
+                likedPosts={likedPosts}
+                setLikedPosts={setLikedPosts}
+                token={token}
+                icon={
+                  <HeartFilled
+                    style={{
+                      color: likedPosts.includes(post.post_id)
+                        ? "red"
+                        : "black",
+                    }}
+                  />
+                }
+              />
+              <Button
+                icon={<MessageOutlined />}
+                type="link"
+                onClick={() => navigate(`./comments/${post.post_id}`)}
+              >
+                Comments
+              </Button>
+
+              {!savedPost.includes(post?.post_id) ? (
+                <Button
+                  type="link"
+                  onClick={() => handleAddSave(post.post_id)}
+                  icon={<SaveOutlined />}
+                >
+                  Save Post
+                </Button>
+              ) : (
+                <Button type="text" disabled>
+                  Saved
+                </Button>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </div>

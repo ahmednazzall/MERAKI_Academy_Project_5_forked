@@ -29,7 +29,7 @@ usersRouter.post("/checkpass/:id", authentication, confirmPass);
 usersRouter.get("/all", authentication, getAllUsers);
 usersRouter.get("/admin/all", authentication, getAllUsersFoAdmin);
 usersRouter.get("/:id", authentication, getUserById);
-usersRouter.get("/userName/search", authentication, getUserByUserName);
+usersRouter.get("/userName/search/:userName", authentication, getUserByUserName);
 usersRouter.put("/:id", authentication, updateUserById);
 usersRouter.put("/sd/:id", authentication, SoftDeleteUserById);
 usersRouter.delete("/hd/:id", authentication, hardDeletedUserById);

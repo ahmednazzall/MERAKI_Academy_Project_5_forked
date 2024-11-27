@@ -20,6 +20,7 @@ import AdminPosts from "./components/AdminPanel/AdminPosts/AdminPosts";
 import AdminReports from "./components/AdminPanel/AdminReports/AdminReports";
 import AdminIsLogin from "./components/AdminPanel/AdminIsLogin/AdminIsLogin";
 import AdminHome from "./components/AdminPanel/AdminDashBoard/Admin Home/AdminHome";
+import Events from "./components/events/Events";
 
 import HowToUse from "./components/setting/HowToUse";
 import GeneralSettings from "./components/setting/UpdateGeneralSettings";
@@ -100,11 +101,18 @@ function App() {
           path: "bookmark",
           element: <SavedPost />,
         },
+
         
         // {
         //   path: "messages/:user_id",
         //   element: <ChatMessages/>,
         // },
+
+
+        {
+          path: "events",
+          element: <Events />,
+        },
 
       ],
     },
@@ -133,6 +141,7 @@ function App() {
         },
       ],
     },
+
     {
       path: "Admin/Panel",
       element: <AdminDashBoard />,
@@ -158,7 +167,6 @@ function App() {
     },
   ]);
 
-
   return <div className={`app ${theme}`}>{element}</div>;
 
   return (
@@ -173,13 +181,9 @@ function App() {
           ))}
         </select>
       </header> */}
-        {element}
-
-
-   
+      {element}
     </div>
   );
-
 }
 
 export default App;
