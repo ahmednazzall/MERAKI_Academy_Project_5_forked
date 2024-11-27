@@ -1,70 +1,59 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const ChatMessages = ({ socket, to, setShow }) => {
   //   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const userId = localStorage.getItem("user_id");
+  // console.log("id",userId);
+  // console.log("to",to);
+//   console.log(socket);
+  
+  const users = useSelector((state) => {
+    return state.followers.following;
+  });
   const [allMsgs, setAllMsgs] = useState([]);
   const token = localStorage.getItem("token");
-  const [clicked, setClicked] = useState(false);
+  const [forTo, setForTo] = useState(null);
+  const [fromTo, setFromTo] = useState(null);
   useEffect(() => {
     socket?.on("message", receive);
     return () => {
       socket.off("message", receive);
     };
   }, [allMsgs]);
+
   const receive = (data) => {
     console.log(data);
     // setAllMsgs([...allMsgs, data]);
+   
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/messages/${to}`, {
+      .get(`http://localhost:5000/messages/${userId}/${to}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((result) => {
         // console.log(result);
-        
+
         setAllMsgs(result.data.result);
       })
       .catch((err) => {
         console.log(err);
       });
-      
-    if (clicked) {
-      axios
-        .post(
-          "http://localhost:5000/messages",
-          { receiver: to, message_text: message },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((result) => {
-          setClicked(false)
-          setMessage("")
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-
-    return ()=>{
-        socket.off("message", receive);
-    }
   }, [allMsgs]);
 
- 
   const handleSend = () => {
-      socket.emit("message", { to, from: userId, message });
-    //   setClicked(true)
+    
+    socket.emit("message", { to, from: userId, message });
+    setMessage("");
   };
+  // console.log(fromTo);
+
 
   return (
     <div>
@@ -89,11 +78,20 @@ const ChatMessages = ({ socket, to, setShow }) => {
       </button>
 
       {allMsgs.length > 0 &&
-        allMsgs.map((message, i) => {            
+        allMsgs.map((message, i) => {
+
+          
           return (
-            <div key={i}>
+            <div key={message.message_id}>
               <span>
-                form {message.sender} <strong>{message.message_text}</strong>
+                
+                <img
+                  src={message.profile_image}
+                  height={"50px"}
+                  width={"50px"}
+                  style={{ borderRadius: "50%" }}
+                />
+                {message.sender} <strong>{message.message_text}</strong>
               </span>
             </div>
           );

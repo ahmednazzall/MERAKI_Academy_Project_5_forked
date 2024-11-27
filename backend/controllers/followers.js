@@ -102,12 +102,10 @@ const getFollowers = async (req, res) => {
   }
 };
 
-// Get list of users a user is following
+// Get list of followers for admin panel
 const getAllFollowers = async (req, res) => {
   const user_id = req.params.user_id;
-  try {
-    const result = await pool.query(
-      `   SELECT
+  const query = ` SELECT
     DATE(followed_at) AS day,
     COUNT(DISTINCT follower_id) AS new_followers,
     SUM(COUNT(DISTINCT follower_id)) OVER (ORDER BY DATE(followed_at)) AS cumulative_followers
@@ -115,8 +113,9 @@ const getAllFollowers = async (req, res) => {
         GROUP BY
           DATE(followed_at)
           ORDER BY
-          day;`
-    );
+          day;`;
+  try {
+    const result = await pool.query(query);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "No following users found " });
     }
@@ -133,7 +132,7 @@ const getAllFollowers = async (req, res) => {
 const getFollowing = async (req, res) => {
   const { id } = req.params;
   const query = `
-  SELECT f.following_id,f.follower_id,u.user_name,u.first_name,u.last_name FROM followers f 
+  SELECT f.following_id,f.follower_id,u.user_name,u.first_name,u.last_name ,u.profile_image,u.user_id FROM followers f 
       INNER JOIN users u ON f.following_id=u.user_id
       WHERE f.follower_id=$1 AND f.is_deleted=0`;
 
