@@ -363,7 +363,7 @@ S20.866,331,46.607,331h668.787C741.133,331,762,307.942,762,279.5S741.133,228,715
       {/* Modal Popup للنجاح أو الخطأ */}
       <Modal
         title="Login Status"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
