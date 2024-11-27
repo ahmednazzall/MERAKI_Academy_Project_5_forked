@@ -223,7 +223,7 @@ const ProfilePage = () => {
             <Title level={2}>{user[0]?.first_name}</Title>
             <p>@{user[0]?.user_name}</p>
           </div>
-          {user[0]?.user_id === localStorage.getItem("user_id") && (
+          {user[0]?.user_id == localStorage.getItem("user_id") && (
             <Button
               type="primary"
               onClick={() => navigate(`/home/profile/edit`)}
@@ -241,7 +241,7 @@ const ProfilePage = () => {
           <Card className="profile-stat">
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
-              <Link to={`/home/profile/f/${id}`}>
+              <Link to={`/home/profile/f/0`}>
                 <Title level={5}>Followers</Title>
               </Link>
             </Space>
@@ -253,7 +253,7 @@ const ProfilePage = () => {
           <Card className="profile-stat">
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
-              <Link to={`/following/${userId}`}>
+              <Link to={`/home/profile/f/1`}>
                 <Title level={5}>Following</Title>
               </Link>
             </Space>

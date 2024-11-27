@@ -5,7 +5,7 @@ import { Link, useNavigate, Outlet } from "react-router-dom";
 import Side from "./Side";
 import Search from "../search/Search";
 import { SearchOutlined } from "@ant-design/icons"; // استيراد أيقونة البحث
-
+import Chat from "../messages/Chat"
 const Home = () => {
   const userId = localStorage.getItem("user_id");
   const token = localStorage.getItem("token");
@@ -72,9 +72,9 @@ const Home = () => {
 
         {isSearching && <Search token={token} searchTerm={searchTerm} />}
         <Outlet />
+        <div className="messages"><Chat /> </div>
       </div>
 
-      <div className="messages">messages here</div>
     </div>
   );
 };

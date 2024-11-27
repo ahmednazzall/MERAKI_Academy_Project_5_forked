@@ -68,7 +68,7 @@ const Followers = () => {
   return (
     <div style={{ padding: "20px" }}>
       <Row gutter={16}>
-        <Col span={12}>
+        {!show && <Col span={12}>
           <Card
             title="Followers"
             bordered={false}
@@ -100,8 +100,9 @@ const Followers = () => {
               <p>No followers</p>
             )}
           </Card>
-        </Col>
-        <Col span={12}>
+        </Col> }
+       
+        {show&&  <Col span={12}>
           <Card
             title="Following"
             bordered={false}
@@ -133,7 +134,8 @@ const Followers = () => {
               <p>No following</p>
             )}
           </Card>
-        </Col>
+        </Col>}
+       
       </Row>
     </div>
   );

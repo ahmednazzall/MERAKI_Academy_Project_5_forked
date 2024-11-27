@@ -11,10 +11,11 @@ const authentication = (req, res, next) => {
 
     // Split and extract token from the Authorization header
     const token = req.headers.authorization.split(" ").pop();
+// console.log(token);
 
-    if (!token) {
-      return res.status(403).json({ message: "Token must be provided" });
-    }
+    // if (!token) {
+    //   return res.status(403).json({ message: "Token must be provided" });
+    // }
 
     // Verify token
     jwt.verify(token, process.env.SECRET, (err, result) => {
@@ -24,6 +25,8 @@ const authentication = (req, res, next) => {
           message: "The token is invalid or expired",
         });
       } else {
+        // console.log(result);
+        
         req.token = result; 
         next(); 
       }

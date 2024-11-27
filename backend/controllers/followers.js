@@ -49,7 +49,7 @@ const removeFollower = async (req, res) => {
   }
 };
 const unfollowUser = async (req, res) => {
-  console.log("hi");
+  // console.log("hi");
 
   // const following_id = req.token.userId;
   // const follower_id = req.params.user_id;

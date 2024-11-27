@@ -28,6 +28,7 @@ import SecuritySettings from "./components/setting/UpdateSecuritySettings";
 import ContactUs from "./components/setting/ContactUs";
 import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
 import Explore from "./components/explore/Explore";
+import ChatMessages from "./components/messages/ChatMessages";
 // import { Provider } from "@/components/ui/provider"
 // import { Provider } from "@/components/ui/provider";
 
@@ -99,6 +100,12 @@ function App() {
           path: "bookmark",
           element: <SavedPost />,
         },
+        
+        // {
+        //   path: "messages/:user_id",
+        //   element: <ChatMessages/>,
+        // },
+
       ],
     },
     {
