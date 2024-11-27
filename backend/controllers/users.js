@@ -196,7 +196,7 @@ WHERE u.user_id=$1 AND u.is_deleted=0`;
 };
 
 const getUserByUserName = async (req, res) => {
-  const { searchUser } = req.query;
+  const  searchUser  = req.params.userName;
 
   const query = `SELECT * FROM users where user_name=$1 And is_deleted=0`;
 

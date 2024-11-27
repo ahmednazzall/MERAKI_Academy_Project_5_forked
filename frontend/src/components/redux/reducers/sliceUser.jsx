@@ -12,7 +12,7 @@ export const sliceUser = createSlice({
       state.users.push(action.payload);
     },
     getAllUsers: (state, action) => {
-      state.users = action.payload.reverse();
+      state.users = action.payload;
     },
     getUserById: (state, action) => {
       state.users = [action.payload];
