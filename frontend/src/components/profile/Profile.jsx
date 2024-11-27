@@ -239,7 +239,7 @@ const ProfilePage = () => {
           <Card className="profile-stat">
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
-              <Link to={`/home/profile/f/${id}`}>
+              <Link to={`/home/profile/f/0`}>
                 <Title level={5}>Followers</Title>
               </Link>
             </Space>
@@ -251,7 +251,11 @@ const ProfilePage = () => {
           <Card className="profile-stat">
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
+
+              <Link to={`/home/profile/f/1`}>
+
               <Link to={`/home/profile/f/${id}`}>
+
                 <Title level={5}>Following</Title>
               </Link>
             </Space>

@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import Side from "./Side";
 import { SearchOutlined } from "@ant-design/icons"; // استيراد أيقونة البحث
+
+import Chat from "../messages/Chat"
+
 import { Input, List, Avatar, Button, FloatButton ,message} from "antd";
 import VirtualList from 'rc-virtual-list';
 const fakeDataUrl =
@@ -11,6 +14,7 @@ const fakeDataUrl =
 const ContainerHeight = 400;
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+
 
 
 
@@ -155,9 +159,9 @@ const Home = () => {
 
         
         <Outlet />
+        <div className="messages"><Chat /> </div>
       </div>
 
-      <div className="messages">messages here</div>
     </div>
   );
 };

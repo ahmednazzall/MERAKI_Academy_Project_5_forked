@@ -224,7 +224,7 @@ const Posts = () => {
         style={{
           marginBottom: "20px",
           padding: "20px",
-          width: "1200px",
+          width: "950px",
           boxSizing: "border-box",
           borderRadius: "10px",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",

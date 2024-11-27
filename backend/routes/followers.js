@@ -34,7 +34,7 @@ followerRouter.get('/posty/:userId',authentication, getPostsByFollowers);
 
 
 
-// Route to get users a user is following
+// Route for admin Panel 
 followerRouter.get('/',authentication,getAllFollowers);
 
 

@@ -15,6 +15,7 @@ const followersRouter = require("./routes/followers");
 const greetingRouter = require("./routes/greeting");
 const reactsRouter = require("./routes/reacts");
 const settingsRouter = require("./routes/settings");
+const messageRouter = require("./routes/messages");
 
 const socketAuth = require("./middleware/socketAuth");
 const ioConnection = require("./controllers/ioConnect");
@@ -28,6 +29,7 @@ app.use("/followers", followersRouter);
 app.use("/greeting", greetingRouter);
 app.use("/reacts", reactsRouter);
 app.use("/settings", settingsRouter);
+app.use("/messages",messageRouter)
 
 
 io.use(socketAuth);
