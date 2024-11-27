@@ -20,6 +20,8 @@ import {
   Space,
   Upload,
   Tooltip,
+  Modal,
+  message,
 } from "antd";
 import {
   HeartFilled,
@@ -30,6 +32,7 @@ import {
   UsergroupAddOutlined,
   CameraOutlined,
   SendOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import "./Profile.css";
 import Like from "../likes/Like";
@@ -153,39 +156,50 @@ const ProfilePage = () => {
     return false;
   };
 
-  const handelDelete = (postId) => {
+  const handleDelete = (postId) => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this post?",
+      content: "Once deleted, it cannot be recovered.",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: () => {
+        axios
+          .delete(`http://localhost:5000/posts/${postId}/hard`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            dispatch(deletePost({ post_id: postId }));
+            message.success("Post deleted successfully!");
+          })
+          .catch((err) => {
+            console.error(err);
+            message.error("Failed to delete post.");
+          });
+      },
+    });
+  };
+
+  const handleAddSave = (postId) => {
     axios
-      .delete(`http://localhost:5000/posts/${postId}/soft`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .post(
+        `http://localhost:5000/posts/add&save/${postId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
-        dispatch(deletePost({ post_id: postId }));
+        message.success("Post saved successfully!");
+        setSavedPost([...savedPost, postId]);
       })
       .catch((err) => {
         console.error(err);
-        console.log('"Failed to delete post."');
+        message.error("Failed to save post.");
       });
-  };
-
-  const handleAddSave = (id) => {
-    if (!savedPost.includes(id)) {
-      axios
-        .post(
-          `http://localhost:5000/posts/add&save/${id}`,
-          {},
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        .then((res) => {
-          console.log("Post saved successfully!");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      console.log("already saved");
-    }
   };
 
   const handelUpdatePost = (postId) => {
@@ -221,17 +235,20 @@ const ProfilePage = () => {
             <Title level={2}>{user[0]?.first_name}</Title>
             <p>@{user[0]?.user_name}</p>
           </div>
+          <br />
+          <Paragraph className="bio">{user[0]?.bio}</Paragraph>
+
           {user[0]?.user_id == localStorage.getItem("user_id") && (
             <Button
               type="primary"
               onClick={() => navigate(`/home/profile/edit`)}
               className="edit-profile-btn"
+              style={{ borderRadius: "25px" }}
             >
               Edit Profile
             </Button>
           )}
         </div>
-        <Paragraph className="bio">{user?.bio}</Paragraph>
       </div>
       <Paragraph className="bio-text">{user?.bio}</Paragraph>
       <Row gutter={16} className="profile-stats">
@@ -391,27 +408,62 @@ const ProfilePage = () => {
                   />
                 }
               />
+              {/* زر التعليقات */}
               <Button
                 icon={<MessageOutlined />}
                 type="link"
+                style={{
+                  color: "#1890ff",
+                  fontSize: "18px",
+                  fontWeight: "600",
+                }}
                 onClick={() => navigate(`./comments/${post.post_id}`)}
               >
                 Comments
               </Button>
 
-              {!savedPost.includes(post?.post_id) ? (
-                <Button
-                  type="link"
-                  onClick={() => handleAddSave(post.post_id)}
-                  icon={<SaveOutlined />}
-                >
-                  Save Post
-                </Button>
-              ) : (
-                <Button type="text" disabled>
-                  Saved
-                </Button>
-              )}
+              {/* زر الحفظ */}
+              <Button
+                icon={<SaveOutlined />}
+                type="link"
+                onClick={() => handleAddSave(post.post_id)}
+                style={{
+                  color: "#28a745",
+                  fontSize: "18px",
+                }}
+              >
+                Save
+              </Button>
+
+              {/* زر التعديل */}
+              <Button
+                icon={<EditOutlined />}
+                type="link"
+                onClick={() => {
+                  setPostId(post.post_id);
+                  setEditPostText(post.body);
+                  setUpdateClicked(true);
+                }}
+                style={{
+                  color: "#ffc107",
+                  fontSize: "18px",
+                }}
+              >
+                Edit
+              </Button>
+
+              {/* زر الحذف */}
+              <Button
+                icon={<DeleteOutlined />}
+                type="link"
+                danger
+                onClick={() => handleDelete(post.post_id)}
+                style={{
+                  fontSize: "18px",
+                }}
+              >
+                Delete
+              </Button>
             </div>
           </div>
         ))}

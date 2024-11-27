@@ -33,7 +33,7 @@ import {
   CommentOutlined,
   SendOutlined,
   CameraOutlined,
-  HeartFilled, 
+  HeartFilled,
   MessageOutlined,
 } from "@ant-design/icons";
 
@@ -63,7 +63,7 @@ const Posts = () => {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const [savedPost, setSavedPost] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]); 
+  const [likedPosts, setLikedPosts] = useState([]);
 
   const posts = useSelector((state) => state.posts.posts);
 
@@ -116,19 +116,23 @@ const Posts = () => {
   };
 
   const handleAddPost = () => {
-    const data = {body : postInfo.body ,image : postInfo.image||null ,video : postInfo.video||null }
+    const data = {
+      body: postInfo.body,
+      image: postInfo.image || null,
+      video: postInfo.video || null,
+    };
     const formData = new FormData();
     formData.append("body", postInfo.body);
     if (postInfo.image) formData.append("image", postInfo.image);
     if (postInfo.video) formData.append("video", postInfo.video);
     console.log(postInfo.body);
-    
+
     axios
-    .post("http://localhost:5000/posts", postInfo, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((res) => {
-        console.log( data.image);
+      .post("http://localhost:5000/posts", postInfo, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log(data.image);
         dispatch(createPost(res.data.post[0]));
         message.success("Post created successfully!");
         setAddPost({ body: "", image: null, video: null });
@@ -140,25 +144,40 @@ const Posts = () => {
   };
 
   const handleUpdatePost = (postId) => {
-    axios
-      .put(
-        `http://localhost:5000/posts/${postId}`,
-        { body: editPostText },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        dispatch(updatePost(res.data.updatedPost));
-        setUpdateClicked(false);
-        message.success("Post updated successfully!");
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Failed to update post.");
-      });
+    Modal.confirm({
+      title: "Edit Post",
+      centered: true,
+      content: (
+        <TextArea
+          value={editPostText}
+          onChange={(e) => setEditPostText(e.target.value)}
+          rows={4}
+        />
+      ),
+      okText: "Save Changes",
+      cancelText: "Cancel",
+      onOk: () => {
+        axios
+          .put(
+            `http://localhost:5000/posts/${postId}`,
+            { body: editPostText },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            dispatch(updatePost(res.data.updatedPost));
+            setUpdateClicked(false);
+            message.success("Post updated successfully!");
+          })
+          .catch((err) => {
+            console.error(err);
+            message.error("Failed to update post.");
+          });
+      },
+    });
   };
 
   const handleDelete = (postId) => {
@@ -167,6 +186,7 @@ const Posts = () => {
       content: "Once deleted, it cannot be recovered.",
       okText: "Yes",
       cancelText: "No",
+      centered: true,
       onOk: () => {
         axios
           .delete(`http://localhost:5000/posts/${postId}/hard`, {
@@ -187,24 +207,33 @@ const Posts = () => {
   };
 
   const handleAddSave = (postId) => {
-    axios
-      .post(
-        `http://localhost:5000/posts/add&save/${postId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        message.success("Post saved successfully!");
-        setSavedPost([...savedPost, postId]);
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Failed to save post.");
-      });
+    Modal.confirm({
+      title: "Are you sure you want to save this post?",
+      content: "You can view it later in your saved posts.",
+      okText: "Yes",
+      cancelText: "No",
+      centered: true,
+      onOk: () => {
+        axios
+          .post(
+            `http://localhost:5000/posts/add&save/${postId}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            message.success("Post saved successfully!");
+            setSavedPost([...savedPost, postId]);
+          })
+          .catch((err) => {
+            console.error(err);
+            message.error("Failed to save post.");
+          });
+      },
+    });
   };
 
   return (
@@ -234,9 +263,7 @@ const Posts = () => {
         <TextArea
           placeholder="What's on your mind?"
           value={addPost.body || ""}
-          onChange={(e) => setAddPost({ ...addPost, body: e.target.value }) 
-        
-        }
+          onChange={(e) => setAddPost({ ...addPost, body: e.target.value })}
           rows={4}
           style={{ width: "100%", marginBottom: "10px" }}
         />
@@ -292,13 +319,15 @@ const Posts = () => {
           <Card
             style={{
               marginBottom: "20px",
-              padding: "15px",
+              padding: "20px",
               width: "100%",
               boxSizing: "border-box",
               borderRadius: "10px",
               backgroundColor: "#f9f9f9",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "transform 0.3s, box-shadow 0.3s",
             }}
+            hoverable
           >
             <List.Item key={post.post_id}>
               <List.Item.Meta
@@ -314,21 +343,38 @@ const Posts = () => {
                   )
                 }
                 title={<strong>{post.user_name}</strong>}
-                description={post.body}
-               
+                description={
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      color: "#333", // اللون الرمادي الداكن
+                      marginTop: "10px",
+                      lineHeight: "1.8", // تباعد الأسطر
+                      fontFamily: "'Poppins', sans-serif", // تغيير الخط إلى Poppins
+                      fontWeight: "400", // خط عادي أو يمكن تغييره إلى bold
+                    }}
+                  >
+                    <p>{post.body}</p>
+                  </div>
+                }
               />
-            
+
+              {/* صورة أو فيديو البوست */}
               {post.image && (
                 <img
                   src={post.image}
-                  alt="post"
+                  alt="Post Image"
                   style={{
                     width: "100%",
                     borderRadius: "8px",
                     marginTop: "10px",
+                    objectFit: "cover",
+                    height: "auto",
+                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 />
               )}
+
               {post.video && (
                 <video
                   controls
@@ -336,19 +382,22 @@ const Posts = () => {
                     width: "100%",
                     marginTop: "10px",
                     borderRadius: "8px",
+                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                   }}
                   src={post.video}
                 />
               )}
             </List.Item>
+
             <Space
               style={{
                 marginTop: "15px",
                 display: "flex",
                 justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {/* Like Button  */}
+              {/* زر الإعجاب */}
               <Like
                 postId={post.post_id}
                 likedPosts={likedPosts}
@@ -360,55 +409,71 @@ const Posts = () => {
                       color: likedPosts.includes(post.post_id)
                         ? "red"
                         : "black",
+                      fontSize: "20px",
                     }}
                   />
-                } 
+                }
               />
 
-              {/* Comment Button */}
+              {/* زر التعليقات */}
               <Button
                 icon={<MessageOutlined />}
                 type="link"
                 style={{
-                  color: "blue",
-                  fontSize: "20px",
+                  color: "#1890ff",
+                  fontSize: "18px",
+                  fontWeight: "600",
                 }}
                 onClick={() => navigate(`./comments/${post.post_id}`)}
               >
                 Comments
               </Button>
 
-              {/* Save Button */}
+              {/* زر الحفظ */}
               <Button
                 icon={<SaveOutlined />}
                 type="link"
                 onClick={() => handleAddSave(post.post_id)}
+                style={{
+                  color: "#28a745",
+                  fontSize: "18px",
+                }}
               >
                 Save
               </Button>
 
-              {/* Edit Button */}
-              <Button
-                icon={<EditOutlined />}
-                type="link"
-                onClick={() => {
-                  setPostId(post.post_id);
-                  setEditPostText(post.body);
-                  setUpdateClicked(true);
-                }}
-              >
-                Edit
-              </Button>
+              {/* زر التعديل */}
+              {post.user_id === parseInt(userId) && (
+                <Button
+                  icon={<EditOutlined />}
+                  type="link"
+                  onClick={() => {
+                    setPostId(post.post_id);
+                    setEditPostText(post.body);
+                    setUpdateClicked(true);
+                  }}
+                  style={{
+                    color: "#ffc107",
+                    fontSize: "18px",
+                  }}
+                >
+                  Edit
+                </Button>
+              )}
 
-              {/* Delete Button */}
-              <Button
-                icon={<DeleteOutlined />}
-                type="link"
-                danger
-                onClick={() => handleDelete(post.post_id)}
-              >
-                Delete
-              </Button>
+              {post.user_id === parseInt(userId) && (
+                <Button
+                  icon={<DeleteOutlined />}
+                  type="link"
+                  danger
+                  onClick={() => handleDelete(post.post_id)}
+                  style={{
+                    fontSize: "18px",
+                  }}
+                >
+                  Delete
+                </Button>
+              )}
             </Space>
           </Card>
         )}

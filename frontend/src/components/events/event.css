@@ -1,0 +1,80 @@
+.birthdays-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.HB{
+    
+    text-align: center;
+}
+.birthday-card-container {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 10px auto;
+}
+
+.birthday-card {
+  background: linear-gradient(135deg, #4c6c8c, #7a9ab2);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 100%; 
+  
+
+}
+
+.birthday-card:hover {
+  transform: translateY(-5px);
+}
+
+.birthday-card h3 {
+  font-size: 1.5em;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  resize: none;
+  background-color: #f4f4f4;
+  transition: background-color 0.3s ease;
+}
+
+button {
+  background-color: #0076b6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #005f8d;
+}
+
+.no-birthdays {
+  color: #fff;
+  font-size: 1.2em;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 20px auto;
+}

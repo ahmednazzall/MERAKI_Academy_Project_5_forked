@@ -6,14 +6,15 @@ import {
   Button,
   Input,
   Form,
-  Upload,
   Typography,
   Space,
   Avatar,
   message,
+  Modal,
 } from "antd";
 import { CameraOutlined } from "@ant-design/icons";
 import "./edit.css";
+import { Navigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -21,7 +22,9 @@ const Edit = () => {
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({});
   const [newPass, setNewPass] = useState({});
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(false); // حالة للتحكم في إظهار/إخفاء نموذج تغيير كلمة السر
+  const [isModalVisible, setIsModalVisible] = useState(false); // حالة لعرض النافذة المنبثقة
+  const [passwordError, setPasswordError] = useState(""); // حالة لعرض خطأ كلمة السر
   const userId = localStorage.getItem("user_id");
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.users.users);
@@ -80,6 +83,10 @@ const Edit = () => {
   };
 
   const handleUpdate = () => {
+    setIsModalVisible(true); // عرض نافذة تأكيد التحديث
+  };
+
+  const confirmUpdate = () => {
     axios
       .put(`http://localhost:5000/users/${userId}`, userInfo, {
         headers: {
@@ -90,10 +97,15 @@ const Edit = () => {
         dispatch(updateUserById(res.data.result[0]));
         setUserInfo({});
         message.success("User information updated successfully!");
+        setIsModalVisible(false);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const cancelUpdate = () => {
+    setIsModalVisible(false);
   };
 
   const handleChangePass = () => {
@@ -125,20 +137,23 @@ const Edit = () => {
                 )
                 .then(() => {
                   message.success("Password updated successfully!");
+                  setShowPass(false); // إغلاق الفورم بعد التحديث
                 })
                 .catch((err) => {
                   console.log(err);
                 });
+            } else {
+              setPasswordError("Incorrect old password. Please try again.");
             }
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
-        message.warning("Please insert the old password");
+        setPasswordError("Please enter the old password.");
       }
     } else {
-      message.warning("Passwords must match");
+      setPasswordError("Passwords do not match.");
     }
   };
 
@@ -172,28 +187,32 @@ const Edit = () => {
           country: user[0]?.country,
           bio: user[0]?.bio,
         }}
+        style={{ maxWidth: "600px", margin: "0 auto" }}
       >
-        <Form.Item label="User name" name="user_name">
+        <Form.Item label="User Name" name="user_name">
           <Input
             onChange={(e) => {
               setUserInfo({ ...userInfo, user_name: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
-        <Form.Item label="First name" name="first_name">
+        <Form.Item label="First Name" name="first_name">
           <Input
             onChange={(e) => {
               setUserInfo({ ...userInfo, first_name: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
-        <Form.Item label="Last name" name="last_name">
+        <Form.Item label="Last Name" name="last_name">
           <Input
             onChange={(e) => {
               setUserInfo({ ...userInfo, last_name: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
@@ -203,6 +222,7 @@ const Edit = () => {
             onChange={(e) => {
               setUserInfo({ ...userInfo, email: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
@@ -211,6 +231,7 @@ const Edit = () => {
             onChange={(e) => {
               setUserInfo({ ...userInfo, country: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
@@ -219,13 +240,52 @@ const Edit = () => {
             onChange={(e) => {
               setUserInfo({ ...userInfo, bio: e.target.value });
             }}
+            style={{ borderRadius: "8px", padding: "10px" }}
           />
         </Form.Item>
 
-        <Button type="primary" onClick={handleUpdate}>
-          Save Changes
-        </Button>
+        <div className="button-container">
+          <Button
+            type="primary"
+            size="large"
+            shape="round"
+            onClick={handleUpdate}
+            style={{
+              backgroundColor: "#1890ff",
+              borderRadius: "25px",
+              width: "70%",
+              fontSize: "17px",
+            }}
+          >
+            Save Changes
+          </Button>
+          <Button
+            size="large"
+            shape="round"
+            onClick={() => navigate(`/profile/${userId}`)}
+            style={{
+              backgroundColor: "#f44336",
+              borderRadius: "25px",
+              width: "70%",
+              fontSize: "17px",
+              marginLeft: "10px",
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
       </Form>
+
+      <Modal
+        title="Confirm Changes"
+        open={isModalVisible}
+        onOk={confirmUpdate}
+        onCancel={cancelUpdate}
+        okText="Yes"
+        cancelText="No"
+      >
+        <p>Are you sure you want to save the changes?</p>
+      </Modal>
 
       <div className="password-section">
         {!showPass ? (
@@ -234,30 +294,55 @@ const Edit = () => {
           </a>
         ) : (
           <div>
+            <br />
+            <br />
             <Input.Password
               placeholder="Enter old password"
               onChange={(e) =>
                 setNewPass({ ...newPass, oldPass: e.target.value })
               }
             />
+            <br /> <br />
             <Input.Password
               placeholder="Enter new password"
               onChange={(e) =>
                 setNewPass({ ...newPass, new_pass: e.target.value })
               }
             />
+            <br />
+            <br />
             <Input.Password
               placeholder="Confirm new password"
               onChange={(e) =>
                 setNewPass({ ...newPass, confirm: e.target.value })
               }
             />
-            <Space>
-              <Button type="primary" onClick={handleChangePass}>
-                Submit
+            <br />
+            {passwordError && <p className="error-message">{passwordError}</p>}
+            <br />
+            <div className="password-buttons-container">
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleChangePass}
+                style={{
+                  backgroundColor: "#1890ff",
+                  borderRadius: "25px",
+                }}
+              >
+                Change Password
               </Button>
-              <Button onClick={() => setShowPass(false)}>Cancel</Button>
-            </Space>
+              <Button
+                size="large"
+                onClick={() => setShowPass(false)}
+                style={{
+                  backgroundColor: "#f44336",
+                  borderRadius: "25px",
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         )}
       </div>

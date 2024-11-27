@@ -15,18 +15,17 @@ const {
   isLogin,
   isNotLogin,
   createUserByGoogle,
-  LoginByGoogle
+  LoginByGoogle,
 } = require("../controllers/users");
 
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 usersRouter.post("/register", Register);
 
-
 usersRouter.post("/login", login);
 
 usersRouter.post("/checkpass/:id", authentication, confirmPass);
-usersRouter.get("/all", authentication, getAllUsers);
+usersRouter.get("/all", getAllUsers);
 usersRouter.get("/admin/all", authentication, getAllUsersFoAdmin);
 usersRouter.get("/:id", authentication, getUserById);
 usersRouter.get("/userName/search/:userName", authentication, getUserByUserName);
@@ -38,9 +37,9 @@ module.exports = usersRouter;
 //reset password
 usersRouter.put("/login/re/", ResetPassByEmail);
 
-usersRouter.put("/islogin/true/:userId" ,isLogin);
+usersRouter.put("/islogin/true/:userId", isLogin);
 
-usersRouter.put("/isNotlogin/false/:userId" ,isNotLogin);
+usersRouter.put("/isNotlogin/false/:userId", isNotLogin);
 
 /* 
 register/Admin
