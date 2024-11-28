@@ -121,8 +121,8 @@ CREATE TABLE savedPost (
  post_id integer ,
  user_id integer,
 saved_at timestamp default now(),
- foreign key (post_id) references posts.post_id,
- foreign key (user_id) references users.user_id
+ foreign key (post_id) references posts(post_id) ON DELETE CASCADE,
+ foreign key (user_id) references users(user_id) ON DELETE CASCADE
 )
  CREATE TABLE likes (
     id SERIAL PRIMARY KEY,

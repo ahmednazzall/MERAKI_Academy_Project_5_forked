@@ -42,6 +42,7 @@ const { TextArea } = Input;
 const { Title } = Typography;
 
 const Posts = () => {
+  const [postDisplayEdit , setpostDisplayEdit] = useState(false)
   const [postId, setPostId] = useState(0);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [editPostText, setEditPostText] = useState("");
@@ -144,19 +145,7 @@ const Posts = () => {
   };
 
   const handleUpdatePost = (postId) => {
-    Modal.confirm({
-      title: "Edit Post",
-      centered: true,
-      content: (
-        <TextArea
-          value={editPostText}
-          onChange={(e) => setEditPostText(e.target.value)}
-          rows={4}
-        />
-      ),
-      okText: "Save Changes",
-      cancelText: "Cancel",
-      onOk: () => {
+   
         axios
           .put(
             `http://localhost:5000/posts/${postId}`,
@@ -168,16 +157,15 @@ const Posts = () => {
             }
           )
           .then((res) => {
-            dispatch(updatePost(res.data.updatedPost));
-            setUpdateClicked(false);
+            
+            setpostDisplayEdit(false)
             message.success("Post updated successfully!");
           })
           .catch((err) => {
             console.error(err);
             message.error("Failed to update post.");
           });
-      },
-    });
+      
   };
 
   const handleDelete = (postId) => {
@@ -354,7 +342,17 @@ const Posts = () => {
                       fontWeight: "400", // خط عادي أو يمكن تغييره إلى bold
                     }}
                   >
-                    <p>{post.body}</p>
+                    {postDisplayEdit && postId == post.post_id ?<>
+                      <Input defaultValue={post.body} onChange={(e)=>{
+                        setEditPostText(e.target.value)
+                      }}/>
+                      <Button onClick={(e)=>{
+                        setpostDisplayEdit(false)
+                      }}>Cancel</Button>
+                      <Button onClick={(e)=>{
+                        handleUpdatePost(postId)
+                      }}>Save</Button>
+                    </> :<p>{post.body}</p>}
                   </div>
                 }
               />
@@ -448,6 +446,7 @@ const Posts = () => {
                   icon={<EditOutlined />}
                   type="link"
                   onClick={() => {
+                    setpostDisplayEdit(true)
                     setPostId(post.post_id);
                     setEditPostText(post.body);
                     setUpdateClicked(true);

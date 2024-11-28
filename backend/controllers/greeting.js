@@ -10,7 +10,7 @@ const sendGreeting = async (req, res) => {
   }
 
   try {
-    console.log("Input values:", { senderId, recipientId, greeting });
+   
 
     const result = await pool.query(
       "INSERT INTO greetings (sender_id, recipient_id, message) VALUES ($1, $2, $3) RETURNING *",
