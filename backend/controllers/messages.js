@@ -26,7 +26,6 @@ const saveMessages = async (req, res) => {
 };
 
 const getMessages = async (req, res) => {
-  //   const sender = req.token.userId;
   const { senderId, receiverId } = req.params;
 
   const query = `SELECT m.message_text,m.sender,u.profile_image ,m.created_at FROM messages m

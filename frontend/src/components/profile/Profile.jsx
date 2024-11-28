@@ -273,7 +273,7 @@ const ProfilePage = () => {
               <Title level={5}>Follower</Title>
               </Link>
 
-              <Link to={`/home/profile/f/${id}`}>
+
                 <Title level={5}>Following</Title>
               </Link>
             </Space>

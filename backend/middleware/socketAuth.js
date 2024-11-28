@@ -9,7 +9,8 @@ const socketAuth = (socket, next) => {
       if (err) {
         next(new Error("Forbidden"));
       }
-      socket.join(`room-${headers.user_id}`);
+    socket.join(`room-${headers.user_id}`);
+      
       socket.user = { token: result, user_id: headers.user_id };
       next();
     });

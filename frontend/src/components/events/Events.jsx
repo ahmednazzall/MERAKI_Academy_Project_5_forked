@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "antd";
 
-const Events = ({ userId, token }) => {
+const Events = ({ userId }) => {
+  const  token = localStorage.getItem('token')
   const [todaysBirthdays, setTodaysBirthdays] = useState([]);
   const [greeting, setGreeting] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,10 +47,12 @@ const Events = ({ userId, token }) => {
 
   const sendGreeting = (recipientId) => {
     if (greeting.trim()) {
+      console.log(greeting);
+      
       axios
         .post(
           `http://localhost:5000/greeting/send`,
-          { userId, recipientId, greeting },
+          { recipientId, greeting },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -89,10 +92,12 @@ const Events = ({ userId, token }) => {
               <h3>{user.user_name}</h3>
               <textarea
                 value={greeting}
-                onChange={handleGreetingChange}
+                onChange={(e)=>{
+                  setGreeting(e.target.value)
+                }}
                 placeholder="Write a greeting..."
               />
-              <button onClick={() => sendGreeting(user.id)}>
+              <button onClick={() => sendGreeting(user.user_id)}>
                 Send Greeting
               </button>
             </div>
