@@ -269,7 +269,7 @@ const ProfilePage = () => {
             <Space>
               <UsergroupAddOutlined className="followers-icon" />
 
-              <Link to={`/home/profile/f/1`}>
+              
 
               <Link to={`/home/profile/f/${id}`}>
 
