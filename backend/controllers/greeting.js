@@ -1,18 +1,20 @@
 const { pool } = require("../models/db");
 
 const sendGreeting = async (req, res) => {
-  const { senderId, recipientId, message } = req.body;
-
-  if (req.user.user_id !== senderId) {
+  const {  recipientId, greeting } = req.body;
+  const senderId = req.token.userId
+  console.log(senderId, recipientId, greeting);
+  if (req.token.userId !== senderId) {
+    
     return res.status(403).json({ message: 'You are not authorized to send this greeting' });
   }
 
   try {
-    console.log("Input values:", { senderId, recipientId, message });
+    console.log("Input values:", { senderId, recipientId, greeting });
 
     const result = await pool.query(
       "INSERT INTO greetings (sender_id, recipient_id, message) VALUES ($1, $2, $3) RETURNING *",
-      [senderId, recipientId, message]
+      [senderId, recipientId, greeting]
     );
 
     res.status(201).json({
