@@ -1,0 +1,65 @@
+.how-to-use-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f9ff, #cfeffd);
+    padding: 20px;
+  }
+  
+  .how-to-use-card {
+    max-width: 700px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+  
+  .how-to-use-title {
+    text-align: center;
+    color: #00796b;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .how-to-use-description {
+    text-align: center;
+    font-size: 16px;
+    color: #595959;
+    margin-bottom: 30px;
+  }
+  
+  .how-to-use-steps {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .how-to-use-step-item {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #444444;
+  }
+  
+  /* الحاوية الرئيسية للخطوة */
+  .step-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* الرقم */
+  .step-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: #00796b;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 50%;
+    margin-right: 15px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
