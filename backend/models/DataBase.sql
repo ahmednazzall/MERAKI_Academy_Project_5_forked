@@ -123,7 +123,7 @@ CREATE TABLE likes (
 );
 CREATE TABLE privacy_settings (
     u_id INT NOT NULL,
-    profile_visibility VARCHAR(20) DEFAULT
+    profile_visibility VARCHAR(20) DEFAULT('Public'),
     blocked_accounts TEXT,
     FOREIGN KEY (u_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
