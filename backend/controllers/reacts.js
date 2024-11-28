@@ -46,8 +46,9 @@ const getLikes = async (req, res) => {
     const likesData = await pool.query(
       `SELECT u.user_id AS user_id, u.user_name AS user_name FROM likes l 
        INNER JOIN users u ON l.userId = u.user_id 
-       WHERE l.postId = $1 AND l.userId=$2`,
-      [postId, userId]
+       INNER JOIN posts ON posts.post_id = l.postid
+       WHERE l.postId = $1`,
+      [postId]
     );
 
     const userLiked = likesData.rows.some((like) => like.user_id === userId);
