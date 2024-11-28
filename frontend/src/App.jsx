@@ -6,7 +6,7 @@ import Home from "./components/dashboard/Home";
 import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Comments from "./components/comments/Comments";
 
 import SearchBar from "./components/search/Search";
@@ -30,16 +30,41 @@ import ContactUs from "./components/setting/ContactUs";
 import AdminComments from "./components/AdminPanel/AdminPosts/adminComments/AdminComments";
 import Explore from "./components/explore/Explore";
 import ChatMessages from "./components/messages/ChatMessages";
+import io from "socket.io-client";
+
 // import { Provider } from "@/components/ui/provider"
 // import { Provider } from "@/components/ui/provider";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
   const [theme, setTheme] = useState("light");
-
+  const [socket, setSocket] = useState(null);
+  const token = localStorage.getItem("token");
+  const user_id = localStorage.getItem("user_id");
   const toggleTheme = (e) => {
     setTheme(e.target.value);
   };
+  useEffect(() => {
+    const socketConnection = io("http://localhost:5000", {
+      extraHeaders: {
+        user_id,
+        token,
+      },
+    });
+    setSocket(socketConnection);
+
+    socketConnection?.on("connect", () => {
+      console.log("io connected");
+    });
+    socketConnection?.on("connect_error", (error) => {
+      console.log("problem", error.message);
+    });
+    return () => {
+      socketConnection?.removeAllListeners();
+      socketConnection?.disconnect();
+    };
+  }, []);
+
 
   let element = useRoutes([
     {
@@ -67,7 +92,7 @@ function App() {
     },
     {
       path: "/home",
-      element: <Home />,
+      element: <Home socket={socket} />,
       children: [
         {
           path: "",
