@@ -3,31 +3,24 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const ChatMessages = ({ socket, to, setShow }) => {
-  //   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const userId = localStorage.getItem("user_id");
-  // console.log("id",userId);
-  // console.log("to",to);
-//   console.log(socket);
-  
-  const users = useSelector((state) => {
-    return state.followers.following;
-  });
+  const [loggedInUser, setLoggedInUser] = useState("");
   const [allMsgs, setAllMsgs] = useState([]);
   const token = localStorage.getItem("token");
-  const [forTo, setForTo] = useState(null);
-  const [fromTo, setFromTo] = useState(null);
+
+  // console.log(loggedInUser);
+
   useEffect(() => {
     socket?.on("message", receive);
     return () => {
-      socket.off("message", receive);
+      socket?.off("message", receive);
     };
   }, [allMsgs]);
 
   const receive = (data) => {
     console.log(data);
-    // setAllMsgs([...allMsgs, data]);
-   
+    setAllMsgs([...allMsgs, data]);
   };
 
   useEffect(() => {
@@ -38,22 +31,36 @@ const ChatMessages = ({ socket, to, setShow }) => {
         },
       })
       .then((result) => {
-        // console.log(result);
-
         setAllMsgs(result.data.result);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [allMsgs]);
+
+    axios
+      .get("http://localhost:5000/users/all")
+      .then((res) => {
+        const findUser = res.data.Users.find((user) => {
+          return user.user_id == userId;
+        });
+
+        setLoggedInUser(findUser.user_name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleSend = () => {
-    
-    socket.emit("message", { to, from: userId, message });
-    setMessage("");
+    if (message !== "") {
+      socket.emit("message", { to, from: userId, message });
+      setMessage("");
+      socket.emit("notification", {
+        message: `new message from ${loggedInUser}`,
+        to,
+      });
+    }
   };
-  // console.log(fromTo);
-
 
   return (
     <div>
@@ -78,20 +85,17 @@ const ChatMessages = ({ socket, to, setShow }) => {
       </button>
 
       {allMsgs.length > 0 &&
-        allMsgs.map((message, i) => {
-
-          
+        allMsgs.map((message) => {
           return (
             <div key={message.message_id}>
               <span>
-                
                 <img
                   src={message.profile_image}
                   height={"50px"}
                   width={"50px"}
                   style={{ borderRadius: "50%" }}
                 />
-                {message.sender} <strong>{message.message_text}</strong>
+                {/* {message.sender} */} <strong>{message.message_text}</strong>
               </span>
             </div>
           );

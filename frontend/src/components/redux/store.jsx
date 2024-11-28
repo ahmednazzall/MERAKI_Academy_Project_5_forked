@@ -10,7 +10,8 @@ const store=configureStore({
         users:userReducer,
         posts:postsReducer,
         followers:followerReducer,
-        comments:commentReducer
+        comments:commentReducer,
+       
     }
 })
 
