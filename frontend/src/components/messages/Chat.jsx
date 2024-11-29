@@ -69,8 +69,8 @@ const Chat = ({socket}) => {
 
   return (
     <div>
-      <h5 className="Head-Chat">Chat messages</h5>
-
+    <h5 className="Head-Chat">Chat messages</h5>
+      <div className="Chat-Con">
       {users?.map((user) => {
         return (
           <div
@@ -82,15 +82,17 @@ const Chat = ({socket}) => {
           >
             <img
               src={user?.profile_image}
-              className="userPic-Message"
+              className="userPic"
               alt="userPicture"
+              width={50}
+              height={70}
             />
            
             <p className="User-Name-Chat">{user.user_name}</p>
           </div>
         );
       })}
-
+</div>
       {show && <ChatMessages socket={socket} to={to} setShow={setShow} />}
     </div>
   );
