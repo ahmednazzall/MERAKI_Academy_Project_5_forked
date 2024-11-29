@@ -8,7 +8,7 @@
   .notification-window {
     position: fixed;
     top: 63px; 
-    width: 300px;
+    width: 350px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
