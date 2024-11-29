@@ -114,7 +114,7 @@ function App() {
         },
         {
           path: "/home/explore",
-          element: <Explore />,
+          element: <Explore socket={socket} />,
         },
         {
           path: "/home/search",

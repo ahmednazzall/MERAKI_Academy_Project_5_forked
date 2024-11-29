@@ -45,3 +45,28 @@ input {
 .float-Button {
   margin: 0 13% 0 0;
 } */
+.media-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.media-item {
+  flex: 1;
+  max-width: 50%;
+}
+
+ .media-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+ .media-video video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
