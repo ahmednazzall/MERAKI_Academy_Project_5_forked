@@ -40,3 +40,7 @@
      align-items: center;
    gap: 20px;
   }
+  .btnComment{
+
+    padding: 2vh 8% 2vh 5%;
+  }
