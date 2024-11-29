@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Badge } from "antd";
 import { AiFillBell } from "react-icons/ai";
 import "./notify.css";
-
+import moment from "moment-timezone";
 
 const Notification = ({ socket }) => {
   const token = localStorage.getItem("token");
   const [showNote, setShowNote] = useState(false);
   const [note, setNote] = useState([]);
   const [count, setCount] = useState(0);
-  // const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     socket?.on("notification", (data) => {
@@ -39,9 +38,17 @@ const Notification = ({ socket }) => {
         console.log(err);
       });
 
-    return () => {};
-  }, []);
- 
+    return () => {
+    };
+  }, [note]);
+  const formatRelativeTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const offset = date.getTimezoneOffset();
+    date.setMinutes(date.getMinutes() - offset);
+    const localTime = moment.utc(date);
+
+    return localTime.fromNow();
+  };
   return (
     <div>
       <Badge count={count}>
@@ -63,14 +70,13 @@ const Notification = ({ socket }) => {
             <h2>Notifications</h2>
           </div>
           <div className="notification-list">
-            {note.reverse().map((notify) => {
-              const at = new Date(notify.notification_time);
+            {note?.map((notify) => {
               return (
                 <div key={notify.notification_id} className="notification-item">
                   <span className="img">
                     {" "}
                     <img
-                      src={notify.profile_image || ""}
+                      src={notify.profile_image || "default-profile.png"}
                       style={{
                         height: "50px",
                         width: "50px",
@@ -78,9 +84,11 @@ const Notification = ({ socket }) => {
                       }}
                     />
                   </span>
-                  <span  className="notification-message">{notify.action}</span>
+                  <span className="notification-message">{notify.action}</span>
 
-                  <span className="notification-time">{at.toLocaleTimeString()}</span>
+                  <span className="notification-time">
+                    {formatRelativeTime(notify.notification_time)}
+                  </span>
                 </div>
               );
             })}
