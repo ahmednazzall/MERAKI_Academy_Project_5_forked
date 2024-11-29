@@ -32,8 +32,6 @@ import Explore from "./components/explore/Explore";
 import ChatMessages from "./components/messages/ChatMessages";
 import io from "socket.io-client";
 
-// import { Provider } from "@/components/ui/provider"
-// import { Provider } from "@/components/ui/provider";
 
 function App() {
   const themes = ["light", "dark", "blue", "green"];
@@ -136,7 +134,7 @@ function App() {
 
         {
           path: "events",
-          element: <Events />,
+          element: <Events socket={socket} />,
         },
 
       ],

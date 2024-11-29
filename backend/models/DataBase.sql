@@ -100,10 +100,12 @@ CREATE TABLE messages (
 );
 CREATE TABLE notifications (
   notification_id SERIAL NOT NULL,
-  user_id integer,
+  sender integer,
+  receiver integer
   action varchar(100),
   notification_time timestamp default now(),
-  foreign KEY(user_id) references users(user_id) ON DELETE CASCADE,
+  foreign KEY(sender) references users(user_id) ON DELETE CASCADE,
+  foreign KEY(receiver) references users(user_id) ON DELETE CASCADE,
   PRIMARY KEY (notification_id)
 );
 CREATE TABLE greetings (

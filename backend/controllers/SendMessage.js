@@ -2,7 +2,6 @@ const { pool } = require("../models/db");
 
 const messageHandler = (socket) => {
   socket.on("message", async (data) => {
-    // console.log(data);
     const userId = socket.handshake.headers.user_id;
 
     // socket.join(`room-${userId}`);

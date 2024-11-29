@@ -58,6 +58,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
       socket.emit("notification", {
         message: `new message from ${loggedInUser}`,
         to,
+        from:userId
       });
     }
   };
