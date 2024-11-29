@@ -2,11 +2,13 @@
     
     width:40%;
     border-radius: 50%;
+    
 }
 .Head-Chat{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
     left: 27%;
+    top: -1vh;
 }
 .User-Name-Chat{
     font-family: sans-serif;
@@ -22,7 +24,7 @@
     z-index: 10;
     background-color: white;
     top: 5vh;
-    opacity: 0.8;
+   
     border: dotted 0.5px rgb(99,131,219); 
 }
 .Exit-Chat:hover{
@@ -78,4 +80,8 @@ width: 50%;
 position: relative;
 height: 5vh;
 border: solid 0.2px;
+}
+.Chat-Con{
+    position: relative;
+    top: 2vh;
 }
