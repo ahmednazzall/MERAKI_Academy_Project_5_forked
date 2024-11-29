@@ -12,6 +12,8 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
     "@chakra-ui/react": "^3.2.0",
+    "@cloudinary/react": "^1.13.1",
+    "@cloudinary/url-gen": "^1.21.0",
     "@emotion/react": "^11.13.5",
     "@nivo/bar": "^0.88.0",
     "@nivo/funnel": "^0.88.0",

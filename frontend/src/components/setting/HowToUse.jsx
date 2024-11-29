@@ -1,28 +1,45 @@
 import React from "react";
+import { Card, List, Typography } from "antd";
+import "./HowToUse.css";
+
+const { Title, Paragraph } = Typography;
 
 const HowToUse = () => {
   const content = {
-    title: "Welcome to Our Website!",
-    description: "Here's how you can make the most of our platform:",
+    title: "Welcome to Our Platform!",
+    description: "Follow these steps to get started and maximize your experience:",
     steps: [
-      "1. **Create an Account**: Register with your email and set up a secure password.",
-      "2. **Customize Your Profile**: Add a bio, profile picture, and update your general settings.",
-      "3. **Privacy Controls**: Manage your privacy settings, block or unblock users, and set your profile visibility.",
-      "4. **Security Settings**: Enable two-factor authentication and manage active sessions for better security.",
-      "5. **Explore Features**: Use our tools to connect, share, and grow within the community.",
-      "6. **Contact Support**: Reach out to us for assistance via the Help section.",
+      "Create an Account: Register with your email and set up a secure password.",
+      "Customize Your Profile: Add a bio, profile picture, and update your settings.",
+      "Privacy Controls: Adjust privacy settings to suit your needs.",
+      "Security Settings: Enable two-factor authentication for enhanced security.",
+      "Explore Features: Discover tools to connect, share, and grow.",
+      "Contact Support: Get assistance anytime through the Help section.",
     ],
   };
 
   return (
-    <div>
-      <h1>{content.title}</h1>
-      <p>{content.description}</p>
-      <ul>
-        {content.steps.map((step, index) => (
-          <li key={index}>{step}</li>
-        ))}
-      </ul>
+    <div className="how-to-use-container">
+      <Card className="how-to-use-card">
+        <Title level={2} className="how-to-use-title">
+          {content.title}
+        </Title>
+        <Paragraph className="how-to-use-description">
+          {content.description}
+        </Paragraph>
+        <List
+          className="how-to-use-steps"
+          dataSource={content.steps}
+          renderItem={(step, index) => (
+            <List.Item className="how-to-use-step-item">
+              <div className="step-container">
+                <div className="step-number">{index + 1}</div>
+                <Typography.Text>{step}</Typography.Text>
+              </div>
+            </List.Item>
+          )}
+        />
+      </Card>
     </div>
   );
 };

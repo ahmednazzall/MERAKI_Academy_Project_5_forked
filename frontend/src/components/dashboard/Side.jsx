@@ -69,6 +69,7 @@ const Side = () => {
         <HiMiniChatBubbleLeftRight className="sidebar-icon"></HiMiniChatBubbleLeftRight>
         Chatting
       </Link>
+      
       {/* Events Link */}
       <Link
         to={"/home/events"}

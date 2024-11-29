@@ -3,13 +3,13 @@ import axios from "axios";
 
 const UpdatePrivacySettings = () => {
   const [profileVisibility, setProfileVisibility] = useState("public");
-  const [blockedUsers, setBlockedUsers] = useState([]); // قائمة بالمستخدمين المحظورين
-  const [allUsers, setAllUsers] = useState([]); // قائمة بكل أسماء المستخدمين
-  const [blockInput, setBlockInput] = useState(""); // إدخال اسم المستخدم للحظر
-  const [error, setError] = useState("");
+  const [blockedUsers, setBlockedUsers] = useState([]); 
+  const [allUsers, setAllUsers] = useState([]); 
+  const [blockInput, setBlockInput] = useState(""); 
+    const [error, setError] = useState("");
 
   useEffect(() => {
-    // جلب إعدادات الخصوصية الحالية
+   
     axios
       .get("http://localhost:5000/settings/privacy", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -23,14 +23,14 @@ const UpdatePrivacySettings = () => {
         console.error("Error fetching privacy settings:", error)
       );
 
-    // جلب قائمة المستخدمين من قاعدة البيانات
+  
     axios
       .get("http://localhost:5000/users/all", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((response) => {
-        const { users } = response.data; // افترض أن الـ API يعيد قائمة المستخدمين
-        setAllUsers(users.map((user) => user.user_name)); // استخراج أسماء المستخدمين فقط
+        const { users } = response.data;
+        setAllUsers(users.map((user) => user.user_name)); 
       })
       .catch((error) =>
         console.error("Error fetching users from database:", error)
@@ -40,19 +40,16 @@ const UpdatePrivacySettings = () => {
   const handleBlock = async (userName) => {
     setError("");
 
-    // التحقق إذا كان اسم المستخدم موجودًا في قائمة المستخدمين
     if (!allUsers.includes(userName)) {
       setError(`User with username "${userName}" does not exist.`);
       return;
     }
 
-    // التحقق إذا كان المستخدم محظورًا بالفعل
     if (blockedUsers.includes(userName)) {
       setError(`User with username "${userName}" is already blocked.`);
       return;
     }
 
-    // إرسال طلب الحظر
     try {
       await axios.put(
         "http://localhost:5000/settings/privacy",

@@ -270,7 +270,10 @@ const ProfilePage = () => {
               <UsergroupAddOutlined className="followers-icon" />
 
               <Link to={`/home/profile/f/1`}>
+              <Title level={5}>Follower</Title>
+              </Link>
 
+              <Link to={`/home/profile/f/${id}`}>
 
                 <Title level={5}>Following</Title>
               </Link>

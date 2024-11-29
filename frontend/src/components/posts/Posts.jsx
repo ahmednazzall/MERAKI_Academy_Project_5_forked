@@ -101,9 +101,15 @@ const Posts = () => {
       });
   }, [posts]);
 
-  const handleFileUpload = (file) => {
-    const isImage = file.type.startsWith("image/");
-    const isVideo = file.type.startsWith("video/");
+  const handleFileUpload = (e) => {
+    const select = e.target.file[0]
+
+    if(!select){
+      const isImage = file.type.startsWith("image/");
+    }
+    
+    // const isVideo = file.type.startsWith("video/");
+
     if (isImage) {
       setAddPost({ ...addPost, image: file });
       message.success("Image added successfully!");
@@ -113,35 +119,95 @@ const Posts = () => {
     } else {
       message.error("Only images and videos are allowed!");
     }
+
     return false;
   };
 
   const handleAddPost = () => {
-    const data = {
-      body: postInfo.body,
-      image: postInfo.image || null,
-      video: postInfo.video || null,
-    };
     const formData = new FormData();
-    formData.append("body", postInfo.body);
-    if (postInfo.image) formData.append("image", postInfo.image);
-    if (postInfo.video) formData.append("video", postInfo.video);
-    console.log(postInfo.body);
 
-    axios
-      .post("http://localhost:5000/posts", postInfo, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        console.log(data.image);
-        dispatch(createPost(res.data.post[0]));
-        message.success("Post created successfully!");
-        setAddPost({ body: "", image: null, video: null });
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Failed to create post.");
-      });
+    formData.append("body", postInfo.body);
+
+    if (postInfo.image) formData.append("image", postInfo.image);
+    // if (postInfo.video) formData.append("video", postInfo.video);
+
+    const uploadToCloudinary = (file) => {
+      const isImage = file.type.startsWith("image/");
+      // const isVideo = file.type.startsWith("video/");
+
+      if (isImage || isVideo) {
+        const cloudinaryData = new FormData();
+        cloudinaryData.append("file", file);
+        cloudinaryData.append("upload_preset", "project_5");
+        cloudinaryData.append("cloud_name", "dkuojigr0");
+
+         fetch("https://api.cloudinary.com/v1_1/dkuojigr0/image/upload", {
+          method: "POST",
+          body: cloudinaryData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.secure_url) {
+              console.log(data.secure_url);
+            } else {
+              throw new Error("Cloudinary did not return a valid URL.");
+            }
+          })
+          .catch((err) => {
+            console.error("Cloudinary upload error:", err);
+            message.error("Failed to upload file.");
+            throw err;
+          });
+      }
+      return Promise.resolve(null);
+    };
+
+    const uploadImageOrVideo = postInfo.image || postInfo.video;
+
+    if (uploadImageOrVideo) {
+      const file = postInfo.image || postInfo.video;
+
+      uploadToCloudinary(file)
+        .then((uploadedUrl) => {
+          if (uploadedUrl) {
+            formData.append(
+              uploadedUrl.startsWith("http") ? "image" : "video",
+              uploadedUrl
+            );
+          }
+
+          return axios.post("http://localhost:5000/posts", formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          });
+        })
+        .then((res) => {
+          dispatch(createPost(res.data.post[0]));
+          message.success("Post created successfully!");
+          setAddPost({ body: "", image: null, video: null });
+        })
+        .catch((err) => {
+          console.error("Error while creating post:", err);
+          message.error("Failed to create post.");
+        });
+    } else {
+      // إذا لم يكن هناك ملف مرفق، يتم إرسال المنشور مباشرةً
+      axios
+        .post("http://localhost:5000/posts", formData, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          dispatch(createPost(res.data.post[0]));
+          message.success("Post created successfully!");
+          setAddPost({ body: "", image: null, video: null });
+        })
+        .catch((err) => {
+          console.error(err);
+          message.error("Failed to create post.");
+        });
+    }
   };
 
   const handleUpdatePost = (postId) => {

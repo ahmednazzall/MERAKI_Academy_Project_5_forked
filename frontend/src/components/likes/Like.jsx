@@ -41,7 +41,8 @@ const Like = ({ postId }) => {
         }
       );
       if (response.status === 200 || response.status === 201) {
-        fetchLikes(); // Refresh likes data
+        // After the "like" action, fetch the updated like data
+        fetchLikes(); 
       }
     } catch (error) {
       console.error("Error toggling like:", error);
@@ -80,7 +81,7 @@ const Like = ({ postId }) => {
         </span>
 
         <span style={{ marginLeft: "8px", fontSize: "1.2rem", color: "black" }}>
-         ({likesCount})
+          ({likesCount})
         </span>
       </button>
 
