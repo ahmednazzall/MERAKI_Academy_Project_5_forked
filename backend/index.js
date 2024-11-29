@@ -16,7 +16,7 @@ const greetingRouter = require("./routes/greeting");
 const reactsRouter = require("./routes/reacts");
 const settingsRouter = require("./routes/settings");
 const messageRouter = require("./routes/messages");
-
+const notifyRouter=require("./routes/notification")
 const socketAuth = require("./middleware/socketAuth");
 const ioConnection = require("./controllers/ioConnect");
 app.use(express.json());
@@ -30,7 +30,7 @@ app.use("/greeting", greetingRouter);
 app.use("/reacts", reactsRouter);
 app.use("/settings", settingsRouter);
 app.use("/messages",messageRouter)
-
+app.use("/notify",notifyRouter)
 
 io.use(socketAuth);
 io.on("connection", ioConnection);

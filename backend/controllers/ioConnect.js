@@ -1,5 +1,5 @@
+const {notify} = require("./notifications");
 const messageHandler = require("./SendMessage");
-const { login } = require("./users");
 
 const clients = {};
 
@@ -13,14 +13,9 @@ const ioConnection = (socket) => {
   // })
   messageHandler(socket);
 
-  socket.on("notification", (data) => {
-    // socket.join(userId);
+  notify(socket)
 
-    // console.log(data);
-
-    socket.to(`room-${data.to}`).emit("notification", data);
-  });
-  // console.log(clients);
+  
 
   socket.on("disconnect", () => {
     for (const key in clients) {

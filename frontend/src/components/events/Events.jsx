@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "antd";
 
-const Events = ({ userId }) => {
-  const  token = localStorage.getItem('token')
+const Events = ({ socket }) => {
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("user_id");
   const [todaysBirthdays, setTodaysBirthdays] = useState([]);
   const [greeting, setGreeting] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState({});
 
   useEffect(() => {
     axios
@@ -20,6 +22,9 @@ const Events = ({ userId }) => {
       })
       .then((response) => {
         const users = response.data.Users || [];
+        const owner = users.find((user) => user.user_id == userId);
+        setLoggedInUser(owner);
+
         filterTodaysBirthdays(users);
       })
       .catch((error) => console.error("Error fetching users:", error));
@@ -47,8 +52,8 @@ const Events = ({ userId }) => {
 
   const sendGreeting = (recipientId) => {
     if (greeting.trim()) {
-      console.log(greeting);
-      
+      console.log(recipientId);
+
       axios
         .post(
           `http://localhost:5000/greeting/send`,
@@ -60,6 +65,7 @@ const Events = ({ userId }) => {
           }
         )
         .then((response) => {
+          socket.emit("notification", { message: `${greeting} from ${loggedInUser.user_name}`, to: recipientId ,from:userId});
           showModal("Success", "Your greeting has been sent successfully!");
           setGreeting("");
         })
@@ -92,9 +98,7 @@ const Events = ({ userId }) => {
               <h3>{user.user_name}</h3>
               <textarea
                 value={greeting}
-                onChange={(e)=>{
-                  setGreeting(e.target.value)
-                }}
+                onChange={handleGreetingChange}
                 placeholder="Write a greeting..."
               />
               <button onClick={() => sendGreeting(user.user_id)}>
