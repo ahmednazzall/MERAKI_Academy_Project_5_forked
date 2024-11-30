@@ -3,8 +3,17 @@ import { Input } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import moment from "moment-timezone";
 
 const ChatMessages = ({ socket, to, setShow }) => {
+  const formatRelativeTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const offset = date.getTimezoneOffset();
+    date.setMinutes(date.getMinutes() - offset);
+    const localTime = moment.utc(date);
+
+    return localTime.fromNow();
+  };
   const [message, setMessage] = useState("");
   const userId = localStorage.getItem("user_id");
   const [loggedInUser, setLoggedInUser] = useState("");
@@ -99,11 +108,10 @@ const ChatMessages = ({ socket, to, setShow }) => {
             className={message.sender == userId ? "Message-Containor-User" : "Message-Containor"}
             >
               <span>
-                {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{message.created_at.split('').slice(0,10).join().replaceAll(',','')}</p> : null}
+                {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
                 <img
+                className="userPic-Message"
                   src={message.profile_image}
-                  height={"50px"}
-                  width={"50px"}
                   style={{ borderRadius: "50%" }}
                 />
               {allUsers?.map((user)=>{
