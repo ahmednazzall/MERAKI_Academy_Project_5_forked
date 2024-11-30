@@ -1,156 +1,164 @@
 .userPic {
-  width: 30%;
-  border-radius: 50%;
-}
-.Head-Chat {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  position: relative;
-  left: 27%;
-  top: -1vh;
-}
-.User-Name-Chat {
-  font-family: sans-serif;
-  font-weight: bolder;
-  position: relative;
-  top: -5.6vh;
-  left: 35%;
-}
-.span_profile{
-display: flex;
-width: 500px;
-}
-.Message-Chat-Card {
-  position: fixed;
-  width: 550px;
-  z-index: 10;
-  background-color: white;
-  top: 50%;
-  left: 50%;
-  border: solid 0.5px rgb(99, 131, 219);
-  transform: translate(-50%, -50%);
-  max-height: 80vh;
-  overflow: hidden;
-}
-.Perent_Message-Containor {
-  max-height: 70vh;
-  overflow-y: auto;
-  display: grid;
-  align-items: center;
-  gap: 20px;
-  max-width: 550px;
-}
-.you{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    right: -70px;
-}
-.userAndImg{
-    display: flex;
-    flex-direction: column;
-    gap: 0em;
-    align-items: flex-end;
-    justify-content: flex-end;
-    width: 100%;
-}
-.Exit-Chat:hover {
-  background-color: red;
-}
-.Exit-Chat {
-  position: relative;
-  left: 89%;
-  bottom: 1.7vh;
-  width: 7%;
-  height: 6vh;
-  padding: 0 0 0 0;
-}
-.Message-Containor {
-  position: relative;
-  left: 3%;
-  bottom: 7vh;
-  margin: 0 0 0vh 0;
-  width: 500px;
-}
-.Message-Containor-User {
-    position: relative;
-    /* left: 92%; */
-    bottom: 2vh;
-    margin: 0 0 -3vh 0;
-    /* width: 90%; */
+    width: 30%;
+    border-radius: 50%;
   }
-  /* .image_User_container{
+  .Head-Chat {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    left: 27%;
+    top: -1vh;
+  }
+  .User-Name-Chat {
+    font-family: sans-serif;
+    font-weight: bolder;
+    position: relative;
+    top: -5.6vh;
+    left: 35%;
+  }
+  .span_profile{
+  display: flex;
+  width: 500px;
+  }
+  .Message-Chat-Card {
+    position: fixed;
+    width: 550px;
+    z-index: 10;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    border: solid 0.5px rgb(99, 131, 219);
+    transform: translate(-50%, -50%);
+    max-height: 80vh;
+    overflow: hidden;
+  }
+  .Perent_Message-Containor {
+    max-height: 70vh;
+    overflow-y: auto;
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+  }
+  .you{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      right: -0px;
+      width: inherit;
+  }
+  .userAndImg{
+      display: flex;
+      flex-direction: column;
+      gap: 0em;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+  }
+  .Exit-Chat:hover {
+    background-color: red;
+  }
+  .Exit-Chat {
+    position: relative;
+    left: 89%;
+    bottom: 1.7vh;
+    width: 7%;
+    height: 6vh;
+    padding: 0 0 0 0;
+  }
+  .Message-Containor {
+    position: relative;
+    left: 3%;
+    bottom: 0vh;
+    margin: 0 0 0vh 0;
+    width: 500px;
+  }
+  .Message-Containor-User {
+      position: relative;
+      /* left: 92%; */
+      bottom: 2vh;
+      margin: 0 0 -3vh 0;
+      /* width: 90%; */
+    }
+    /* .image_User_container{
+    } */
+  .userPic-Message {
+    width: 7%;
+    border-radius: 50%;
+    
+  }
+  .UserName-ChatMessage {
+    position: relative;
+    left: 8.3%;
+    bottom: 6vh;
+    width: 10%;
+  }
+  .Message-Chat {
+    position: relative;
+    left: 10%;
+    bottom: 3.5vh;
+    font-family: "Arial Narrow Bold", sans-serif;
+    font-weight: lighter;
+    height: auto;
+    min-width: 5%;
+    max-width: 20%;
+    padding: 10px;
+    background-color: rgb(99, 131, 219);
+    border-radius: 0px 10px 10px 10px;
+    cursor: pointer;
+  }
+  .Message-Time {
+    position: relative;
+    left: 45%;
+    bottom: 0vh;
+    width: 15%;
+   
 
-  } */
-.userPic-Message {
-  width: 7%;
-  border-radius: 50%;
-  height: 70%;
-}
-.UserName-ChatMessage {
-  position: relative;
-  left: 8.3%;
-  bottom: 6vh;
-  width: 10%;
-}
-.Message-Chat {
-  position: relative;
-  left: 10%;
-  bottom: 3.5vh;
-  font-family: "Arial Narrow Bold", sans-serif;
-  font-weight: lighter;
-  height: auto;
-  min-width: 5%;
-  max-width: 20%;
-  padding: 10px;
-  background-color: rgb(99, 131, 219);
-  border-radius: 0px 10px 10px 10px;
-  cursor: pointer;
-}
-.Message-Time {
-  position: relative;
-  left: 50%;
-  bottom: 0vh;
-  width: 10%;
-}
-.Send-Perent {
-  position: sticky;
-  bottom: 0vh;
-  text-align: center;
-  opacity: 0.7;
-}
-.Send_Input {
-  width: 50%;
-  position: relative;
-  height: 5vh;
-  border: solid 0.2px;
-}
-.Chat-Con {
-  position: relative;
-  top: 2vh;
-}
-.UserName-ChatMessage-You {
-  position: relative;
-  left: -8%;
-  bottom: 6vh;
-}
+  }
+  .Send-Perent {
+    position: sticky;
+    bottom: 0vh;
+    text-align: center;
+    opacity: 0.7;
+  }
+  .Send_Input {
+    width: 50%;
+    position: relative;
+    height: 5vh;
+    border: solid 0.2px;
+  }
+  .Chat-Con {
+    position: relative;
+    top: 2vh;
+  }
+  .UserName-ChatMessage-You {
+    position: relative;
+    left: -8%;
+    bottom: 6vh;
+  }
+  .Message-Time-you {
+    position: relative;
+    right: 40%;
+    bottom: 1vh;
+  }
+  .Message-Chat-you {
+    position: relative;
+    right: 12%;
+    bottom: 3.5vh;
+    font-family: "Arial Narrow Bold", sans-serif;
+    font-weight: lighter;
+    height: auto;
+    min-width: 5%;
+    max-width: 20%;
+    /* max-width: 20%; */
+    padding: 10px;
+    background-color: rgb(99, 131, 219);
+    border-radius: 10px 0px 10px 10px;
+    cursor: pointer;
+  }
+  .Message-Info{
+    width: 100%;
+    /* align-items: flex-start; */
 
-.Message-Time-you {
-  position: relative;
-  right: 49%;
-  bottom: 1vh;
-}
-.Message-Chat-you {
-  position: relative;
-  right: 12%;
-  bottom: 3.5vh;
-  font-family: "Arial Narrow Bold", sans-serif;
-  font-weight: lighter;
-  height: auto;
-  min-width: 5%;
-  /* max-width: 20%; */
-  padding: 10px;
-  background-color: rgb(99, 131, 219);
-  border-radius: 10px 0px 10px 10px;
-  cursor: pointer;
-}
+
+  }
