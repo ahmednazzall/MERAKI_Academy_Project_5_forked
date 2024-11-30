@@ -420,40 +420,56 @@ const Posts = () => {
                         </Button>
                       </>
                     ) : (
-                      <p>{post.body}</p>
+                      <div>
+                        <p>{post.body}</p>
+
+                        {post.image && post.video ? (
+                          <div className="media-container">
+                            <div className="media-item media-image">
+                              <img src={post.image} alt="Post visual content" />
+                            </div>
+                            <div className="media-item media-video">
+                              <video controls>
+                                <source src={post.video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {post.image && (
+                              <img
+                                src={post.image}
+                                alt="Post Image"
+                                style={{
+                                  width: "100%",
+                                  borderRadius: "8px",
+                                  marginTop: "10px",
+                                  objectFit: "cover",
+                                  height: "auto",
+                                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                                }}
+                              />
+                            )}
+                            {post.video && (
+                              <video
+                                controls
+                                style={{
+                                  width: "100%",
+                                  marginTop: "10px",
+                                  borderRadius: "8px",
+                                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                                }}
+                                src={post.video}
+                              />
+                            )}
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
                 }
               />
-
-              {/* صورة أو فيديو البوست */}
-              {post.image && (
-                <img
-                  src={post.image}
-                  alt="Post Image"
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    marginTop: "10px",
-                    objectFit: "cover",
-                    height: "auto",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-              )}
-
-              {post.video && (
-                <video
-                  controls
-                  style={{
-                    width: "100%",
-                    marginTop: "10px",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                  src={post.video}
-                />
-              )}
             </List.Item>
 
             <Space

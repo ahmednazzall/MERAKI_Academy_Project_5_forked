@@ -67,12 +67,12 @@ const Followers = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <Row gutter={16}>
-        {!show && <Col span={12}>
+      {/* <Row gutter={20}> */}
+        {!show && <Col span={24}>
           <Card
             title="Followers"
             bordered={false}
-            style={{ width: "100%", textAlign: "center" }}
+            style={{ width: "59em", textAlign: "center" }}
             onClick={() => setShow(false)}
           >
             <Button type="link" size="large">
@@ -102,11 +102,11 @@ const Followers = () => {
           </Card>
         </Col> }
        
-        {show&&  <Col span={12}>
+        {show&&  <Col span={24}>
           <Card
             title="Following"
             bordered={false}
-            style={{ width: "100%", textAlign: "center" }}
+            style={{ width: "59em", textAlign: "center" }}
             onClick={() => setShow(true)}
           >
             <Button type="link" size="large">
@@ -136,7 +136,7 @@ const Followers = () => {
           </Card>
         </Col>}
        
-      </Row>
+      {/* </Row> */}
     </div>
   );
 };

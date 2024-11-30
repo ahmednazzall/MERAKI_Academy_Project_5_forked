@@ -58,6 +58,8 @@ const ProfilePage = () => {
 
   const [following, setFollowing] = useState();
   const [follower, setFollower] = useState();
+  const [fileList, setFileList] = useState([]);
+  const [videoList, setVideoList] = useState([]);
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
@@ -90,7 +92,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/followers/${id}/following`, {
+      .get(`http://localhost:5000/followers/${userId}/following`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((result) => {
@@ -101,7 +103,7 @@ const ProfilePage = () => {
       });
 
     axios
-      .get(`http://localhost:5000/followers/${id}/follower`)
+      .get(`http://localhost:5000/followers/${userId}/follower`)
       .then((result) => {
         setFollower(result.data.data?.length);
       })
@@ -127,33 +129,28 @@ const ProfilePage = () => {
   }, [posts]);
 
   const handleAddPost = () => {
-    axios
-      .post("http://localhost:5000/posts", postInfo, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        dispatch(createPost(res.data.post[0]));
-        setAddPost({});
-      })
-      .catch((err) => {
-        console.error(err);
-        console.log('"Failed to create post."');
-      });
-  };
-
-  const handleFileUpload = (file) => {
-    const isImage = file.type.startsWith("image/");
-    const isVideo = file.type.startsWith("video/");
-    if (isImage) {
-      setAddPost({ ...addPost, image: file });
-      message.success("Image added successfully!");
-    } else if (isVideo) {
-      setAddPost({ ...addPost, video: file });
-      message.success("Video added successfully!");
+    if (
+      postInfo.body !== null ||
+      postInfo.video !== null ||
+      postInfo.image !== null
+    ) {
+      axios
+        .post("http://localhost:5000/posts", postInfo, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          dispatch(createPost(res.data.post[0]));
+          setAddPost({});
+        })
+        .catch((err) => {
+          console.error(err);
+          console.log('"Failed to create post."');
+        });
     } else {
-      message.error("Only images and videos are allowed!");
+      message.error(
+        "write something or upload photo or video  to create post."
+      );
     }
-    return false;
   };
 
   const handleDelete = (postId) => {
@@ -219,6 +216,77 @@ const ProfilePage = () => {
         console.log('"Failed to update post."');
       });
   };
+  const props = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      fileList.splice(index, 1);
+      setFileList(fileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    onChange: (file) => {
+      if (!fileList[0]) return;
+
+      const data = new FormData();
+      data.append("file", fileList[0]);
+      data.append("upload_preset", "project_5");
+      data.append("cloud_name", "dniaphcwx");
+      fetch("https://api.cloudinary.com/v1_1/dniaphcwx/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data.url);
+          setAddPost({ ...addPost, image: data.url });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    fileList,
+  };
+  const prop = {
+    onRemove: (video) => {
+      const index = videoList.indexOf(video);
+      const newFileList = videoList.slice();
+      videoList.splice(index, 1);
+      setVideoList(videoList);
+      setAddPost({ ...addPost, video: null });
+    },
+    beforeUpload: (video) => {
+      setVideoList([...videoList, video]);
+      return false;
+    },
+    onChange: (video) => {
+      console.log(video);
+      console.log(videoList);
+
+      console.log(addPost);
+      if (!videoList[0]) return;
+
+      const data = new FormData();
+      data.append("file", videoList[0]);
+      data.append("upload_preset", "project_5");
+      data.append("cloud_name", "dniaphcwx");
+      fetch("https://api.cloudinary.com/v1_1/dniaphcwx/video/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data.url);
+          setAddPost({ ...addPost, video: data.url });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    videoList,
+  };
 
   return (
     <div className="profile-container">
@@ -270,11 +338,6 @@ const ProfilePage = () => {
               <UsergroupAddOutlined className="followers-icon" />
 
               <Link to={`/home/profile/f/1`}>
-              <Title level={5}>Follower</Title>
-              </Link>
-
-              <Link to={`/home/profile/f/${id}`}>
-
                 <Title level={5}>Following</Title>
               </Link>
             </Space>
@@ -309,23 +372,18 @@ const ProfilePage = () => {
             gap: "10px",
           }}
         >
-          <Upload
-            beforeUpload={handleFileUpload}
-            showUploadList={false}
-            accept="image/*,video/*"
-          >
-            <Tooltip title="Upload Image/Video">
-              <Button
-                type="text"
-                icon={<CameraOutlined />}
-                style={{
-                  fontSize: "18px",
-                  color: "#1890ff",
-                  cursor: "pointer",
-                }}
-              />
-            </Tooltip>
-          </Upload>
+          <Tooltip title="Upload Image">
+            <Upload {...props}>
+              <Button icon={<CameraOutlined />}>Upload image</Button>
+            </Upload>
+          </Tooltip>
+
+          <Tooltip title="Upload Video">
+            <Upload {...prop}>
+              <Button icon={<CameraOutlined />}>Upload video</Button>
+            </Upload>
+          </Tooltip>
+
           <Tooltip title="Post">
             <Button
               type="primary"
@@ -352,6 +410,48 @@ const ProfilePage = () => {
               <Col span={20}>
                 <h3>{post?.user_name}</h3>
                 <p className="post-body">{post?.body}</p>
+                {post.image && post.video ? (
+                  <div className="media-container">
+                    <div className="media-item media-image">
+                      <img src={post.image} alt="Post visual content" />
+                    </div>
+                    <div className="media-item media-video">
+                      <video controls>
+                        <source src={post.video} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {post.image && (
+                      <img
+                        src={post.image}
+                        alt="Post Image"
+                        style={{
+                          width: "100%",
+                          borderRadius: "8px",
+                          marginTop: "10px",
+                          objectFit: "cover",
+                          height: "auto",
+                          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                        }}
+                      />
+                    )}
+                    {post.video && (
+                      <video
+                        controls
+                        style={{
+                          width: "100%",
+                          marginTop: "10px",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                        }}
+                        src={post.video}
+                      />
+                    )}
+                  </>
+                )}
                 {post?.user_id === userId && (
                   <div className="post-actions">
                     <Button
@@ -385,7 +485,7 @@ const ProfilePage = () => {
                     <Button
                       icon={<DeleteOutlined />}
                       danger
-                      onClick={() => handelDelete(post.post_id)}
+                      onClick={() => handleDelete(post.post_id)}
                     >
                       Delete
                     </Button>

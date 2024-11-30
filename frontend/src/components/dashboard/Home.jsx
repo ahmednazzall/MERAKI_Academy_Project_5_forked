@@ -16,7 +16,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Notification from "../messages/Notification";
 
-const Home = ({socket}) => {
+const Home = ({ socket }) => {
   const [display, setdisplay] = useState(false);
   const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -80,10 +80,9 @@ const Home = ({socket}) => {
   return (
     <div className="parent">
       <div className="nav" onClick={(e) => {}}>
-
         <img src="../../Preview.png" className="MoltaqaIcon" alt="Logo" />
         <div className="notification">
-          <Notification  socket={socket}/>
+          <Notification socket={socket} />
         </div>
         <div className="search-bar">
           {/* حقل إدخال النص للبحث */}
@@ -156,12 +155,15 @@ const Home = ({socket}) => {
           </VirtualList>
         </List>
       </div>
-      <div className="org">
-        <Side />
-
-        <Outlet />
+      <div className="organization">
+        <div>
+          <Side />
+        </div>
+        <div>
+          <Outlet />
+        </div>
         <div className="messages">
-          <Chat  socket={socket}/>{" "}
+          <Chat socket={socket} />{" "}
         </div>
       </div>
     </div>
