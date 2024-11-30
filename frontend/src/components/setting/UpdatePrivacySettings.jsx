@@ -1,139 +1,170 @@
 import React, { useState, useEffect } from "react";
+import { Form, Select, Input, Button, List, message, Typography } from "antd";
 import axios from "axios";
 
-const UpdatePrivacySettings = () => {
-  const [profileVisibility, setProfileVisibility] = useState("public");
-  const [blockedUsers, setBlockedUsers] = useState([]); 
-  const [allUsers, setAllUsers] = useState([]); 
-  const [blockInput, setBlockInput] = useState(""); 
-    const [error, setError] = useState("");
+const { Option } = Select;
+const { Title } = Typography;
 
+const UpdatePrivacySettings = () => {
+  const [privacySettings, setPrivacySettings] = useState({
+    profile_visibility: "public",
+    blocked_accounts: [],
+  });
+  const [allUsers, setAllUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [unblockUserName, setUnblockUserName] = useState("");
+  const [searchUserName, setSearchUserName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const token = localStorage.getItem("token");
+
+  // Fetch current privacy settings
   useEffect(() => {
-   
     axios
       .get("http://localhost:5000/settings/privacy", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        const { profile_visibility, blocked_accounts } = response.data;
-        setProfileVisibility(profile_visibility);
-        setBlockedUsers(blocked_accounts || []);
+        const fetchedSettings = response.data.privacySettings;
+        setPrivacySettings({
+          profile_visibility: fetchedSettings?.profile_visibility || "public", // Default to "public" if undefined
+          blocked_accounts: fetchedSettings?.blocked_accounts || [],
+        });
       })
-      .catch((error) =>
-        console.error("Error fetching privacy settings:", error)
-      );
-
-  
-    axios
-      .get("http://localhost:5000/users/all", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((response) => {
-        const { users } = response.data;
-        setAllUsers(users.map((user) => user.user_name)); 
-      })
-      .catch((error) =>
-        console.error("Error fetching users from database:", error)
-      );
-  }, []);
-
-  const handleBlock = async (userName) => {
-    setError("");
-
-    if (!allUsers.includes(userName)) {
-      setError(`User with username "${userName}" does not exist.`);
-      return;
-    }
-
-    if (blockedUsers.includes(userName)) {
-      setError(`User with username "${userName}" is already blocked.`);
-      return;
-    }
-
-    try {
-      await axios.put(
-        "http://localhost:5000/settings/privacy",
-        { blocked_accounts: [userName] },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      setBlockedUsers([...blockedUsers, userName]);
-      alert("User blocked successfully!");
-    } catch (error) {
-      console.error("Error blocking user:", error);
-      alert("Error blocking user.");
-    }
-  };
-
-  const handleUnblock = async (userName) => {
-    try {
-      await axios.post(
-        "http://localhost:5000/settings/privacy",
-        { unblock_user_name: userName },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      setBlockedUsers(blockedUsers.filter((name) => name !== userName));
-      alert("User unblocked successfully!");
-    } catch (error) {
-      console.error("Error unblocking user:", error);
-      alert("Error unblocking user.");
-    }
-  };
-
-  const handleVisibilityChange = (e) => {
-    const visibility = e.target.value;
-    setProfileVisibility(visibility);
-    axios
-      .post(
-        "http://localhost:5000/settings/privacy",
-        { profile_visibility: visibility },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      )
-      .then(() => alert("Profile visibility updated successfully!"))
       .catch((error) => {
-        console.error("Error updating profile visibility:", error);
-        alert("Error updating profile visibility.");
+        message.error("Failed to load privacy settings.");
+        console.error(error);
       });
+  }, [token]);
+
+
+
+  const handleSelectChange = (value) => {
+    setSelectedUsers(value);
+  };
+
+  const handleSearchChange = async (value) => {
+    setSearchUserName(value); // تحديث النص المدخل في حقل البحث
+
+    // التحقق من أن النص المدخل غير فارغ
+    if (value.trim() === "") {
+      setAllUsers([]); // إذا كان النص فارغًا، إفراغ قائمة المستخدمين
+      return;
+    }
+
+    try {
+      // إرسال طلب GET للبحث عن المستخدمين بناءً على الاسم
+      const response = await axios.get(
+        `http://localhost:5000/users/userName/search/${value}`
+      );
+      if (response.data.success) {
+        setAllUsers(response.data.User); // تحديث قائمة المستخدمين
+      } else {
+        setAllUsers([]); // إذا لم يتم العثور على مستخدمين
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setAllUsers([]); // إفراغ القائمة إذا حدث خطأ
+    }
+  };
+
+  // Update privacy settings
+  const updateSettings = async (values) => {
+    try {
+      setLoading(true);
+      const response = await axios.put(
+        "http://localhost:5000/settings/privacy",
+        {
+          profile_visibility: values.profile_visibility,
+          blocked_accounts: values.blocked_accounts || undefined,
+          unblock_user_name: unblockUserName || undefined,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPrivacySettings(response.data.privacySettings);
+      setUnblockUserName("");
+      message.success("Privacy settings updated successfully!");
+    } catch (error) {
+      message.error(
+        error.response?.data?.message || "Failed to update settings."
+      );
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <h2>Privacy Settings</h2>
-      <label>
-        Profile Visibility:
-        <select value={profileVisibility} onChange={handleVisibilityChange}>
-          <option value="public">Public</option>
-          <option value="private">Private</option>
-        </select>
-      </label>
-      <h3>Block Users</h3>
-      <input
-        type="text"
-        placeholder="Enter username"
-        value={blockInput}
-        onChange={(e) => setBlockInput(e.target.value)}
-      />
-      <button
-        onClick={() => {
-          handleBlock(blockInput);
-          setBlockInput("");
+    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+      <Title level={3}>Update Privacy Settings</Title>
+      <Form
+        layout="vertical"
+        onFinish={updateSettings}
+        initialValues={{
+          profile_visibility: privacySettings.profile_visibility,
         }}
       >
-        Block
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <h3>Blocked Users</h3>
-      {blockedUsers.map((userName) => (
-        <div key={userName}>
-          <span>{userName}</span>
-          <button onClick={() => handleUnblock(userName)}>Unblock</button>
-        </div>
-      ))}
+        <Form.Item
+          label="Profile Visibility"
+          name="profile_visibility"
+          rules={[
+            { required: true, message: "Please select profile visibility!" },
+          ]}
+        >
+          <Select
+            defaultValue={privacySettings.profile_visibility} // Set default value to prevent null warning
+          >
+            <Option value="public">Public</Option>
+            <Option value="private">Private</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Block Accounts" name="blocked_accounts">
+          <Select
+            mode="multiple" // السماح باختيار عدة مستخدمين
+            placeholder="Select users to block" // نص التلميح داخل القائمة
+            showSearch // تفعيل البحث داخل القائمة
+            filterOption={
+              (input, option) =>
+                option.children.toLowerCase().includes(input.toLowerCase()) // تصفية النتائج بناءً على النص المدخل
+            }
+            allowClear // السماح بإلغاء الاختيارات
+            onSearch={handleSearchChange} // استدعاء دالة البحث عند كتابة النص
+            value={selectedUsers} // تعيين القيمة المختارة من الحالة
+            onChange={handleSelectChange} // استدعاء دالة عند تغيير الاختيار
+          >
+            {allUsers.length > 0 ? (
+              allUsers.map((user) => (
+                <Option key={user.user_name} value={user.user_name}>
+                  {user.user_name}
+                </Option>
+              ))
+            ) : (
+              <Option disabled>No users found</Option>
+            )}
+          </Select>
+        </Form.Item>
+        <Form.Item label="Unblock User">
+          <Input
+            placeholder="Enter username to unblock"
+            value={unblockUserName}
+            onChange={(e) => setUnblockUserName(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Update Privacy Settings
+          </Button>
+        </Form.Item>
+      </Form>
+
+      <Title level={4}>Blocked Accounts</Title>
+      <List
+        bordered
+        dataSource={privacySettings.blocked_accounts || []} // Safe check for undefined
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+      />
     </div>
   );
 };
