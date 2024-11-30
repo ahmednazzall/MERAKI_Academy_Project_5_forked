@@ -46,7 +46,7 @@ const Followers = () => {
         show ? setFollowing(result.data.data) : setFollower(result.data.data);
       })
       .catch((err) => console.log(err));
-  }, [userId ,show]);
+  }, [userId ,show ,follower ,following]);
 
   const handleUnfollow = (id) => {
     const url = show

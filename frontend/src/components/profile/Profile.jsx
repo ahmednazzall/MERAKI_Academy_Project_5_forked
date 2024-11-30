@@ -183,6 +183,8 @@ const ProfilePage = () => {
   };
 
   const handleAddSave = (postId) => {
+    {console.log(savedPost , postId)
+    }
     axios
       .post(
         `http://localhost:5000/posts/add&save/${postId}`,
@@ -253,6 +255,7 @@ const ProfilePage = () => {
     },
     fileList,
   };
+  
   const prop = {
     onRemove: (video) => {
       const index = videoList.indexOf(video);
@@ -426,7 +429,7 @@ const ProfilePage = () => {
       <div className="posts-section">
 
        {localStorage.getItem("user_id")==userId && <h3>Your Posts</h3>} 
-
+      <br></br>
         {posts?.map((post, index) => (
           <div className="post-card" key={index}>
             <Row>
@@ -487,14 +490,35 @@ const ProfilePage = () => {
                           value={editPostText}
                           onChange={(e) => setEditPostText(e.target.value)}
                         />
-                        <Button
-                          onClick={() => {
-                            handelUpdatePost(post.post_id);
-                            setUpdateClicked(false);
-                          }}
-                        >
-                          Save
-                        </Button>
+                        
+                         {!savedPost.includes(post.post_id)
+              ?
+              
+              <Button
+              icon={<SaveOutlined />}
+             
+              type="link"
+              onClick={() => handleAddSave(post.post_id)}
+              style={{
+                color: "#28a745",
+                fontSize: "18px",
+              }}
+            >
+              Save
+            </Button>
+            : 
+            <Button
+            icon={<SaveOutlined />}
+            disabled
+            type="link"
+            style={{
+              color: "#28a745",
+              fontSize: "18px",
+            }}
+          >
+            Saved
+          </Button>
+              }
                         <Button onClick={() => setUpdateClicked(false)}>
                           Cancel
                         </Button>

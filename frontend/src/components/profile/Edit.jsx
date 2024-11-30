@@ -14,11 +14,12 @@ import {
 } from "antd";
 import { CameraOutlined } from "@ant-design/icons";
 import "./edit.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 const Edit = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState({});
   const [newPass, setNewPass] = useState({});
@@ -262,7 +263,7 @@ const Edit = () => {
           <Button
             size="large"
             shape="round"
-            onClick={() => navigate(`/profile/${userId}`)}
+            onClick={() => navigate(`/home/profile/${userId}`)}
             style={{
               backgroundColor: "#f44336",
               borderRadius: "25px",
