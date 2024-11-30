@@ -78,7 +78,7 @@ const unfollowUser = async (req, res) => {
 // Get list of followers for a user
 const getFollowers = async (req, res) => {
   const user_id = req.params.user_id;
-  const query = ` SELECT f.following_id,f.follower_id,u.user_name,u.first_name,u.last_name  FROM followers f 
+  const query = ` SELECT * FROM followers f 
       INNER JOIN users u ON f.follower_id=u.user_id
       WHERE f.following_id=$1 AND f.is_deleted=0 
      `;
@@ -132,7 +132,7 @@ const getAllFollowers = async (req, res) => {
 const getFollowing = async (req, res) => {
   const { id } = req.params;
   const query = `
-  SELECT f.following_id,f.follower_id,u.user_name,u.first_name,u.last_name ,u.profile_image,u.user_id FROM followers f 
+  SELECT * FROM followers f 
       INNER JOIN users u ON f.following_id=u.user_id
       WHERE f.follower_id=$1 AND f.is_deleted=0`;
 
@@ -140,6 +140,8 @@ const getFollowing = async (req, res) => {
     const result = await pool.query(query, [id]);
 
     if (result.rows.length) {
+      
+      
       res.status(200).json({
         message: "Following List retrieved successfully",
         data: result.rows,

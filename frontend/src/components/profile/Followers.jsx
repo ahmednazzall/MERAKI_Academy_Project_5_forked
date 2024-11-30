@@ -66,9 +66,10 @@ const Followers = () => {
           className="user-card"
         >
           <Space align="center">
+            
             <Avatar
               size={64}
-              src={elem.profile_picture || "/default-avatar.png"}
+              src={elem.profile_image || "/default-avatar.png"}
               alt="profile"
               style={{ border: "2px solid #1890ff" }}
             />
