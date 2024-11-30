@@ -31,6 +31,13 @@
   border-radius: 5px;
 }
 
+  /* إعادة ترتيب الإشعارات في الشاشات الصغيرة */
+  .notification {
+    display: flex;
+    align-items: center;
+    margin-left: 15px; /* المسافة بين حقل البحث وزر الإشعارات */
+  }
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -139,7 +146,7 @@
     flex-direction: column;
   }
 
-  .org {
+  .organization {
     flex-direction: column;
   }
 
@@ -154,5 +161,9 @@
 
   .search-bar {
     width: 100%;
+  }
+  .MoltaqaIcon {
+    width: 60px;
+    height: 45px;
   }
 }

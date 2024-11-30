@@ -96,14 +96,20 @@ const Events = ({ socket }) => {
           <div key={user.user_id} className="birthday-card-container">
             <div className="birthday-card">
               <h3>{user.user_name}</h3>
-              <textarea
-                value={greeting}
-                onChange={handleGreetingChange}
-                placeholder="Write a greeting..."
-              />
-              <button onClick={() => sendGreeting(user.user_id)}>
-                Send Greeting
-              </button>
+              {user.user_id !== localStorage.getItem("user_id") ? (
+                <>
+                  <textarea
+                    value={greeting}
+                    onChange={handleGreetingChange}
+                    placeholder="Write a greeting..."
+                  />
+                  <button onClick={() => sendGreeting(user.user_id)}>
+                    Send Greeting
+                  </button>
+                </>
+              ) : (
+                <p>🎉 Happy Birthday! 🎉</p> 
+              )}
             </div>
           </div>
         ))
