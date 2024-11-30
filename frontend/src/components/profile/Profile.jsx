@@ -535,17 +535,33 @@ const ProfilePage = () => {
               >
                 Comments
               </Button>
-              <Button
-                icon={<SaveOutlined />}
-                type="link"
-                onClick={() => handleAddSave(post.post_id)}
-                style={{
-                  color: "#28a745",
-                  fontSize: "18px",
-                }}
-              >
-                Save
-              </Button>
+              {!savedPost.includes(post.post_id)?
+               <Button
+               icon={<SaveOutlined />}
+               type="link"
+               onClick={() => handleAddSave(post.post_id)}
+               style={{
+                 color: "#28a745",
+                 fontSize: "18px",
+               }}
+             >
+               Save
+             </Button>
+             :
+             <Button
+             icon={<SaveOutlined />}
+             type="link"
+            disabled
+             style={{
+               color: "#28a745",
+               fontSize: "18px",
+             }}
+           >
+             Saved
+           </Button>
+            
+            }
+             
 
               {localStorage.getItem("user_id")==userId &&
               <>
