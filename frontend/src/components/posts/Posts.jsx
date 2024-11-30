@@ -80,7 +80,9 @@ const Posts = () => {
         },
       })
       .then((res) => {
-        dispatch(setPosts(res.data.data.reverse()));
+        // console.log();
+        
+        dispatch(setPosts(res.data.data));
         // console.log(res);
       })
       .catch((err) => {
@@ -379,6 +381,7 @@ const Posts = () => {
                       size={50}
                       src={post.profile_image}
                       style={{ borderRadius: "50%" }}
+                      onClick={()=>{navigate(`/home/profile/${post.user_id}`)}}
                     />
                   ) : (
                     <Avatar icon={<UserOutlined />} />

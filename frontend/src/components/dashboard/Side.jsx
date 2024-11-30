@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { HiMiniChatBubbleLeftRight } from "react-icons/hi2";
 import "./sideStyle.css";
-import { Logout } from "../redux/reducers/auth";
+import { Logout, setVisitId } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -41,6 +41,7 @@ const Side = () => {
       <Link
         to={"/home/"}
         onClick={() => {
+          dispatch(setVisitId(null))
           if (localStorage.getItem("postId")) {
             localStorage.removeItem("postId");
           }

@@ -59,7 +59,9 @@ const getAllPosts = (req, res) => {
 
 const getPostById = (req, res) => {
   const postId = req.params.post_id;
-  const query = `SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id WHERE post_id = $1 AND posts.is_deleted=$2`;
+  const query = `SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id WHERE post_id = $1 AND posts.is_deleted=$2
+  ORDER BY DESC
+  `;
   pool
     .query(query, [postId, 0])
     .then((result) => {
@@ -87,7 +89,11 @@ const getPostById = (req, res) => {
 
 const getPostByUser = (req, res) => {
   const userId = req.params.user_id;
-  const query = `SELECT * FROM posts INNER JOIN users ON posts.user_id = users.user_id WHERE posts.user_id = $1 AND posts.is_deleted=$2`;
+  const query = `  
+SELECT * FROM posts  p 
+INNER JOIN users ON p.user_id = users.user_id WHERE p.user_id =$1 AND p.is_deleted=$2
+  ORDER BY  p.created_at DESC
+  `;
 
   pool
     .query(query, [userId, 0])
