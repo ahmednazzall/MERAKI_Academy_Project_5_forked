@@ -21,7 +21,7 @@ const Search = ({searchTerm}) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-    const token = localStorage.getItem("token"); // Ensure a valid token is retrieved
+    const token = localStorage.getItem("token");
     const users = useSelector((reducers)=>{
 
       return reducers.users.users

@@ -180,6 +180,7 @@ const updatePrivacySettings = async (req, res) => {
           message: `The user '${unblock_user_name}' is not currently blocked.`,
         });
       }
+  
 
       updatedBlockedAccounts = updatedBlockedAccounts.filter(
         (username) => username !== unblock_user_name

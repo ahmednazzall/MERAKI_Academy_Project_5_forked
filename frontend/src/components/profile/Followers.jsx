@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom"; // Import Link
-import { Card, Button, Row, Col } from "antd";
+import { useParams, Link } from "react-router-dom";
+import { Card, Button, Row, Col, Avatar, Typography, Space } from "antd";
 import {
   setFollowers,
   setFollowing,
@@ -11,132 +11,124 @@ import {
 } from "../redux/reducers/sliceFollowers";
 import "./follower.css";
 
+const { Text } = Typography;
+
 const Followers = () => {
   const dispatch = useDispatch();
   const condition = useParams();
-  const [show, setShow] = useState(condition.id == 1 ? true : false);
+  const [show, setShow] = useState(condition.id == 1);
   const { token, userId } = useSelector((state) => state.auth);
 
   const following = useSelector((state) => state.followers.following);
   const follower = useSelector((state) => state.followers.myFollowers);
 
   useEffect(() => {
-    show
-      ? axios
-          .get(`http://localhost:5000/followers/${userId}/following`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((result) => {
-            dispatch(setFollowing(result.data.data));
-          })
-          .catch((err) => console.log(err))
-      : axios
-          .get(`http://localhost:5000/followers/${userId}/follower`)
-          .then((result) => {
-            dispatch(setFollowers(result.data.data));
-          })
-          .catch((err) => console.log(err));
-  }, [show]);
+    const url = show
+      ? `http://localhost:5000/followers/${userId}/following`
+      : `http://localhost:5000/followers/${userId}/follower`;
+
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        show
+          ? dispatch(setFollowing(result.data.data))
+          : dispatch(setFollowers(result.data.data));
+      })
+      .catch((err) => console.log(err));
+  }, [show, dispatch, token, userId]);
 
   const handleUnfollow = (id) => {
-    if (!show) {
-      dispatch(removeFollower(id));
+    const url = show
+      ? `http://localhost:5000/followers/${id}/unfollow`
+      : `http://localhost:5000/followers/${id}/trimFollower`;
 
-      axios
-        .delete(`http://localhost:5000/followers/${id}/trimFollower`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((result) => {})
-        .catch((err) => console.log(err));
-    } else {
-      dispatch(unFollow(id));
-      axios
-        .delete(`http://localhost:5000/followers/${id}/unfollow`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((result) => {})
-        .catch((err) => console.log(err));
-    }
+    axios
+      .delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        show ? dispatch(unFollow(id)) : dispatch(removeFollower(id));
+      })
+      .catch((err) => console.log(err));
   };
 
+  const renderList = (list, isFollowing) => (
+    <div style={{ marginTop: "10px" }}>
+      {list.map((elem) => (
+        <div
+          key={isFollowing ? elem.following_id : elem.follower_id}
+          className="user-card"
+        >
+          <Space align="center">
+            <Avatar
+              size={64}
+              src={elem.profile_picture || "/default-avatar.png"}
+              alt="profile"
+              style={{ border: "2px solid #1890ff" }}
+            />
+            <Link
+              to={`/home/profile/${
+                isFollowing ? elem.following_id : elem.follower_id
+              }`}
+            >
+              <Text strong className="username">
+                {elem.user_name}
+              </Text>
+            </Link>
+          </Space>
+          <Button
+            type="primary"
+            danger
+            shape="round"
+            onClick={() =>
+              handleUnfollow(isFollowing ? elem.following_id : elem.follower_id)
+            }
+          >
+            {isFollowing ? "Unfollow" : "Remove"}
+          </Button>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
-    <div style={{ padding: "20px" }}>
-      {/* <Row gutter={20}> */}
-        {!show && <Col span={24}>
+    <div className="followers-container">
+      <Row justify="center">
+        <Col span={24}>
           <Card
-            title="Followers"
+            title={
+              <Space align="center">
+                <Text className="section-title">
+                  {show ? "Following" : "Followers"}
+                </Text>
+                <Button
+                  type="link"
+                  onClick={() => setShow(!show)}
+                  className="switch-button"
+                >
+                  Switch to {show ? "Followers" : "Following"}
+                </Button>
+              </Space>
+            }
             bordered={false}
-            style={{ width: "59em", textAlign: "center" }}
-            onClick={() => setShow(false)}
+            className="custom-card"
           >
-            <Button type="link" size="large">
-              {follower?.length} Followers
-            </Button>
-            {follower?.length ? (
-              <div style={{ marginTop: "10px" }}>
-                {follower.map((elem) => (
-                  <div key={elem.follower_id} style={{ marginBottom: "10px" }}>
-                    {/* Wrap the username in a Link component */}
-                    <Link to={`/profile/${elem.follower_id}`}>
-                      <h5>@{elem.user_name}</h5>
-                    </Link>
-                    <Button
-                      type="link"
-                      danger
-                      onClick={() => handleUnfollow(elem.follower_id)}
-                    >
-                      Remove Follower
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No followers</p>
-            )}
+            {show
+              ? following?.length
+                ? renderList(following, true)
+                : <p className="empty-text">No following yet.</p>
+              : follower?.length
+              ? renderList(follower, false)
+              : <p className="empty-text">No followers yet.</p>}
           </Card>
-        </Col> }
-       
-        {show&&  <Col span={24}>
-          <Card
-            title="Following"
-            bordered={false}
-            style={{ width: "59em", textAlign: "center" }}
-            onClick={() => setShow(true)}
-          >
-            <Button type="link" size="large">
-              {following?.length} Following
-            </Button>
-            {following?.length ? (
-              <div style={{ marginTop: "10px" }}>
-                {following.map((elem) => (
-                  <div key={elem.following_id} style={{ marginBottom: "10px" }}>
-                    {/* Wrap the username in a Link component */}
-                    <Link to={`/profile/${elem.following_id}`}>
-                      <h5>@{elem.user_name}</h5>
-                    </Link>
-                    <Button
-                      type="link"
-                      danger
-                      onClick={() => handleUnfollow(elem.following_id)}
-                    >
-                      Unfollow
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No following</p>
-            )}
-          </Card>
-        </Col>}
-       
-      {/* </Row> */}
+        </Col>
+      </Row>
     </div>
   );
 };

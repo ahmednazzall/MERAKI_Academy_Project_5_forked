@@ -1,18 +1,51 @@
-/* Followers.css */
-.card-title {
-  font-size: 18px;
+.followers-container {
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  min-height: 100vh;
+}
+
+.custom-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 24px;
   font-weight: bold;
+  color: #1890ff;
+}
+
+.switch-button {
+  color: #1890ff;
+  font-size: 16px;
+}
+
+.user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.user-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.username {
+  font-size: 18px;
+  color: #333;
+}
+
+.empty-text {
+  font-size: 16px;
+  color: #888;
   text-align: center;
-}
-
-.card-content {
-  padding: 10px;
-}
-
-button {
-  margin-top: 5px;
-}
-
-button:focus {
-  outline: none;
+  margin-top: 20px;
 }
