@@ -36,6 +36,8 @@ import {
 } from "@ant-design/icons";
 import "./Profile.css";
 import Like from "../likes/Like";
+import Followers from "./Followers";
+import { SetUserId, setVisitId } from "../redux/reducers/auth";
 
 const { Title, Paragraph } = Typography;
 
@@ -48,7 +50,6 @@ const ProfilePage = () => {
   const [savedPost, setSavedPost] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const userId = id ? id : localStorage.getItem("user_id");
-
   const [addPost, setAddPost] = useState({});
   const postInfo = {
     image: addPost.image || null,
@@ -83,6 +84,8 @@ const ProfilePage = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((result) => {
+        // console.log(result.data.Post);
+        
         dispatch(setPosts(result.data.Post));
       })
       .catch((err) => {
@@ -97,6 +100,7 @@ const ProfilePage = () => {
       })
       .then((result) => {
         setFollowing(result.data.data?.length);
+        dispatch(setVisitId(userId))
       })
       .catch((err) => {
         console.log(err);
@@ -374,7 +378,7 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <br /> <br /> <br /> <br />
-      {userId === user[0]?.user_id && (
+      {userId == localStorage.getItem("user_id") && (
         <div className="createPost">
           <Input.TextArea
             placeholder="What's on your mind?"
@@ -420,7 +424,7 @@ const ProfilePage = () => {
       )}
       <br /> <br /> <br /> <br />
       <div className="posts-section">
-        <h3>Your Posts</h3>
+       {localStorage.getItem("user_id")==userId && <h3>Your Posts</h3>} 
         {posts?.map((post, index) => (
           <div className="post-card" key={index}>
             <Row>
@@ -472,17 +476,9 @@ const ProfilePage = () => {
                     )}
                   </>
                 )}
-                {post?.user_id === userId && (
+                {post?.user_id == userId && (
                   <div className="post-actions">
-                    <Button
-                      onClick={() => {
-                        setUpdateClicked(true);
-                        setPostId(post.post_id);
-                      }}
-                      className="update-button"
-                    >
-                      Update
-                    </Button>
+                   
                     {updateClicked && postId === post?.post_id && (
                       <>
                         <Input
@@ -502,13 +498,7 @@ const ProfilePage = () => {
                         </Button>
                       </>
                     )}
-                    <Button
-                      icon={<DeleteOutlined />}
-                      danger
-                      onClick={() => handleDelete(post.post_id)}
-                    >
-                      Delete
-                    </Button>
+                  
                   </div>
                 )}
               </Col>
@@ -543,8 +533,6 @@ const ProfilePage = () => {
               >
                 Comments
               </Button>
-
-              {/* زر الحفظ */}
               <Button
                 icon={<SaveOutlined />}
                 type="link"
@@ -556,6 +544,34 @@ const ProfilePage = () => {
               >
                 Save
               </Button>
+
+              {localStorage.getItem("user_id")==userId &&
+              <>
+                <Button
+                     icon={<EditOutlined />}
+                      onClick={() => {
+                        setUpdateClicked(true);
+                        setPostId(post.post_id);
+                      }}
+                      className="update-button"
+                    >
+                      Update
+                    </Button>
+              <Button
+                      icon={<DeleteOutlined />}
+                      danger
+                      onClick={() => handleDelete(post.post_id)}
+                    >
+                      Delete
+                    </Button>
+              
+              </>
+              }
+            
+
+                  
+              {/* زر الحفظ */}
+             
 
               {/* زر التعديل */}
               {post?.user_id === userId && (

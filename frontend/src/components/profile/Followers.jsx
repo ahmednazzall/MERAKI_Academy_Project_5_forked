@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { Card, Button, Row, Col, Avatar, Typography, Space } from "antd";
 import {
-  setFollowers,
-  setFollowing,
+  // setFollowers,
+  // setFollowing,
   unFollow,
   removeFollower,
 } from "../redux/reducers/sliceFollowers";
@@ -17,15 +17,21 @@ const Followers = () => {
   const dispatch = useDispatch();
   const condition = useParams();
   const [show, setShow] = useState(condition.id == 1);
-  const { token, userId } = useSelector((state) => state.auth);
+  const { token, visitUser } = useSelector((state) => state.auth);
+  const [following, setFollowing] = useState([]);
+  const [follower, setFollower] = useState([]);
+  // const following = useSelector((state) => state.followers.following);
+  // const follower = useSelector((state) => state.followers.myFollowers);
 
-  const following = useSelector((state) => state.followers.following);
-  const follower = useSelector((state) => state.followers.myFollowers);
+  const userId = visitUser ? visitUser : localStorage.getItem("user_id");
+
+  // console.log(following);
 
   useEffect(() => {
     const url = show
       ? `http://localhost:5000/followers/${userId}/following`
       : `http://localhost:5000/followers/${userId}/follower`;
+    // console.log(url);
 
     axios
       .get(url, {
@@ -34,12 +40,13 @@ const Followers = () => {
         },
       })
       .then((result) => {
-        show
-          ? dispatch(setFollowing(result.data.data))
-          : dispatch(setFollowers(result.data.data));
+        console.log(result);
+        console.log(show);
+        
+        show ? setFollowing(result.data.data) : setFollower(result.data.data);
       })
       .catch((err) => console.log(err));
-  }, [show, dispatch, token, userId]);
+  }, [userId ,show]);
 
   const handleUnfollow = (id) => {
     const url = show
@@ -66,15 +73,10 @@ const Followers = () => {
           className="user-card"
         >
           <Space align="center">
-            
             <Avatar
               size={64}
-
               src={elem.profile_image || "/default-profile.png"}
               alt={elem.user_name}
-
-              src={elem.profile_image || "/default-avatar.png"}
-              alt="profile"
               style={{ border: "2px solid #1890ff" }}
             />
             <Link
@@ -87,19 +89,23 @@ const Followers = () => {
               </Text>
             </Link>
           </Space>
-          
-          {userId === (isFollowing ? elem.following_id : elem.follower_id) && (
+
+          {/* {userId === (isFollowing ? elem.following_id : elem.follower_id) && (
+          )} */}
+
+          {userId==localStorage.getItem("user_id") &&
           <Button
-            type="primary"
-            danger
-            shape="round"
-            onClick={() =>
-              handleUnfollow(isFollowing ? elem.following_id : elem.follower_id)
-            }
-          >
-            {isFollowing ? "Unfollow" : "Remove"}
-          </Button>
-          )}
+          type="primary"
+          danger
+          shape="round"
+          onClick={() =>
+            handleUnfollow(isFollowing ? elem.following_id : elem.follower_id)
+          }
+        >
+          {isFollowing ? "Unfollow" : "Remove"}
+        </Button>
+          }
+          
         </div>
       ))}
     </div>
@@ -127,13 +133,17 @@ const Followers = () => {
             bordered={false}
             className="custom-card"
           >
-            {show
-              ? following?.length
-                ? renderList(following, true)
-                : <p className="empty-text">No following yet.</p>
-              : follower?.length
-              ? renderList(follower, false)
-              : <p className="empty-text">No followers yet.</p>}
+            {show ? (
+              following?.length ? (
+                renderList(following, true)
+              ) : (
+                <p className="empty-text">No following yet.</p>
+              )
+            ) : follower?.length ? (
+              renderList(follower, false)
+            ) : (
+              <p className="empty-text">No followers yet.</p>
+            )}
           </Card>
         </Col>
       </Row>
