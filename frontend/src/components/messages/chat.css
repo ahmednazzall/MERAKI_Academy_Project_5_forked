@@ -21,7 +21,7 @@ width: 500px;
 }
 .Message-Chat-Card {
   position: fixed;
-  width: 600px;
+  width: 550px;
   z-index: 10;
   background-color: white;
   top: 50%;
@@ -37,14 +37,13 @@ width: 500px;
   display: grid;
   align-items: center;
   gap: 20px;
-  max-width: 600px;
+  max-width: 550px;
 }
 .you{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    position: absolute;
     right: -70px;
 }
 .userAndImg{
@@ -53,6 +52,7 @@ width: 500px;
     gap: 0em;
     align-items: flex-end;
     justify-content: flex-end;
+    width: 100%;
 }
 .Exit-Chat:hover {
   background-color: red;
@@ -85,11 +85,12 @@ width: 500px;
 .userPic-Message {
   width: 7%;
   border-radius: 50%;
+  height: 70%;
 }
 .UserName-ChatMessage {
   position: relative;
-  left: 7.3%;
-  bottom: 5vh;
+  left: 8.3%;
+  bottom: 6vh;
   width: 10%;
 }
 .Message-Chat {
@@ -131,7 +132,7 @@ width: 500px;
 .UserName-ChatMessage-You {
   position: relative;
   left: -8%;
-  bottom: 5vh;
+  bottom: 6vh;
 }
 
 .Message-Time-you {
