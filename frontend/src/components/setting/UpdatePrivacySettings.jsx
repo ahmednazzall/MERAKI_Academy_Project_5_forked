@@ -10,6 +10,7 @@ const UpdatePrivacySettings = () => {
     profile_visibility: "public",
     blocked_accounts: [],
   });
+  const [BlockPe , setBlockPe] = useState({})
   const [allUsers, setAllUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [unblockUserName, setUnblockUserName] = useState("");
@@ -35,13 +36,11 @@ const UpdatePrivacySettings = () => {
         message.error("Failed to load privacy settings.");
         console.error(error);
       });
-  }, [token]);
+  }, []);
 
 
 
-  const handleSelectChange = (value) => {
-    setSelectedUsers(value);
-  };
+
 
   const handleSearchChange = async (value) => {
     setSearchUserName(value); // تحديث النص المدخل في حقل البحث
@@ -56,7 +55,13 @@ const UpdatePrivacySettings = () => {
       // إرسال طلب GET للبحث عن المستخدمين بناءً على الاسم
       const response = await axios.get(
         `http://localhost:5000/users/userName/search/${value}`
-      );
+      ,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+ 
+      
       if (response.data.success) {
         setAllUsers(response.data.User); // تحديث قائمة المستخدمين
       } else {
@@ -72,7 +77,7 @@ const UpdatePrivacySettings = () => {
   const updateSettings = async (values) => {
     try {
       setLoading(true);
-      const response = await axios.put(
+      const response = await axios.post(
         "http://localhost:5000/settings/privacy",
         {
           profile_visibility: values.profile_visibility,
@@ -96,10 +101,10 @@ const UpdatePrivacySettings = () => {
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      <Title level={3}>Update Privacy Settings</Title>
+      <Title level={3}>Update Privacy Settings (Under Editing)</Title>
       <Form
         layout="vertical"
-        onFinish={updateSettings}
+       
         initialValues={{
           profile_visibility: privacySettings.profile_visibility,
         }}
@@ -125,13 +130,18 @@ const UpdatePrivacySettings = () => {
             placeholder="Select users to block" // نص التلميح داخل القائمة
             showSearch // تفعيل البحث داخل القائمة
             filterOption={
-              (input, option) =>
+              (input, option) =>{
+
                 option.children.toLowerCase().includes(input.toLowerCase()) // تصفية النتائج بناءً على النص المدخل
+               
+                // setBlockPe({blocked_accounts:input})
+              }
+              
             }
+            
             allowClear // السماح بإلغاء الاختيارات
-            onSearch={handleSearchChange} // استدعاء دالة البحث عند كتابة النص
             value={selectedUsers} // تعيين القيمة المختارة من الحالة
-            onChange={handleSelectChange} // استدعاء دالة عند تغيير الاختيار
+             // استدعاء دالة عند تغيير الاختيار
           >
             {allUsers.length > 0 ? (
               allUsers.map((user) => (
@@ -149,11 +159,14 @@ const UpdatePrivacySettings = () => {
             placeholder="Enter username to unblock"
             value={unblockUserName}
             onChange={(e) => setUnblockUserName(e.target.value)}
+          
           />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
+          <Button type="primary" htmlType="submit" loading={loading} onClick={(e)=>{
+            // updateSettings
+          }}>
             Update Privacy Settings
           </Button>
         </Form.Item>

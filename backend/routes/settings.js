@@ -6,7 +6,7 @@ const authentication = require("../middleware/authentication");
 
 settingsRouter.get("/howToUse", authentication, getHowToUse);
 settingsRouter.put("/general", authentication, updateGeneralSettings);
-settingsRouter.put("/privacy", authentication, updatePrivacySettings);
+settingsRouter.post("/privacy", authentication, updatePrivacySettings);
 settingsRouter.get("/privacy",authentication, getPrivacySettings);
 settingsRouter.put("/security", authentication, updateSecuritySettings);
 settingsRouter.put("/contactUs", authentication, getContactUs);
