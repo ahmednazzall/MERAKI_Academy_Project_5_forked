@@ -122,7 +122,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                 }
               >
                 <div className="span_profile">
-                  {/* {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null} */}
+                 
 
                   {allUsers?.map((user) => {
                     if (
@@ -134,6 +134,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                           style={{ display: "flex", flexDirection: "column" }}
                         >
                           <div >
+                           {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
                             <img
                               className="userPic-Message"
                               src={message.profile_image}
@@ -153,7 +154,13 @@ const ChatMessages = ({ socket, to, setShow }) => {
                                 ? "Message-Chat-you"
                                 : "Message-Chat"
                             }
-                            onClick={handleClick}
+                            onClick={(e)=>{
+                              if (messageTimeShow.show != message.message_id) {
+                                setMessageTimeShow({ show: message.message_id });
+                              } else {
+                                setMessageTimeShow({ show: 0 });
+                              }
+                            }}
                           >
                             {message.message_text}
                           </div>
@@ -187,7 +194,13 @@ const ChatMessages = ({ socket, to, setShow }) => {
                                 ? "Message-Chat-you"
                                 : "Message-Chat"
                             }
-                            onClick={handleClick}
+                            onClick={(e)=>{
+                              if (messageTimeShow.show != message.message_id) {
+                                setMessageTimeShow({ show: message.message_id });
+                              } else {
+                                setMessageTimeShow({ show: 0 });
+                              }
+                            }}
                           >
                             {message.message_text}
                           </div>
