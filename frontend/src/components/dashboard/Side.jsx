@@ -66,11 +66,7 @@ const Side = () => {
         <FaSearch className="sidebar-icon" /> Explore
       </Link>
 
-      <Link to={"/chat/"}>
-        <HiMiniChatBubbleLeftRight className="sidebar-icon" /> Chatting
-      </Link>
-
- 
+   
       {/* Events Link */}
       <Link
         to={"/home/events"}
