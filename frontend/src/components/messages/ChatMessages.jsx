@@ -130,10 +130,11 @@ const ChatMessages = ({ socket, to, setShow }) => {
                       user.user_id != userId
                     ) {
                       return (
-                        <div
+                        <div className="Message-Info"
                           style={{ display: "flex", flexDirection: "column" }}
                         >
                           <div >
+                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
                             <img
                               className="userPic-Message"
                               src={message.profile_image}
@@ -157,7 +158,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                           >
                             {message.message_text}
                           </div>
-                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
+                         
 
                         </div>
                       );
@@ -171,6 +172,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                        
                         >
                           <div className="userAndImg">
+                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
                             <img
                               className="userPic-Message"
                               src={message.profile_image}
@@ -194,7 +196,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                             {message.message_text}
                           
                           </div>
-                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
+                          
                         </div>
                       );
                     }
