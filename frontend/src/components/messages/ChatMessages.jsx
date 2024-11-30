@@ -90,6 +90,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
   };
   return (
     <div className="Message-Chat-Card">
+      <div className="Perent_Message-Containor">
       <button
       className="Exit-Chat"
         onClick={() => {
@@ -153,6 +154,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
       >
         Send
       </button>
+      </div>
       </div>
     </div>
   );
