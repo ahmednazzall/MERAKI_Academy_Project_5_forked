@@ -6,6 +6,7 @@ const {
   getAllFollowers,
   getFollowing,
   removeFollower,
+  getUserProfile,
   getPostsByFollowers
 } = require("../controllers/followers");
 const authentication = require("../middleware/authentication");
@@ -40,6 +41,7 @@ followerRouter.get('/',authentication,getAllFollowers);
 
 // route to get who is user following 
 followerRouter.get('/:id/following',authentication ,getFollowing);
+followerRouter.get('/profile/:id',authentication ,getUserProfile);
 
 
 //test in postman example:

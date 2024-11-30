@@ -156,6 +156,82 @@ const getFollowing = async (req, res) => {
   }
 };
 
+const getUserProfile = async (req, res) => {
+  const authorizationHeader = req.headers.authorization;
+
+  if (!authorizationHeader) {
+    return res.status(400).json({
+      success: false,
+      message: "Authorization token must be provided.",
+    });
+  }
+
+  const token = authorizationHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+    const { user_id } = req.params; // ID المستخدم المطلوب جلب ملفه الشخصي
+
+    // Fetch the user's privacy settings
+    const privacyQuery = `SELECT profile_visibility FROM privacy_settings WHERE u_id = $1`;
+    const privacyResult = await pool.query(privacyQuery, [user_id]);
+
+    if (privacyResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found or privacy settings not configured.",
+      });
+    }
+
+    const profileVisibility = privacyResult.rows[0].profile_visibility;
+
+    // If the profile is private, check if the requester is a friend
+    if (profileVisibility === "private") {
+      const friendshipQuery = `
+        SELECT * FROM followers
+        WHERE follower_id = $1 AND following_id = $2 AND is_deleted = 0
+      `;
+      const friendshipResult = await pool.query(friendshipQuery, [
+        decoded.userId, // الشخص الذي يطلب عرض الملف الشخصي
+        user_id, // الشخص الذي يتم عرض ملفه الشخصي
+      ]);
+
+      if (friendshipResult.rows.length === 0) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied. This profile is private.",
+        });
+      }
+    }
+
+    // Fetch the user's profile details (e.g., name, bio, etc.)
+    const userProfileQuery = `
+      SELECT user_id, user_name, bio, created_at
+      FROM users WHERE user_id = $1
+    `;
+    const userProfileResult = await pool.query(userProfileQuery, [user_id]);
+
+    if (userProfileResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      userProfile: userProfileResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching user profile.",
+      error: error.message,
+    });
+  }
+};
+
 // const getPostsByFollowers = (req,res)=>{
 //   const follower_id = req.params.follower_id
 //   const query = `SELECT * FROM followers INNER JOIN
@@ -203,5 +279,6 @@ module.exports = {
   getAllFollowers,
   getFollowing,
   unfollowUser,
+  getUserProfile,
   getPostsByFollowers,
 };

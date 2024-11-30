@@ -88,7 +88,7 @@ const updateGeneralSettings = async (req, res) => {
 };
 
 //---------------------------------------------------------------------------------------------------------
-
+// تحديث إعدادات الخصوصية
 const updatePrivacySettings = async (req, res) => {
   const authorizationHeader = req.headers.authorization;
 
@@ -103,122 +103,106 @@ const updatePrivacySettings = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.SECRET);
+    const { profile_visibility, blocked_accounts, unblock_user_name } =
+      req.body;
 
-    const { profile_visibility, blocked_accounts, unblock_user_id } = req.body;
+    // جلب اسم المستخدم الخاص بالمستخدم الحالي
+    const userQuery = `SELECT user_name FROM users WHERE user_id = $1`;
+    const userResult = await pool.query(userQuery, [decoded.userId]);
 
-    if (
-      blocked_accounts &&
-      blocked_accounts.includes(decoded.userId.toString())
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "You cannot block yourself.",
-      });
-    }
-
-    // Unblock user logic
-    if (unblock_user_id) {
-      const query =
-        "SELECT blocked_accounts FROM privacy_settings WHERE u_id = $1";
-      const result = await pool.query(query, [decoded.userId]);
-
-      if (result.rows.length === 0 || !result.rows[0].blocked_accounts) {
-        return res.status(404).json({
-          success: false,
-          message: "No blocked accounts found for this user.",
-        });
-      }
-
-      const blockedAccounts = result.rows[0].blocked_accounts.split(",");
-
-      // Check if the user is in the blocked list
-      if (!blockedAccounts.includes(unblock_user_id)) {
-        return res.status(404).json({
-          success: false,
-          message: `User with ID ${unblock_user_id} is not blocked.`,
-        });
-      }
-
-      // Remove the user from the blocked list
-      const updatedBlockedAccounts = blockedAccounts
-        .filter((id) => id !== unblock_user_id)
-        .join(",");
-
-      // Update the privacy settings
-      const updateQuery = `
-            UPDATE privacy_settings
-            SET blocked_accounts = $1
-            WHERE u_id = $2
-            RETURNING *;
-          `;
-      const updateValues = [updatedBlockedAccounts, decoded.userId];
-
-      const updateResult = await pool.query(updateQuery, updateValues);
-
-      return res.status(200).json({
-        success: true,
-        message: `User with ID ${unblock_user_id} has been unblocked successfully.`,
-        privacySettings: updateResult.rows[0],
-      });
-    }
-
-    const usersQuery =
-      "SELECT user_id FROM users WHERE is_deleted = 0 AND user_id = ANY($1)";
-    const usersResult = await pool.query(usersQuery, [blocked_accounts]);
-
-    const validUserIds = usersResult.rows.map((row) => row.user_id);
-    const invalidUserIds = blocked_accounts.filter(
-      (id) => !validUserIds.includes(id)
-    );
-
-    if (invalidUserIds.length > 0) {
+    if (userResult.rows.length === 0) {
       return res.status(404).json({
         success: false,
-        message: `The following users are invalid or deleted: ${invalidUserIds.join(
-          ", "
-        )}`,
+        message: "User not found.",
       });
     }
 
-    const query =
-      "SELECT blocked_accounts FROM privacy_settings WHERE u_id = $1";
-    const result = await pool.query(query, [decoded.userId]);
-    let blockedAccountsString = "";
+    const currentUserName = userResult.rows[0].user_name;
 
-    if (result.rows.length > 0 && result.rows[0].blocked_accounts) {
-      const existingBlockedAccounts =
-        result.rows[0].blocked_accounts.split(",");
+    // جلب قائمة الحسابات المحظورة الحالية من قاعدة البيانات
+    const getBlockedQuery = `SELECT blocked_accounts FROM privacy_settings WHERE u_id = $1`;
+    const result = await pool.query(getBlockedQuery, [decoded.userId]);
 
-      const alreadyBlocked = blocked_accounts.filter((id) =>
-        existingBlockedAccounts.includes(id)
-      );
+    const currentBlockedAccounts = result.rows[0]?.blocked_accounts
+      ? result.rows[0].blocked_accounts.split(",")
+      : [];
 
-      if (alreadyBlocked.length > 0) {
-        return res.status(400).json({
+    let updatedBlockedAccounts = [...currentBlockedAccounts];
+
+    // تحديث قائمة الحسابات المحظورة
+    if (blocked_accounts && blocked_accounts.length > 0) {
+      const validBlockedAccounts = [];
+      for (let username of blocked_accounts) {
+        // منع المستخدم من حظر نفسه
+        if (username === currentUserName) {
+          return res.status(400).json({
+            success: false,
+            message: "You cannot block yourself.",
+          });
+        }
+
+        const userExistsQuery = `SELECT user_name FROM users WHERE user_name = $1`;
+        const userExistsResult = await pool.query(userExistsQuery, [username]);
+
+        if (userExistsResult.rows.length === 0) {
+          return res.status(404).json({
+            success: false,
+            message: `The user '${username}' does not exist.`,
+          });
+        }
+
+        if (!currentBlockedAccounts.includes(username)) {
+          validBlockedAccounts.push(username);
+        }
+      }
+      updatedBlockedAccounts = [
+        ...new Set([...currentBlockedAccounts, ...validBlockedAccounts]),
+      ];
+    }
+
+    // إلغاء حظر المستخدم
+    if (unblock_user_name) {
+      const userExistsQuery = `SELECT user_name FROM users WHERE user_name = $1`;
+      const userExistsResult = await pool.query(userExistsQuery, [
+        unblock_user_name,
+      ]);
+
+      if (userExistsResult.rows.length === 0) {
+        return res.status(404).json({
           success: false,
-          message: `The following users are already blocked: ${alreadyBlocked.join(
-            ", "
-          )}`,
+          message: `The user '${unblock_user_name}' does not exist.`,
         });
       }
 
-      blockedAccountsString = [
-        ...new Set([...existingBlockedAccounts, ...blocked_accounts]),
-      ].join(",");
-    } else {
-      blockedAccountsString = blocked_accounts.join(",");
+      if (!currentBlockedAccounts.includes(unblock_user_name)) {
+        return res.status(404).json({
+          success: false,
+          message: `The user '${unblock_user_name}' is not currently blocked.`,
+        });
+      }
+
+      updatedBlockedAccounts = updatedBlockedAccounts.filter(
+        (username) => username !== unblock_user_name
+      );
     }
 
+    // تحديث البيانات في قاعدة البيانات
     const queryUpdate = `
-          INSERT INTO privacy_settings (u_id, profile_visibility, blocked_accounts)
-          VALUES ($1, $2, $3)
-          ON CONFLICT (u_id)
-          DO UPDATE SET 
-            profile_visibility = EXCLUDED.profile_visibility,
-            blocked_accounts = EXCLUDED.blocked_accounts
-          RETURNING *;
-        `;
-    const values = [decoded.userId, profile_visibility, blockedAccountsString];
+      INSERT INTO privacy_settings (u_id, profile_visibility, blocked_accounts)
+      VALUES ($1, $2, $3)
+      ON CONFLICT (u_id)
+      DO UPDATE SET 
+        profile_visibility = COALESCE(EXCLUDED.profile_visibility, privacy_settings.profile_visibility),
+        blocked_accounts = EXCLUDED.blocked_accounts
+      RETURNING *;
+    `;
+    const values = [
+      decoded.userId,
+      profile_visibility || null, // إذا لم يتم توفير قيمة، اترك الحقل كما هو
+      updatedBlockedAccounts.length > 0
+        ? updatedBlockedAccounts.join(",")
+        : null,
+    ];
 
     const resultPrivacy = await pool.query(queryUpdate, values);
 
@@ -232,6 +216,79 @@ const updatePrivacySettings = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error updating privacy settings.",
+      error: error.message,
+    });
+  }
+};
+
+const getPrivacySettings = async (req, res) => {
+  const authorizationHeader = req.headers.authorization;
+
+  if (!authorizationHeader) {
+    return res.status(400).json({
+      success: false,
+      message: "Authorization token must be provided.",
+    });
+  }
+
+  const token = authorizationHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    // Log user ID for debugging
+    console.log("User ID:", decoded.userId);
+
+    // Check if decoded.userId exists
+    if (!decoded.userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is missing from the token.",
+      });
+    }
+
+    // Query privacy settings
+    const query = `SELECT * FROM privacy_settings WHERE u_id = $1`;
+    const result = await pool.query(query, [decoded.userId]);
+
+    if (result.rows.length === 0) {
+      // If privacy settings do not exist, create them with default values
+      const insertQuery = `
+        INSERT INTO privacy_settings (u_id, profile_visibility, blocked_accounts)
+        VALUES ($1, $2, $3)
+        RETURNING *;
+      `;
+      const defaultSettings = await pool.query(insertQuery, [
+        decoded.userId, // Ensure valid user ID here
+        "public", // Default visibility
+        null, // No blocked accounts initially
+      ]);
+
+      return res.status(200).json({
+        success: true,
+        privacySettings: {
+          profile_visibility: defaultSettings.rows[0].profile_visibility,
+          blocked_accounts: [],
+        },
+      });
+    }
+
+    const blockedAccounts = result.rows[0]?.blocked_accounts
+      ? result.rows[0].blocked_accounts.split(",")
+      : [];
+
+    res.status(200).json({
+      success: true,
+      privacySettings: {
+        profile_visibility: result.rows[0].profile_visibility,
+        blocked_accounts: blockedAccounts,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching privacy settings:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching privacy settings.",
       error: error.message,
     });
   }
@@ -252,7 +309,7 @@ const updateSecuritySettings = async (req, res) => {
   const token = authorizationHeader.split(" ")[1];
   try {
     // Verify the token and decode it
-    const decoded = jwt.verify(token, process.env.SECRET); // Decode the JWT
+    const decoded = jwt.verify(token, process.env.SECRET); 
 
     // Extract the parameters from the body
     const { two_factor_auth, active_sessions } = req.body;
@@ -385,6 +442,7 @@ module.exports = {
   updateGeneralSettings,
   updatePrivacySettings,
   updateSecuritySettings,
+  getPrivacySettings,
   getContactUs,
   postContactUs,
 };

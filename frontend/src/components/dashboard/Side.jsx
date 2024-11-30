@@ -48,6 +48,7 @@ const Side = () => {
       >
         <FaHome className="sidebar-icon" /> Feeds
       </Link>
+
       {/* Profile Link */}
       <Link
         to={`/home/profile/${userId}`}
@@ -65,6 +66,10 @@ const Side = () => {
         <FaSearch className="sidebar-icon" /> Explore
       </Link>
 
+      <Link to={"/chat/"}>
+        <HiMiniChatBubbleLeftRight className="sidebar-icon" /> Chatting
+      </Link>
+
  
       {/* Events Link */}
       <Link
@@ -78,30 +83,27 @@ const Side = () => {
         <FaCalendarAlt className="sidebar-icon" /> Events
       </Link>
 
-      <Link to={"./bookmark"}>
+      <Link to={"/home/bookmark"}>
         <FaBookmark className="sidebar-icon" /> Bookmarks
       </Link>
 
-      {/* Settings Section */}
-      <div className="settings">
+      {/* Settings Link */}
+      <div className="settings-container">
         <button className="settingsToggle" onClick={toggleSettings}>
           <FaCog className="sidebar-icon" /> Settings
         </button>
 
-        {/* Settings Menu (Dropdown) */}
+        {/* Submenu */}
         {showSettings && (
           <div className="settingsMenu">
             <Link to={"/home/setting/howToUse"}>
-              <FaLock className="sidebar-icon" /> How To Use Our Website
+              <FaLock className="sidebar-icon" /> How To Use
             </Link>
             <Link to={"/home/setting/general"}>
               <FaCog className="sidebar-icon" /> General Settings
             </Link>
             <Link to={"/home/setting/privacy"}>
               <FaLock className="sidebar-icon" /> Privacy Settings
-            </Link>
-            <Link to={"/home/setting/security"}>
-              <FaLock className="sidebar-icon" /> Security Settings
             </Link>
             <Link to={"/home/setting/contact"}>
               <FaPhoneAlt className="sidebar-icon" /> Contact Us
@@ -110,8 +112,9 @@ const Side = () => {
         )}
       </div>
 
+      {/* Logout Link */}
       <Link to="#" onClick={handleLogout} className="LogoutLink">
-        <FaLock className="sidebar1-icon" /> Logout
+        <FaLock className="sidebar-icon" /> Logout
       </Link>
     </div>
   );
