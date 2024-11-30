@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../redux/reducers/sliceUser";
 import "./Explore.css";
 
-const Explore = () => {
+const Explore = ({socket}) => {
   const dispatch = useDispatch();
   const [following, setFollowing] = useState([]);
 
@@ -19,7 +19,6 @@ const Explore = () => {
   const users = AllUsers.filter((user) => {
     return user.role_id !== 1;
   });
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/users/all", {
@@ -64,6 +63,12 @@ const Explore = () => {
       )
       .then((res) => {
         setFollowing([...following, id]);
+        const noteTo =AllUsers.find((user=>{
+          return user.user_id==id
+        }))
+        console.log(noteTo);
+        
+        socket.emit("notification",{message:`${noteTo.user_name} started following you` , from:userId, to:id})
       })
       .catch((err) => {
         console.log(err);
@@ -76,7 +81,7 @@ const Explore = () => {
       <div className="users-list">
         {users?.map((user) => {
           return (
-            user.user_id !== userId &&
+            user.user_id != userId &&
             !following.includes(user.user_id) && (
               <div key={user.user_id} className="user-card">
                 <img

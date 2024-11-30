@@ -35,6 +35,7 @@ import {
   CameraOutlined,
   HeartFilled,
   MessageOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
 
 const { Header, Content, Footer } = Layout;
@@ -42,12 +43,15 @@ const { TextArea } = Input;
 const { Title } = Typography;
 
 const Posts = () => {
-  const [postDisplayEdit , setpostDisplayEdit] = useState(false)
+  const [postDisplayEdit, setpostDisplayEdit] = useState(false);
+
+  const [fileList, setFileList] = useState([]);
+  const [videoList, setVideoList] = useState([]);
   const [postId, setPostId] = useState(0);
   const [updateClicked, setUpdateClicked] = useState(false);
   const [editPostText, setEditPostText] = useState("");
   const [addPost, setAddPost] = useState({
-    body: "",
+    body: null,
     image: null,
     video: null,
   });
@@ -77,6 +81,7 @@ const Posts = () => {
       })
       .then((res) => {
         dispatch(setPosts(res.data.data.reverse()));
+        // console.log(res);
       })
       .catch((err) => {
         console.error(err);
@@ -101,137 +106,54 @@ const Posts = () => {
       });
   }, [posts]);
 
-  const handleFileUpload = (e) => {
-    const select = e.target.file[0]
-
-    if(!select){
-      const isImage = file.type.startsWith("image/");
-    }
-    
-    // const isVideo = file.type.startsWith("video/");
-
-    if (isImage) {
-      setAddPost({ ...addPost, image: file });
-      message.success("Image added successfully!");
-    } else if (isVideo) {
-      setAddPost({ ...addPost, video: file });
-      message.success("Video added successfully!");
-    } else {
-      message.error("Only images and videos are allowed!");
-    }
-
-    return false;
-  };
-
   const handleAddPost = () => {
-    const formData = new FormData();
-
-    formData.append("body", postInfo.body);
-
-    if (postInfo.image) formData.append("image", postInfo.image);
-    // if (postInfo.video) formData.append("video", postInfo.video);
-
-    const uploadToCloudinary = (file) => {
-      const isImage = file.type.startsWith("image/");
-      // const isVideo = file.type.startsWith("video/");
-
-      if (isImage || isVideo) {
-        const cloudinaryData = new FormData();
-        cloudinaryData.append("file", file);
-        cloudinaryData.append("upload_preset", "project_5");
-        cloudinaryData.append("cloud_name", "dkuojigr0");
-
-         fetch("https://api.cloudinary.com/v1_1/dkuojigr0/image/upload", {
-          method: "POST",
-          body: cloudinaryData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.secure_url) {
-              console.log(data.secure_url);
-            } else {
-              throw new Error("Cloudinary did not return a valid URL.");
-            }
-          })
-          .catch((err) => {
-            console.error("Cloudinary upload error:", err);
-            message.error("Failed to upload file.");
-            throw err;
-          });
-      }
-      return Promise.resolve(null);
-    };
-
-    const uploadImageOrVideo = postInfo.image || postInfo.video;
-
-    if (uploadImageOrVideo) {
-      const file = postInfo.image || postInfo.video;
-
-      uploadToCloudinary(file)
-        .then((uploadedUrl) => {
-          if (uploadedUrl) {
-            formData.append(
-              uploadedUrl.startsWith("http") ? "image" : "video",
-              uploadedUrl
-            );
-          }
-
-          return axios.post("http://localhost:5000/posts", formData, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          });
+    if (
+      postInfo.body !== null ||
+      postInfo.video !== null ||
+      postInfo.image !== null
+    ) {
+      axios
+        .post("http://localhost:5000/posts", postInfo, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((res) => {
           dispatch(createPost(res.data.post[0]));
           message.success("Post created successfully!");
           setAddPost({ body: "", image: null, video: null });
+          setFileList([]);
         })
         .catch((err) => {
           console.error("Error while creating post:", err);
           message.error("Failed to create post.");
         });
     } else {
-      // إذا لم يكن هناك ملف مرفق، يتم إرسال المنشور مباشرةً
-      axios
-        .post("http://localhost:5000/posts", formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          dispatch(createPost(res.data.post[0]));
-          message.success("Post created successfully!");
-          setAddPost({ body: "", image: null, video: null });
-        })
-        .catch((err) => {
-          console.error(err);
-          message.error("Failed to create post.");
-        });
+      message.error(
+        "write something or upload photo or video  to create post."
+      );
     }
   };
 
   const handleUpdatePost = (postId) => {
-   
-        axios
-          .put(
-            `http://localhost:5000/posts/${postId}`,
-            { body: editPostText },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            
-            setpostDisplayEdit(false)
-            message.success("Post updated successfully!");
-          })
-          .catch((err) => {
-            console.error(err);
-            message.error("Failed to update post.");
-          });
-      
+    axios
+      .put(
+        `http://localhost:5000/posts/${postId}`,
+        { body: editPostText },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setpostDisplayEdit(false);
+        message.success("Post updated successfully!");
+      })
+      .catch((err) => {
+        console.error(err);
+        message.error("Failed to update post.");
+      });
   };
 
   const handleDelete = (postId) => {
@@ -289,6 +211,77 @@ const Posts = () => {
       },
     });
   };
+  const props = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      fileList.splice(index, 1);
+      setFileList(fileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    onChange: (file) => {
+      if (!fileList[0]) return;
+
+      const data = new FormData();
+      data.append("file", fileList[0]);
+      data.append("upload_preset", "project_5");
+      data.append("cloud_name", "dniaphcwx");
+      fetch("https://api.cloudinary.com/v1_1/dniaphcwx/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data.url);
+          setAddPost({ ...addPost, image: data.url });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    fileList,
+  };
+  const prop = {
+    onRemove: (video) => {
+      const index = videoList.indexOf(video);
+      const newFileList = videoList.slice();
+      videoList.splice(index, 1);
+      setVideoList(videoList);
+      setAddPost({ ...addPost, video: null });
+    },
+    beforeUpload: (video) => {
+      setVideoList([...videoList, video]);
+      return false;
+    },
+    onChange: (video) => {
+      console.log(video);
+      console.log(videoList);
+
+      console.log(addPost);
+      if (!videoList[0]) return;
+
+      const data = new FormData();
+      data.append("file", videoList[0]);
+      data.append("upload_preset", "project_5");
+      data.append("cloud_name", "dniaphcwx");
+      fetch("https://api.cloudinary.com/v1_1/dniaphcwx/video/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data.url);
+          setAddPost({ ...addPost, video: data.url });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    videoList,
+  };
 
   return (
     <Content
@@ -330,23 +323,18 @@ const Posts = () => {
             gap: "10px",
           }}
         >
-          <Upload
-            beforeUpload={handleFileUpload}
-            showUploadList={false}
-            accept="image/*,video/*"
-          >
-            <Tooltip title="Upload Image/Video">
-              <Button
-                type="text"
-                icon={<CameraOutlined />}
-                style={{
-                  fontSize: "18px",
-                  color: "#1890ff",
-                  cursor: "pointer",
-                }}
-              />
-            </Tooltip>
-          </Upload>
+          <Tooltip title="Upload Image">
+            <Upload {...props}>
+              <Button icon={<CameraOutlined />}>Upload image</Button>
+            </Upload>
+          </Tooltip>
+
+          <Tooltip title="Upload Video">
+            <Upload {...prop}>
+              <Button icon={<CameraOutlined />}>Upload video</Button>
+            </Upload>
+          </Tooltip>
+
           <Tooltip title="Post">
             <Button
               type="primary"
@@ -408,49 +396,80 @@ const Posts = () => {
                       fontWeight: "400", // خط عادي أو يمكن تغييره إلى bold
                     }}
                   >
-                    {postDisplayEdit && postId == post.post_id ?<>
-                      <Input defaultValue={post.body} onChange={(e)=>{
-                        setEditPostText(e.target.value)
-                      }}/>
-                      <Button onClick={(e)=>{
-                        setpostDisplayEdit(false)
-                      }}>Cancel</Button>
-                      <Button onClick={(e)=>{
-                        handleUpdatePost(postId)
-                      }}>Save</Button>
-                    </> :<p>{post.body}</p>}
+                    {postDisplayEdit && postId == post.post_id ? (
+                      <>
+                        <Input
+                          defaultValue={post.body}
+                          onChange={(e) => {
+                            setEditPostText(e.target.value);
+                          }}
+                        />
+                        <Button
+                          onClick={(e) => {
+                            setpostDisplayEdit(false);
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={(e) => {
+                            handleUpdatePost(postId);
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </>
+                    ) : (
+                      <div>
+                        <p>{post.body}</p>
+
+                        {post.image && post.video ? (
+                          <div className="media-container">
+                            <div className="media-item media-image">
+                              <img src={post.image} alt="Post visual content" />
+                            </div>
+                            <div className="media-item media-video">
+                              <video controls>
+                                <source src={post.video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {post.image && (
+                              <img
+                                src={post.image}
+                                alt="Post Image"
+                                style={{
+                                  width: "100%",
+                                  borderRadius: "8px",
+                                  marginTop: "10px",
+                                  objectFit: "cover",
+                                  height: "auto",
+                                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                                }}
+                              />
+                            )}
+                            {post.video && (
+                              <video
+                                controls
+                                style={{
+                                  width: "100%",
+                                  marginTop: "10px",
+                                  borderRadius: "8px",
+                                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                                }}
+                                src={post.video}
+                              />
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 }
               />
-
-              {/* صورة أو فيديو البوست */}
-              {post.image && (
-                <img
-                  src={post.image}
-                  alt="Post Image"
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    marginTop: "10px",
-                    objectFit: "cover",
-                    height: "auto",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                />
-              )}
-
-              {post.video && (
-                <video
-                  controls
-                  style={{
-                    width: "100%",
-                    marginTop: "10px",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                  }}
-                  src={post.video}
-                />
-              )}
             </List.Item>
 
             <Space
@@ -512,7 +531,7 @@ const Posts = () => {
                   icon={<EditOutlined />}
                   type="link"
                   onClick={() => {
-                    setpostDisplayEdit(true)
+                    setpostDisplayEdit(true);
                     setPostId(post.post_id);
                     setEditPostText(post.body);
                     setUpdateClicked(true);
