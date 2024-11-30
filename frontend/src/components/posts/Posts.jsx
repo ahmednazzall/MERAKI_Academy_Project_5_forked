@@ -499,6 +499,7 @@ const Posts = () => {
               />
 
               {/* زر التعليقات */}
+             
               <Button
                 icon={<MessageOutlined />}
                 type="link"
@@ -513,17 +514,34 @@ const Posts = () => {
               </Button>
 
               {/* زر الحفظ */}
+              {!savedPost.includes(post.post_id)
+              ?
               <Button
-                icon={<SaveOutlined />}
-                type="link"
-                onClick={() => handleAddSave(post.post_id)}
-                style={{
-                  color: "#28a745",
-                  fontSize: "18px",
-                }}
-              >
-                Save
-              </Button>
+              icon={<SaveOutlined />}
+             
+              type="link"
+              onClick={() => handleAddSave(post.post_id)}
+              style={{
+                color: "#28a745",
+                fontSize: "18px",
+              }}
+            >
+              Save
+            </Button>
+            : 
+            <Button
+            icon={<SaveOutlined />}
+            disabled
+            type="link"
+            style={{
+              color: "#28a745",
+              fontSize: "18px",
+            }}
+          >
+            Saved
+          </Button>
+              }
+             
 
               {/* زر التعديل */}
               {post.user_id === parseInt(userId) && (
