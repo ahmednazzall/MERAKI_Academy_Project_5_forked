@@ -48,9 +48,10 @@ const Explore = ({socket}) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [following]);
 
   const handFollow = (id) => {
+
     axios
       .post(
         `http://localhost:5000/followers/${id}/follow`,
@@ -65,9 +66,7 @@ const Explore = ({socket}) => {
         setFollowing([...following, id]);
         const noteTo =AllUsers.find((user=>{
           return user.user_id==id
-        }))
-        console.log(noteTo);
-        
+        }))  
         socket.emit("notification",{message:`${noteTo.user_name} started following you` , from:userId, to:id})
       })
       .catch((err) => {

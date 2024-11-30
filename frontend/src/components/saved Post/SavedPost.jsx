@@ -3,12 +3,21 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./savePost.css";
+import moment from "moment-timezone";
 
 const SavedPost = () => {
+  
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
-
+    const formatRelativeTime = (timestamp) => {
+      const date = new Date(timestamp);
+      const offset = date.getTimezoneOffset();
+      date.setMinutes(date.getMinutes() - offset);
+      const localTime = moment.utc(date);
+  
+      return localTime.fromNow();
+    };
   useEffect(() => {
     axios
       .get("http://localhost:5000/posts/saved", {
@@ -68,10 +77,12 @@ const SavedPost = () => {
             </div>
             <div
               className="post-content"
-              onClick={() => handleClick(post.post_id)}
+             onClick={(e)=>{
+              navigate('/home')
+             }}
             >
               <p className="post-body">{post.body}</p>
-              <p className="saved-at">Saved at {post.saved_at}</p>
+              <p className="saved-at">Saved at {formatRelativeTime(post.saved_at)}</p>
             </div>
           </div>
         ))
