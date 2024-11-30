@@ -358,9 +358,15 @@ const updateSecuritySettings = async (req, res) => {
 const getContactUs = (req, res) => {
   const contactInfo = {
     Email: {
-      Serren_Email: "sereenesam@gmail.com",
-      Ahmad_Email: "nazzall.ahmed@gmail.com",
-      Abdulelah_Email: "abdalelahaljamal@gmail.com",
+      Serren: "sereenesam@gmail.com",
+      Ahmad: "nazzall.ahmed@gmail.com",
+      Abdulelah: "abdalelahaljamal@gmail.com",
+    },
+    LinkedIn:{
+      Serren: "https://www.linkedin.com/in/sereenhanandeh/",
+      Ahmad: "https://www.linkedin.com/in/ahmednazzall/",
+      Abdulelah: "https://www.linkedin.com/in/abdalelahaljamal/",
+
     },
     Phone_Number: {
       Serren_phone: "0539457475",

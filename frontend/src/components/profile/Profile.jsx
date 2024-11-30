@@ -288,6 +288,24 @@ const ProfilePage = () => {
     videoList,
   };
 
+  const handleUnfollow = () => {
+    axios
+      .delete(`http://localhost:5000/unfollow/${user[0]?.user_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setIsFollowing(false);
+        message.success("You have unfollowed this user.");
+      })
+      .catch((err) => {
+        console.error(err);
+        message.error("Failed to unfollow.");
+      });
+  };
+
+
   return (
     <div className="profile-container">
       <div className="profile-container">
@@ -356,48 +374,50 @@ const ProfilePage = () => {
         </Col>
       </Row>
       <br /> <br /> <br /> <br />
-      <div className="createPost">
-        <Input.TextArea
-          placeholder="What's on your mind?"
-          value={addPost.body || ""}
-          onChange={(e) => setAddPost({ ...addPost, body: e.target.value })}
-          rows={3}
-          style={{ width: "750px", marginBottom: "10px" }}
-        />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <Tooltip title="Upload Image">
-            <Upload {...props}>
-              <Button icon={<CameraOutlined />}>Upload image</Button>
-            </Upload>
-          </Tooltip>
+      {userId === user[0]?.user_id && (
+        <div className="createPost">
+          <Input.TextArea
+            placeholder="What's on your mind?"
+            value={addPost.body || ""}
+            onChange={(e) => setAddPost({ ...addPost, body: e.target.value })}
+            rows={3}
+            style={{ width: "750px", marginBottom: "10px" }}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Tooltip title="Upload Image">
+              <Upload {...props}>
+                <Button icon={<CameraOutlined />}>Upload image</Button>
+              </Upload>
+            </Tooltip>
 
-          <Tooltip title="Upload Video">
-            <Upload {...prop}>
-              <Button icon={<CameraOutlined />}>Upload video</Button>
-            </Upload>
-          </Tooltip>
+            <Tooltip title="Upload Video">
+              <Upload {...prop}>
+                <Button icon={<CameraOutlined />}>Upload video</Button>
+              </Upload>
+            </Tooltip>
 
-          <Tooltip title="Post">
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleAddPost}
-              style={{
-                backgroundColor: "#1877f2",
-              }}
-            >
-              Post
-            </Button>
-          </Tooltip>
+            <Tooltip title="Post">
+              <Button
+                type="primary"
+                icon={<SendOutlined />}
+                onClick={handleAddPost}
+                style={{
+                  backgroundColor: "#1877f2",
+                }}
+              >
+                Post
+              </Button>
+            </Tooltip>
+          </div>
         </div>
-      </div>
+      )}
       <br /> <br /> <br /> <br />
       <div className="posts-section">
         <h3>Your Posts</h3>
@@ -538,34 +558,37 @@ const ProfilePage = () => {
               </Button>
 
               {/* زر التعديل */}
-              <Button
-                icon={<EditOutlined />}
-                type="link"
-                onClick={() => {
-                  setPostId(post.post_id);
-                  setEditPostText(post.body);
-                  setUpdateClicked(true);
-                }}
-                style={{
-                  color: "#ffc107",
-                  fontSize: "18px",
-                }}
-              >
-                Edit
-              </Button>
-
+              {post?.user_id === userId && (
+                <Button
+                  icon={<EditOutlined />}
+                  type="link"
+                  onClick={() => {
+                    setPostId(post.post_id);
+                    setEditPostText(post.body);
+                    setUpdateClicked(true);
+                  }}
+                  style={{
+                    color: "#ffc107",
+                    fontSize: "18px",
+                  }}
+                >
+                  Edit
+                </Button>
+              )}
               {/* زر الحذف */}
-              <Button
-                icon={<DeleteOutlined />}
-                type="link"
-                danger
-                onClick={() => handleDelete(post.post_id)}
-                style={{
-                  fontSize: "18px",
-                }}
-              >
-                Delete
-              </Button>
+              {post?.user_id === userId && (
+                <Button
+                  icon={<DeleteOutlined />}
+                  type="link"
+                  danger
+                  onClick={() => handleDelete(post.post_id)}
+                  style={{
+                    fontSize: "18px",
+                  }}
+                >
+                  Delete
+                </Button>
+              )}
             </div>
           </div>
         ))}

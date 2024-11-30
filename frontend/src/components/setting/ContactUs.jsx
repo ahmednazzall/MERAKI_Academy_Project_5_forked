@@ -1,123 +1,163 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { Card, Col, Row, Button, Typography } from "antd";
+import { MailOutlined, PhoneOutlined, LinkedinOutlined } from "@ant-design/icons";
+
+const { Title, Paragraph } = Typography;
 
 const ContactUs = () => {
-  const [contactInfo, setContactInfo] = useState(null);
-  const [formData, setFormData] = useState({ email: "", message: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
-
-  // Fetch contact information from the server
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/settings/contactUs")
-      .then((response) => {
-        setContactInfo(response.data.contactInfo);
-      })
-      .catch((err) => {
-        console.error("Error fetching contact info:", err);
-      });
-  }, []);
-
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Submit the contact form
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    axios
-      .put("http://localhost:5000/settings/contactUs", formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((response) => {
-        setSuccessMessage(response.data.message);
-        setFormData({ email: "", message: "" });
-      })
-      .catch((err) => {
-        console.error("Error submitting contact inquiry:", err);
-        setError(
-          err.response?.data?.message || "An error occurred while submitting."
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  // Static contact information
+  const contactInfo = {
+    Email: {
+      Serren: "sereenesam@gmail.com",
+      Ahmad: "nazzall.ahmed@gmail.com",
+      Abdulelah: "abdalelahaljamal@gmail.com",
+    },
+    LinkedIn: {
+      Serren: "https://www.linkedin.com/in/sereenhanandeh/",
+      Ahmad: "https://www.linkedin.com/in/ahmednazzall/",
+      Abdulelah: "https://www.linkedin.com/in/abdalelahaljamal/",
+    },
+    Phone_Number: {
+      Serren_phone: "0539457475",
+      Ahmad_phone: "0798546036",
+      Abdulelah_phone: "0775532898",
+    },
   };
 
   return (
-    <div>
-      <h2>Contact Us</h2>
+    <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        height: "100vh", 
+        background: "linear-gradient(135deg, #e0f7fa, #81d4fa)" // Toned down light gradient background
+    }}> 
+      <div style={{ width: "90%", padding: "30px", textAlign: "center" }}>
+        <Title level={2} style={{ color: "#003366" }}>
+          Contact Us
+        </Title>
+        <Paragraph style={{ fontSize: "18px", color: "#003366" }}>
+          Get in touch with our team. Click on the icons to contact us directly.
+        </Paragraph>
 
-      {/* Display contact information */}
-      {contactInfo ? (
-        <div>
-          <h3>Contact Information:</h3>
-          <p>
-            <strong>Emails:</strong>
-          </p>
-          <ul>
-            {Object.entries(contactInfo.Email).map(([key, value]) => (
-              <li key={key}>
-                {key}: {value}
-              </li>
-            ))}
-          </ul>
-          <p>
-            <strong>Phone Numbers:</strong>
-          </p>
-          <ul>
-            {Object.entries(contactInfo.Phone_Number).map(([key, value]) => (
-              <li key={key}>
-                {key}: {value}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>Loading contact information...</p>
-      )}
+        <Row gutter={16} justify="center">
+          {/* Contact Card for Serren */}
+          <Col xs={24} sm={12} md={8} lg={6}>
+            <Card
+              title="Serren Hanandeh"
+              bordered={false}
+              style={{
+                width: "100%",
+                borderRadius: "10px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                textAlign: "center",
+                backgroundColor: "#ffffff", /* White card background */
+              }}
+            >
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <MailOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`mailto:${contactInfo.Email.Serren}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Email.Serren}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <PhoneOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`tel:${contactInfo.Phone_Number.Serren_phone}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Phone_Number.Serren_phone}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <LinkedinOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a
+                  href={contactInfo.LinkedIn.Serren}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#1890ff" }}
+                >
+                  LinkedIn Profile
+                </a>
+              </Paragraph>
+            </Card>
+          </Col>
 
-      {/* Contact form */}
-      <div>
-        <h3>Send Us a Message</h3>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+          {/* Contact Card for Ahmad */}
+          <Col xs={24} sm={12} md={8} lg={6}>
+            <Card
+              title="Ahmad Nazzall"
+              bordered={false}
+              style={{
+                width: "100%",
+                borderRadius: "10px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                textAlign: "center",
+                backgroundColor: "#ffffff", /* White card background */
+              }}
+            >
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <MailOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`mailto:${contactInfo.Email.Ahmad}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Email.Ahmad}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <PhoneOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`tel:${contactInfo.Phone_Number.Ahmad_phone}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Phone_Number.Ahmad_phone}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <LinkedinOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a
+                  href={contactInfo.LinkedIn.Ahmad}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#1890ff" }}
+                >
+                  LinkedIn Profile
+                </a>
+              </Paragraph>
+            </Card>
+          </Col>
 
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="message">Message:</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              required
-            ></textarea>
-          </div>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
-          </button>
-        </form>
+          {/* Contact Card for Abdulelah */}
+          <Col xs={24} sm={12} md={8} lg={6}>
+            <Card
+              title="Abdulelah Aljamal"
+              bordered={false}
+              style={{
+                width: "100%",
+                borderRadius: "10px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                textAlign: "center",
+                backgroundColor: "#ffffff", /* White card background */
+              }}
+            >
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <MailOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`mailto:${contactInfo.Email.Abdulelah}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Email.Abdulelah}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <PhoneOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a href={`tel:${contactInfo.Phone_Number.Abdulelah_phone}`} style={{ color: "#1890ff" }}>
+                  {contactInfo.Phone_Number.Abdulelah_phone}
+                </a>
+              </Paragraph>
+              <Paragraph style={{ fontSize: "16px", color: "#1890ff" }}>
+                <LinkedinOutlined style={{ marginRight: "8px", color: "#1890ff" }} />
+                <a
+                  href={contactInfo.LinkedIn.Abdulelah}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#1890ff" }}
+                >
+                  LinkedIn Profile
+                </a>
+              </Paragraph>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </div>
   );
