@@ -68,8 +68,8 @@ const Followers = () => {
           <Space align="center">
             <Avatar
               size={64}
-              src={elem.profile_picture || "/default-avatar.png"}
-              alt="profile"
+              src={elem.profile_image || "/default-profile.png"}
+              alt={elem.user_name}
               style={{ border: "2px solid #1890ff" }}
             />
             <Link
@@ -82,6 +82,8 @@ const Followers = () => {
               </Text>
             </Link>
           </Space>
+          
+          {userId === (isFollowing ? elem.following_id : elem.follower_id) && (
           <Button
             type="primary"
             danger
@@ -92,6 +94,7 @@ const Followers = () => {
           >
             {isFollowing ? "Unfollow" : "Remove"}
           </Button>
+          )}
         </div>
       ))}
     </div>
