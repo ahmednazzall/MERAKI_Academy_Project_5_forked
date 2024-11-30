@@ -190,10 +190,7 @@ const updatePrivacySettings = async (req, res) => {
     const queryUpdate = `
       INSERT INTO privacy_settings (u_id, profile_visibility, blocked_accounts)
       VALUES ($1, $2, $3)
-      ON CONFLICT (u_id)
-      DO UPDATE SET 
-        profile_visibility = COALESCE(EXCLUDED.profile_visibility, privacy_settings.profile_visibility),
-        blocked_accounts = EXCLUDED.blocked_accounts
+     
       RETURNING *;
     `;
     const values = [
@@ -205,14 +202,17 @@ const updatePrivacySettings = async (req, res) => {
     ];
 
     const resultPrivacy = await pool.query(queryUpdate, values);
-
+   
+    
     res.status(200).json({
       success: true,
       message: "Privacy settings updated successfully.",
       privacySettings: resultPrivacy.rows[0],
     });
   } catch (error) {
+    
     console.error("Error updating privacy settings:", error);
+    
     res.status(500).json({
       success: false,
       message: "Error updating privacy settings.",

@@ -113,10 +113,14 @@
 }
 
 .sidebar1 a:hover {
-  background-color: #3498db;
+  background-color: #070f15;
   color: white;
-}
 
+}
+.sidebar-icon-Block:hover{
+  background-color: red;
+  color: black;
+}
 .sidebar1-icon {
   margin-right: 5px;
   font-size: 18px;
