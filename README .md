@@ -1,6 +1,6 @@
 <p align="center">
 
- <img width="400px" height="100px" src="./Preview.png" alt="MOLTAQA">
+ <img width="200px" height="200px" src="./Preview.png" alt="MOLTAQA">
  
 </p>
 
