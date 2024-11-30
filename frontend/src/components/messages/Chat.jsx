@@ -84,8 +84,8 @@ const Chat = ({socket}) => {
               src={user?.profile_image}
               className="userPic"
               alt="userPicture"
-              width={50}
-              height={70}
+              width={30}
+              height={60}
             />
            
             <p className="User-Name-Chat">{user.user_name}</p>
