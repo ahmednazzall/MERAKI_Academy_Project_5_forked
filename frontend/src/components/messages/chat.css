@@ -83,7 +83,7 @@ width: 500px;
 
   } */
 .userPic-Message {
-  width: 6%;
+  width: 7%;
   border-radius: 50%;
 }
 .UserName-ChatMessage {
@@ -130,7 +130,7 @@ width: 500px;
 }
 .UserName-ChatMessage-You {
   position: relative;
-  left: -7%;
+  left: -8%;
   bottom: 5vh;
 }
 

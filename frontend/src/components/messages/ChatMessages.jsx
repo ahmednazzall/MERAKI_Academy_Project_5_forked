@@ -90,9 +90,9 @@ const ChatMessages = ({ socket, to, setShow }) => {
     });
   };
 
-  const handleClick = (e) => {
-    if (messageTimeShow.show != message.message_id) {
-      setMessageTimeShow({ show: message.message_id });
+  const handleClick = (id) => {
+    if (messageTimeShow.show !=id) {
+      setMessageTimeShow({ show: id });
     } else {
       setMessageTimeShow({ show: 0 });
     }
@@ -122,7 +122,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                 }
               >
                 <div className="span_profile">
-                  {/* {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null} */}
+               
 
                   {allUsers?.map((user) => {
                     if (
@@ -153,10 +153,12 @@ const ChatMessages = ({ socket, to, setShow }) => {
                                 ? "Message-Chat-you"
                                 : "Message-Chat"
                             }
-                            onClick={handleClick}
+                            onClick={()=>{handleClick(message.message_id)}}
                           >
                             {message.message_text}
                           </div>
+                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
+
                         </div>
                       );
                     } else if (
@@ -187,10 +189,12 @@ const ChatMessages = ({ socket, to, setShow }) => {
                                 ? "Message-Chat-you"
                                 : "Message-Chat"
                             }
-                            onClick={handleClick}
+                            onClick={()=>{handleClick(message.message_id)}}
                           >
                             {message.message_text}
+                          
                           </div>
+                          {messageTimeShow.show == message.message_id ?  <p className={message.sender != userId ? "Message-Time" : "Message-Time-you"}>{formatRelativeTime(message.created_at)}</p> : null}
                         </div>
                       );
                     }
