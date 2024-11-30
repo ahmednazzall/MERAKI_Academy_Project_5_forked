@@ -424,7 +424,9 @@ const ProfilePage = () => {
       )}
       <br /> <br /> <br /> <br />
       <div className="posts-section">
+
        {localStorage.getItem("user_id")==userId && <h3>Your Posts</h3>} 
+
         {posts?.map((post, index) => (
           <div className="post-card" key={index}>
             <Row>
@@ -529,7 +531,7 @@ const ProfilePage = () => {
                   fontSize: "18px",
                   fontWeight: "600",
                 }}
-                onClick={() => navigate(`./comments/${post.post_id}`)}
+                onClick={() => navigate(`/home/comments/${post.post_id}`)}
               >
                 Comments
               </Button>
