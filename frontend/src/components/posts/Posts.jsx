@@ -37,6 +37,7 @@ import {
   MessageOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 
 const { Header, Content, Footer } = Layout;
 const { TextArea } = Input;
@@ -81,7 +82,7 @@ const Posts = () => {
       })
       .then((res) => {
         // console.log();
-        
+
         dispatch(setPosts(res.data.data));
         // console.log(res);
       })
@@ -136,7 +137,14 @@ const Posts = () => {
       );
     }
   };
+  const formatRelativeTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const offset = date.getTimezoneOffset();
+    date.setMinutes(date.getMinutes() - offset);
+    const localTime = moment.utc(date);
 
+    return localTime.fromNow();
+  };
   const handleUpdatePost = (postId) => {
     axios
       .put(
@@ -373,6 +381,11 @@ const Posts = () => {
             }}
             hoverable
           >
+            <div style={{display:"flex" , justifyContent:"flex-end"}}>
+              <p style={{ alignSelf: "end" }}>
+                {formatRelativeTime(post.created_at)}
+              </p>
+            </div>
             <List.Item key={post.post_id}>
               <List.Item.Meta
                 avatar={
@@ -381,7 +394,9 @@ const Posts = () => {
                       size={50}
                       src={post.profile_image}
                       style={{ borderRadius: "50%" }}
-                      onClick={()=>{navigate(`/home/profile/${post.user_id}`)}}
+                      onClick={() => {
+                        navigate(`/home/profile/${post.user_id}`);
+                      }}
                     />
                   ) : (
                     <Avatar icon={<UserOutlined />} />
@@ -502,7 +517,7 @@ const Posts = () => {
               />
 
               {/* زر التعليقات */}
-             
+
               <Button
                 icon={<MessageOutlined />}
                 type="link"
@@ -517,34 +532,31 @@ const Posts = () => {
               </Button>
 
               {/* زر الحفظ */}
-              {!savedPost.includes(post.post_id)
-              ?
-              <Button
-              icon={<SaveOutlined />}
-             
-              type="link"
-              onClick={() => handleAddSave(post.post_id)}
-              style={{
-                color: "#28a745",
-                fontSize: "18px",
-              }}
-            >
-              Save
-            </Button>
-            : 
-            <Button
-            icon={<SaveOutlined />}
-            disabled
-            type="link"
-            style={{
-              color: "#28a745",
-              fontSize: "18px",
-            }}
-          >
-            Saved
-          </Button>
-              }
-             
+              {!savedPost.includes(post.post_id) ? (
+                <Button
+                  icon={<SaveOutlined />}
+                  type="link"
+                  onClick={() => handleAddSave(post.post_id)}
+                  style={{
+                    color: "#28a745",
+                    fontSize: "18px",
+                  }}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  icon={<SaveOutlined />}
+                  disabled
+                  type="link"
+                  style={{
+                    color: "#28a745",
+                    fontSize: "18px",
+                  }}
+                >
+                  Saved
+                </Button>
+              )}
 
               {/* زر التعديل */}
               {post.user_id === parseInt(userId) && (
