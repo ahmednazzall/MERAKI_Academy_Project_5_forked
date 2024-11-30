@@ -3,8 +3,7 @@ import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import Side from "./Side";
-import { SearchOutlined } from "@ant-design/icons"; // استيراد أيقونة البحث
-
+import { CloseCircleOutlined, SearchOutlined } from "@ant-design/icons"; // استيراد أيقونة البحث
 import Chat from "../messages/Chat";
 
 import { Input, List, Avatar, Button, FloatButton, message } from "antd";
@@ -112,13 +111,16 @@ const Home = ({ socket }) => {
                 }}
               />
             ) : (
-              <button
+              <CloseCircleOutlined 
+              style={{
+                color:"#1890ff"
+              }}
                 onClick={(e) => {
                   setdisplay(false);
-                }}
-              >
-                cancel
-              </button>
+                  
+              }}/>               
+              
+              
             )}
           </button>
         </div>
