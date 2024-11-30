@@ -27,7 +27,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+
 
 In This Application You Can Contact With Any Person Using MOLTAQA And Talk About Your Opinions By Creating Posts Or Comments, Also You Can Follow Any User And See His Activities , Thank You For Choosing Us.
 
