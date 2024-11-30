@@ -137,7 +137,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                             <img
                               className="userPic-Message"
                               src={message.profile_image}
-                              style={{ borderRadius: "50%" }}
+
                             />
 
                             <h4
@@ -174,7 +174,7 @@ const ChatMessages = ({ socket, to, setShow }) => {
                             <img
                               className="userPic-Message"
                               src={message.profile_image}
-                              style={{ borderRadius: "50%" }}
+                             
                             />
                             <h4
                               key={user.user_id}
