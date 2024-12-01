@@ -1,6 +1,8 @@
 const { pool } = require("../models/db");
 const createPost = async (req, res) => {
 
+
+
   const { body, image, video} = req.body;
 
 
@@ -11,7 +13,7 @@ const createPost = async (req, res) => {
   pool
     .query(query, data)
     .then((result) => {
-  
+
       
       res.status(201).json({
         success: true,
