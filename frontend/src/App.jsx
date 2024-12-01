@@ -126,12 +126,6 @@ function App() {
         },
 
         
-        // {
-        //   path: "messages/:user_id",
-        //   element: <ChatMessages/>,
-        // },
-
-
         {
           path: "events",
           element: <Events socket={socket} />,
