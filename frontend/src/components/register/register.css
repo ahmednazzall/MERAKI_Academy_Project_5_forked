@@ -299,12 +299,13 @@ svg {
     border-radius: 5px;
     font-size: large;
     right: 70%;
-    top: 30vh;
+    top: 29.6vh;
   }
   .FirstName-Input {
     width: 80%;
     position: relative;
     right: 84%;
+    
   }
   .LastName-Input {
     width: 80%;
@@ -316,7 +317,7 @@ svg {
     width: 80%;
     position: relative;
     right: 84%;
-    top: 22vh;
+    top: 21.3vh;
   }
   .Birth-Input {
     width: 80%;
@@ -328,7 +329,7 @@ svg {
     width: 80%;
     position: relative;
     right: 84%;
-    top: 14vh;
+    top: 13.3vh;
   }
   .Country-Input {
     width: 80%;
@@ -369,7 +370,7 @@ svg {
 
   .Have-Account {
     position: relative;
-    top: 10vh;
+    top: 11vh;
     right: 36%;
   }
   .OR-R {

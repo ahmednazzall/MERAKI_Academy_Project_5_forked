@@ -1321,7 +1321,7 @@
 .forget{
     cursor: pointer;
     position: relative;
-    top: 27.3vh;
+    top: 28vh;
     width: 100%;
     right: 65%;
     text-decoration: none;
@@ -1329,7 +1329,7 @@
 .Remember-Label{
 position: relative;
 left: 50%;
-top: 25vh;
+top: 26vh;
 
 text-align: center;
 }
