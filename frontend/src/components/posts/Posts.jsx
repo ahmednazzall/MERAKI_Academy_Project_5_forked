@@ -381,11 +381,7 @@ const Posts = () => {
             }}
             hoverable
           >
-            <div style={{display:"flex" , justifyContent:"flex-end"}}>
-              <p style={{ alignSelf: "end" }}>
-                {formatRelativeTime(post.created_at)}
-              </p>
-            </div>
+            
             <List.Item key={post.post_id}>
               <List.Item.Meta
                 avatar={
