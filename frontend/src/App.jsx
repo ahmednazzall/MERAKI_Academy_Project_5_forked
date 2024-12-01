@@ -6,7 +6,7 @@ import Home from "./components/dashboard/Home";
 import Profile from "./components/profile/Profile";
 import Forget from "./components/forgetPassword/Forget";
 import Posts from "./components/posts/Posts";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useId } from "react";
 import Comments from "./components/comments/Comments";
 
 import SearchBar from "./components/search/Search";
@@ -43,6 +43,8 @@ function App() {
     setTheme(e.target.value);
   };
   useEffect(() => {
+    console.log(token , useId);
+    
     const socketConnection = io("http://localhost:5000", {
       extraHeaders: {
         user_id,
@@ -56,7 +58,7 @@ function App() {
     });
     socketConnection?.on("connect_error", (error) => {
       console.log("problem", error.message);
-    });
+    }); 
     return () => {
       socketConnection?.removeAllListeners();
       socketConnection?.disconnect();

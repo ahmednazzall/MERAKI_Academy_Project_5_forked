@@ -6,7 +6,32 @@
     background: linear-gradient(135deg, #f0f9ff, #cfeffd);
     padding: 20px;
   }
-  
+  .Back{
+    font-size: xx-large;
+    position: relative;
+ 
+  }
+  .Back-Div{
+    position: relative;
+    bottom: 29vh;
+    left: 4%;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .Back-Div-Gen{
+    position: relative;
+    bottom:37vh;
+    left: 4%;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .Back-Con{
+    position: relative;
+    bottom: 20vh;
+    left: 15%;
+    z-index: 10;
+    cursor: pointer;
+  }
   .how-to-use-card {
     max-width: 700px;
     width: 100%;

@@ -31,9 +31,10 @@
 .search-bar {
   flex: 1;
   display: flex;
-  justify-content: center;
+  position: relative;
+  left: 15%;
   align-items: center;
-  margin: 0 20px;
+
   position: relative;
 }
 
@@ -45,11 +46,15 @@
 }
 
 .notification {
-  position: relative;
-  left: 90%;
-  margin-left: 10px;
-}
+position: relative;
+left: 5%;
+  margin: 0 0 0 5%;
 
+}
+.Icon-Of-Search{
+  position: relative;
+  right: 3%;
+}
 .search-bar button {
   background-color: #3498db;
   color: white;

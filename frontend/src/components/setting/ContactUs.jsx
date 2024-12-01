@@ -1,10 +1,13 @@
 import React from "react";
 import { Card, Col, Row, Button, Typography } from "antd";
 import { MailOutlined, PhoneOutlined, LinkedinOutlined } from "@ant-design/icons";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Paragraph } = Typography;
 
 const ContactUs = () => {
+  const navigate = useNavigate()
   // Static contact information
   const contactInfo = {
     Email: {
@@ -32,6 +35,13 @@ const ContactUs = () => {
         height: "100vh", 
         background: "linear-gradient(135deg, #e0f7fa, #81d4fa)" // Toned down light gradient background
     }}> 
+     <div className="Back-Con">
+
+<IoArrowBackOutline className="Back" onClick={()=>{
+  navigate('/home')
+}}/>
+
+</div>
       <div style={{ width: "90%", padding: "30px", textAlign: "center" }}>
         <Title level={2} style={{ color: "#003366" }}>
           Contact Us

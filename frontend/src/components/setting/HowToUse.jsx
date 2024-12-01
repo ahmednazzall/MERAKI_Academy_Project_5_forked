@@ -1,10 +1,13 @@
 import React from "react";
 import { Card, List, Typography } from "antd";
 import "./HowToUse.css";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Paragraph } = Typography;
 
 const HowToUse = () => {
+  const navigate = useNavigate()
   const content = {
     title: "Welcome to Our Platform!",
     description: "Follow these steps to get started and maximize your experience:",
@@ -20,6 +23,13 @@ const HowToUse = () => {
 
   return (
     <div className="how-to-use-container">
+      <div className="Back-Div">
+
+      <IoArrowBackOutline className="Back" onClick={()=>{
+        navigate('/home')
+      }}/>
+
+      </div>
       <Card className="how-to-use-card">
         <Title level={2} className="how-to-use-title">
           {content.title}

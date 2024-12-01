@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Form, Input, Button, Upload, message, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 const UpdateGeneralSettings = () => {
+  const navigate =useNavigate()
   const [formData, setFormData] = useState({
     user_name: "",
     email: "",
@@ -53,6 +56,14 @@ const UpdateGeneralSettings = () => {
 
   return (
     <div style={styles.container}>
+      
+      <div className="Back-Div-Gen">
+
+      <IoArrowBackOutline className="Back" onClick={()=>{
+        navigate('/home')
+      }}/>
+
+      </div>
       <div style={styles.formContainer}>
         <Title level={3} style={styles.title}>
           Update Your Settings
